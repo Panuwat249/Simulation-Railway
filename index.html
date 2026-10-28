@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RailFlow — จำลองเดินรถแบบ Rail Route</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#03050a;--pn:#0d121a;--pn2:#141b25;--bd:#263040;--tx:#e8edf4;--mu:#8592a5;--rd:#c62f3a;--rd2:#e23d4a;--yl:#ffd84a;--gn:#34d399}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font:13px Sarabun,system-ui,sans-serif}
+button,input,select{font:inherit;color:inherit}
+#err{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:#7f1d1d;color:#fff;padding:7px 12px;font:12px monospace}
+.app{display:grid;grid-template-rows:46px 1fr 58px;height:100vh}
+.top{display:flex;align-items:center;gap:8px;padding:0 12px;background:#080b11;border-bottom:1px solid var(--bd)}
+.logo{font:700 20px Rajdhani;letter-spacing:1px}.logo b{color:var(--rd2)}
+.sp{flex:1}
+.tb{background:var(--pn2);border:1px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer}
+.tb:hover{border-color:var(--rd2)}
+.main{display:grid;grid-template-columns:390px 1fr;min-height:0}
+.left{background:var(--pn);border-right:1px solid var(--bd);display:flex;flex-direction:column;min-height:0}
+.tabs{display:flex;border-bottom:1px solid var(--bd)}
+.tab{flex:1;padding:10px;border:0;background:none;cursor:pointer;color:var(--mu);font-weight:700;border-bottom:2px solid transparent}
+.tab.on{color:#fff;border-bottom-color:var(--rd2)}
+#lp{flex:1;overflow:auto;padding:10px}
+.stage{position:relative;min-width:0;overflow:hidden}
+canvas{display:block;width:100%;height:100%}
+.hudc{position:absolute;top:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;pointer-events:none}
+.chip{background:rgba(12,17,25,.92);border:1px solid var(--bd);border-radius:7px;padding:3px 10px;font-size:12px;font-weight:700}
+.banner{position:absolute;top:44px;left:50%;transform:translateX(-50%);background:#6d1420;border:1px solid var(--rd2);padding:7px 16px;border-radius:9px;font-weight:700;display:none;white-space:nowrap}
+.clock{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(9,13,20,.95);border:1px solid #2f3a4b;border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.55)}
+.crow{display:flex;gap:6px;align-items:center}
+.cb{width:36px;height:34px;border:1px solid #3a4658;background:#121924;border-radius:8px;cursor:pointer;font-weight:700;font-size:15px}
+.cb:hover{border-color:var(--yl)}
+.ctime{font:700 32px Rajdhani;letter-spacing:1px;min-width:140px;text-align:center}
+.ctime small{font-size:16px;color:var(--mu)}
+.sx{padding:3px 8px;border:1px solid #3a4658;background:#121924;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;margin-right:2px}
+.sx.on{background:var(--yl);color:#111;border-color:var(--yl)}
+.tin{width:62px;padding:4px;border:1px solid #3a4658;background:#0b1018;border-radius:6px;text-align:center}
+.upc{display:flex;align-items:center;gap:14px;padding:0 14px;background:#080b11;border-top:1px solid var(--bd);overflow-x:auto}
+.upt{font-weight:700;color:#ffd84a;font-size:11px;white-space:nowrap}
+#upl{display:flex;gap:12px}
+.uc{display:flex;flex-direction:column;gap:3px;cursor:pointer;white-space:nowrap}
+.uc .a{font-size:11px;font-weight:700}.uc .b{font-size:10px;border-radius:4px;padding:1px 7px;font-weight:700;color:#fff}
+.sec{border:1px solid var(--bd);border-radius:10px;padding:9px;margin-bottom:9px;background:var(--pn2)}
+.sec h4{margin:0 0 7px;font-size:12px;color:#ff8a94}
+.bt{padding:6px 10px;border:1px solid var(--bd);background:#0b1018;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px}
+.bt:hover{border-color:var(--rd2)}.bt.p{background:var(--rd);border-color:var(--rd)}
+.bt.on{background:var(--yl);color:#111;border-color:var(--yl)}.bt.d{color:#ff8a8a}.bt.w{width:100%;margin-top:6px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.hint{font-size:11px;color:var(--mu);line-height:1.65}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tool{padding:9px;border:1px solid var(--bd);background:#0b1018;border-radius:9px;cursor:pointer;text-align:left;font-weight:700}
+.tool.on{border-color:var(--yl);background:#231d0a;color:var(--yl)}
+.srow{display:flex;gap:6px;align-items:center;margin-bottom:5px}
+.srow input{flex:1;padding:4px 7px;border:1px solid var(--bd);border-radius:6px;background:#0b1018}
+.pill{font-size:10px;font-weight:700;padding:1px 7px;border-radius:99px;background:#273040;color:#9fb0c4;white-space:nowrap}
+.x{border:0;background:none;color:#6b7684;cursor:pointer}.x:hover{color:#f87171}
+.trow{display:flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid var(--bd);border-radius:9px;margin-bottom:6px;background:#0b1018;cursor:pointer}
+.trow:hover{border-color:#4a5568}
+.trow .bar{width:5px;align-self:stretch;border-radius:3px}
+.trow .no{font:700 19px Rajdhani;min-width:48px}
+.trow .rt{flex:1;min-width:0}.trow .rt div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trow .st{font-size:11px;font-weight:700}
+.dl{font-size:10px;font-weight:700;padding:1px 6px;border-radius:99px;background:#3a2a08;color:#fbbf24}
+.eh{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.eh input.no{width:96px;font:700 21px Rajdhani;background:#0b1018;border:1px solid var(--bd);border-radius:7px;padding:1px 8px}
+input[type=color]{width:34px;height:30px;border:1px solid var(--bd);border-radius:7px;background:#0b1018;padding:2px;cursor:pointer}
+.card{border:1px solid #4a1a21;border-radius:8px;margin-bottom:8px;overflow:hidden;background:#0a0d13}
+.ch{display:flex;align-items:center;gap:4px;background:linear-gradient(90deg,#b8222f,#931b26);padding:5px 6px}
+.ch .ix{font:700 21px Rajdhani;min-width:18px;text-align:center}
+.ch .nm{font:700 15px Rajdhani;letter-spacing:.5px;max-width:132px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-transform:uppercase}
+.ch .ic{font-size:11px;opacity:.85;margin-left:2px}
+.pfb{min-width:25px;height:25px;border:1px solid #3c1218;background:#1a0f12;border-radius:5px;cursor:pointer;font-weight:700;font-size:12px;padding:0 4px}
+.pfb:hover{border-color:#ff9aa3}
+.pfb.on{border-color:var(--yl);color:var(--yl);background:#2a1d0c}
+.pfb.au{border-style:dashed;border-color:#b59a2e;color:#d9c06a}
+.cbd{display:grid;grid-template-columns:1fr 112px;gap:7px;padding:6px}
+.mt{position:relative;background:#06090e;border-radius:5px;overflow:hidden}
+.mt .tk{position:absolute;top:1px;font-size:9px;color:#8592a5;transform:translateX(-50%)}
+.mt .tk.c{background:#e8edf4;color:#111;border-radius:4px;padding:0 3px;font-weight:700}
+.mt .rw{position:absolute;left:0;right:0;height:8px;background:rgba(255,255,255,.045)}
+.mt .rl{position:absolute;left:2px;font-size:8px;color:#8592a5;line-height:8px}
+.mt .bb{position:absolute;height:7px;border-radius:4px}
+.mt .nw{position:absolute;top:13px;bottom:0;width:1.5px;background:#fff}
+.mt .band{position:absolute;top:13px;bottom:0;width:8px;background:rgba(255,216,74,.2);border-left:1px solid rgba(255,216,74,.7);border-right:1px solid rgba(255,216,74,.7)}
+.tm label{display:block;font-size:10.5px;color:var(--mu);text-align:center;font-weight:700;margin-top:1px}
+.tmr{display:flex;align-items:center;gap:3px;justify-content:center}
+.pm{width:22px;height:22px;border:1px solid #3a4658;background:#121924;border-radius:5px;cursor:pointer;font-weight:700;padding:0}
+.ti{width:54px;text-align:center;border:1px solid transparent;background:transparent;font-weight:700;font-size:14px;border-radius:4px}
+.ti:focus{outline:none;border-color:var(--yl);background:#0b1018}
+.act{font-size:10px;color:#ff9ed2;text-align:center;margin-top:3px}
+.cf{display:flex;gap:4px;justify-content:center;margin-top:5px}
+.mini{font-size:10px;padding:2px 6px;border:1px solid #3a4658;background:#121924;border-radius:5px;cursor:pointer}
+.mini.on{border-color:#7cb4ff;color:#7cb4ff}
+.err2{background:#3b1117;border:1px solid #7f1d1d;color:#ffb4b4;border-radius:8px;padding:6px 9px;margin-bottom:8px;font-size:12px}
+#mask{position:fixed;inset:0;background:rgba(3,5,9,.7);display:none;z-index:500;align-items:center;justify-content:center;padding:18px}
+#mask.on{display:flex}
+.dlg{background:var(--pn);border:1px solid #3a4553;border-radius:14px;width:min(560px,100%);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.dlg h3{margin:0;padding:13px 16px;border-bottom:1px solid var(--bd);font-size:14px}
+.dlg .db{padding:14px 16px}
+.dlg .df{padding:11px 16px;border-top:1px solid var(--bd);display:flex;gap:7px;justify-content:flex-end}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.f{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.f label{font-size:11px;color:var(--mu);font-weight:700}
+.f input,.f select{padding:7px 9px;border:1px solid var(--bd);border-radius:7px;background:#0b1018}
+#toast{position:fixed;right:16px;bottom:70px;display:flex;flex-direction:column;gap:6px;z-index:600}
+.ts{background:#064e30;border:1px solid #0d7a4c;color:#fff;padding:8px 12px;border-radius:9px;font-size:12px}
+.ts.er{background:#5b1220;border-color:#912036}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#2c3642;border-radius:8px;border:2px solid var(--pn)}
+</style></head><body>
+<div id="err"></div>
+<div class="app">
+ <div class="top"><div class="logo">RAIL<b>FLOW</b></div><span class="hint">จำลองเดินรถแบบ Rail Route</span>
+  <div class="sp"></div>
+  <button class="tb" id="bFit">⤢ พอดีจอ</button><button class="tb" id="bDemo">↺ ตัวอย่าง</button>
+  <button class="tb" id="bSave">⬇ บันทึก</button>
+  <label class="tb" style="margin:0">⬆ เปิด<input type="file" id="fIn" accept=".json" hidden></label></div>
+ <div class="main">
+  <div class="left"><div class="tabs"><button class="tab on" data-tab="tr">🚆 ขบวน &amp; เส้นทาง</button><button class="tab" data-tab="bd">🛠 สร้างราง</button></div><div id="lp"></div></div>
+  <div class="stage"><canvas id="cv"></canvas>
+   <div class="hudc" id="hud"></div><div class="banner" id="bn"></div>
+   <div class="clock">
+    <div class="crow"><button class="cb" id="cRs" title="เริ่มใหม่">⏮</button><button class="cb" id="cBk" title="ย้อน 5 นาที">«</button>
+     <div class="ctime" id="ct">05:00</div><button class="cb" id="cFw" title="ข้าม 5 นาที">»</button></div>
+    <div class="crow"><button class="cb" id="cPl">⏸</button><span id="spd"></span>
+     <input class="tin" id="cIn" value="05:30"><button class="sx" id="cGo">ไปเวลา</button></div></div></div>
+ </div>
+ <div class="upc"><span class="upt">🕒 UPCOMING TRAINS</span><div id="upl"></div></div>
+</div>
+<div id="mask"><div class="dlg" id="dlg"></div></div>
+<div id="toast"></div>
+<script>
+"use strict";
+window.addEventListener('error',e=>{const b=document.getElementById('err');b.style.display='block';b.textContent='⚠ '+e.message+' [บรรทัด '+e.lineno+']';});
+const $=id=>document.getElementById(id);
+const p2=n=>String(n).padStart(2,'0');
+const D2=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const lerp=(a,b,f)=>({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f});
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const val=id=>{const e=$(id);return e?e.value:'';};
+function hm(t){if(t==null||isNaN(t))return'--:--';t=Math.round(t);t=((t%86400)+86400)%86400;return p2(Math.floor(t/3600))+':'+p2(Math.floor(t%3600/60));}
+function pT(s){const m=String(s||'').trim().match(/^(\d{1,2})[:.]?(\d{2})(?:[:.](\d{2}))?$/);if(!m||+m[2]>59)return null;return +m[1]*3600+ +m[2]*60+(m[3]?+m[3]:0);}
+function mmss(s){const n=s<0;s=Math.abs(Math.round(s||0));return(n?'-':'')+p2(Math.floor(s/60))+':'+p2(s%60);}
+function toast(m,k){const d=document.createElement('div');d.className='ts '+(k||'');d.textContent=m;$('toast').appendChild(d);setTimeout(()=>d.remove(),2600);}
+function shade(h,a){let n=parseInt(String(h).slice(1),16);if(isNaN(n))n=0xd42a37;const f=c=>Math.round(a>0?c+(255-c)*a:c*(1+a));return'rgb('+f(n>>16)+','+f(n>>8&255)+','+f(n&255)+')';}
+
+/* ═════════ ค่าคงที่ ═════════ */
+const PXM=2,NCAR=4,CAR=21,GAP=1.8,TL=NCAR*CAR+(NCAR-1)*GAP,ACC=0.8/PXM,DEC=0.9/PXM,GRID=10;
+const kp=k=>Math.max(5,k)/3.6/PXM;
+const tt=(px,v)=>px*PXM/(Math.max(10,v)/3.6*0.88);
+
+/* ═════════ โลก ═════════ */
+let W={nodes:[],edges:[],sts:[],trains:[],seq:1};
+let NM={},EM={},SM={},ADJ={},NETV=1,RES={},TRM={};
+const SIM={t:18000,run:true,mul:10};
+const UI={tab:'tr',sel:null,add:false,tool:'track',cas:true};
+const nid=p=>p+(W.seq++);
+function reindex(){NM={};EM={};SM={};ADJ={};
+ W.nodes.forEach(n=>{NM[n.id]=n;ADJ[n.id]=[];});W.sts.forEach(s=>SM[s.id]=s);
+ W.edges=W.edges.filter(e=>NM[e.a]&&NM[e.b]&&e.a!==e.b);
+ W.edges.forEach(e=>{e.len=D2(NM[e.a],NM[e.b]);EM[e.id]=e;ADJ[e.a].push(e.id);ADJ[e.b].push(e.id);});NETV++;}
+const oth=(E,n)=>E.a===n?E.b:E.a;
+const stName=id=>SM[id]?SM[id].name:'?';
+const stCode=id=>SM[id]?SM[id].code:'?';
+const TR=id=>W.trains.find(t=>t.id===id);
+function addNode(x,y){const n={id:nid('n'),x,y};W.nodes.push(n);NM[n.id]=n;ADJ[n.id]=[];return n;}
+function addEdge(a,b,o){if(!a||!b||a===b)return null;for(const e of W.edges)if((e.a===a&&e.b===b)||(e.a===b&&e.b===a))return e;
+ const e=Object.assign({id:nid('e'),a,b,kind:'track',st:null,pf:'',vmax:100},o||{});W.edges.push(e);reindex();return e;}
+function cleanNodes(){W.nodes=W.nodes.filter(n=>W.edges.some(e=>e.a===n.id||e.b===n.id));reindex();}
+function delEdge(id){W.edges=W.edges.filter(e=>e.id!==id);cleanNodes();}
+function splitEdge(E,x,y){const n=addNode(Math.round(x),Math.round(y)),o={kind:E.kind,st:E.st,pf:E.pf,vmax:E.vmax};
+ W.edges=W.edges.filter(q=>q.id!==E.id);reindex();addEdge(E.a,n.id,o);addEdge(n.id,E.b,o);return n;}
+function outerN(E){return(ADJ[E.a]||[]).length<=1?E.a:E.b;}
+function nodeNear(x,y,r){let b=null,bd=r;for(const n of W.nodes){const d=Math.hypot(n.x-x,n.y-y);if(d<bd){bd=d;b=n;}}return b;}
+function edgeNear(x,y,r){let best=null,bd=r;for(const e of W.edges){const A=NM[e.a],B=NM[e.b],vx=B.x-A.x,vy=B.y-A.y,L2=vx*vx+vy*vy;if(!L2)continue;
+ const t=Math.max(0,Math.min(1,((x-A.x)*vx+(y-A.y)*vy)/L2)),px=A.x+vx*t,py=A.y+vy*t,d=Math.hypot(px-x,py-y);if(d<bd){bd=d;best={e,x:px,y:py,t};}}return best;}
+function stEdges(sp){let a=W.edges.filter(e=>(e.kind==='plat'||e.kind==='portal')&&e.st===sp.st);
+ if(sp.pf){const b=a.filter(e=>String(e.pf)===String(sp.pf));if(b.length)a=b;}return a;}
+function tset(sp){const T={};stEdges(sp).forEach(e=>T[e.id]=1);return T;}
+function onDist(E){return Math.max(Math.min(TL+2,E.len-2),Math.min(E.len-2,E.len/2+TL/2));}
+function cumOf(P){const C=[0];for(let i=1;i<P.length;i++)C.push(C[i-1]+D2(P[i-1],P[i]));return C;}
+function atP(P,C,d){if(d<=0)return P[0];const n=C.length-1;if(d>=C[n])return P[n];let lo=0,hi=n;
+ while(hi-lo>1){const m=(lo+hi)>>1;if(C[m]<=d)lo=m;else hi=m;}const s=C[hi]-C[lo];return s>0?lerp(P[lo],P[hi],(d-C[lo])/s):P[lo];}
+const at=(r,d)=>atP(r.pts,r.cum,d);
+function sliceP(P,C,a,b){const o=[atP(P,C,a)];for(let i=0;i<P.length;i++)if(C[i]>a&&C[i]<b)o.push(P[i]);o.push(atP(P,C,b));return o;}
+const lenOf=P=>{let s=0;for(let i=1;i<P.length;i++)s+=D2(P[i-1],P[i]);return s;};
+
+/* ═════════ ค้นหาเส้นทาง ═════════ */
+function hdg(E,from){const a=NM[from],b=NM[oth(E,from)];return Math.atan2(b.y-a.y,b.x-a.x);}
+function angOK(i1,n,i2){const E1=EM[i1],E2=EM[i2];let d=Math.abs(hdg(E1,oth(E1,n))-hdg(E2,n));if(d>Math.PI)d=2*Math.PI-d;return d<=1.0;}
+function route(starts,T,tid){
+ const Q=[],seen={};let g=0;
+ starts.forEach(s=>Q.push({e:s.e,x:s.x,c:s.c,s,par:null}));
+ while(Q.length&&g++<20000){
+  let bi=0;for(let i=1;i<Q.length;i++)if(Q[i].c<Q[bi].c)bi=i;
+  const q=Q.splice(bi,1)[0];
+  if(q.fin){const ch=[];let p=q.par;while(p.par){ch.unshift({e:p.e,exit:p.x});p=p.par;}return{s:p.s,chain:ch,tgt:{e:q.e,entry:q.par.x}};}
+  const k=q.e+'>'+q.x;if(seen[k])continue;seen[k]=1;
+  for(const e2 of ADJ[q.x]||[]){if(e2===q.e||!angOK(q.e,q.x,e2))continue;const E=EM[e2];let pen=0;
+   if(tid){const r=RES['e'+e2];if(r&&r!==tid)pen+=3000;const rn=RES['n'+q.x];if(rn&&rn!==tid)pen+=1500;}
+   if(T[e2])Q.push({fin:1,e:e2,c:q.c+E.len/2+pen,par:q});
+   else Q.push({e:e2,x:oth(E,q.x),c:q.c+E.len+pen,par:q});}}
+ return null;}
+function spawnOpts(E){if(E.kind==='portal'){const O=outerN(E);return[{e:E.id,x:oth(E,O),c:0,p:{x:NM[O].x,y:NM[O].y}}];}
+ const c=lerp(NM[E.a],NM[E.b],.5);return[{e:E.id,x:E.a,c:0,p:c},{e:E.id,x:E.b,c:0,p:c}];}
+function poseOpts(P,rev){const E=EM[P.e],o=[{e:P.e,x:P.face,c:D2(P.hp,NM[P.face]),p:P.hp}];
+ if(rev){const b=oth(E,P.face);o.push({e:P.e,x:b,c:D2(P.tp,NM[b])+400,p:P.tp,rev:1});}return o;}
+function planChain(opts,S,i,tid){
+ const pts=[],items=[],wps=[],spd=[],hops=[];let d=0,pa=0,carry=0,starts=opts,start=null,end=null,ha=Infinity;
+ const add=p=>{const l=pts[pts.length-1];if(!l||D2(l,p)>.01)pts.push({x:p.x,y:p.y});};
+ const it=(k,e)=>items.push({k,end:e});
+ for(let j=i+1;j<S.length;j++){
+  const sp=S[j],wp=!!sp.pass&&j<S.length-1,r=route(starts,tset(sp),tid);if(!r)return{fail:j};
+  const s=r.s;if(!start)start=s;const h={j,a:pa,t:carry};carry=0;
+  if(!s.ch){add(s.p);const sx=NM[s.x],d1=D2(s.p,sx),E=EM[s.e];spd.push({a:d,b:d+d1,v:E.vmax});h.t+=tt(d1,E.vmax);d+=d1;add(sx);it('e'+s.e,d);it('n'+s.x,d);}
+  for(const c of r.chain){const E=EM[c.e];spd.push({a:d,b:d+E.len,v:E.vmax});h.t+=tt(E.len,E.vmax);d+=E.len;add(NM[c.exit]);it('e'+c.e,d);it('n'+c.exit,d);}
+  const te=EM[r.tgt.e],En=NM[r.tgt.entry],xN=oth(te,r.tgt.entry),X=NM[xN];h.tgt=te.id;
+  if(wp){wps.push({j,d:d+te.len/2});spd.push({a:d,b:d+te.len,v:te.vmax});h.t+=tt(te.len/2,te.vmax);carry=tt(te.len/2,te.vmax);
+   h.b=d+te.len/2;pa=h.b;d+=te.len;add(X);it('e'+te.id,d);it('n'+xN,d);hops.push(h);starts=[{e:te.id,x:xN,c:0,p:X,ch:1}];continue;}
+  if(te.kind==='portal'){const ext=TL+12,ux=(X.x-En.x)/te.len,uy=(X.y-En.y)/te.len;spd.push({a:d,b:d+te.len+ext,v:te.vmax});
+   h.t+=tt(te.len,te.vmax);d+=te.len;add(X);ha=d;h.b=d;d+=ext;add({x:X.x+ux*ext,y:X.y+uy*ext});it('e'+te.id,Infinity);
+   end={j,portal:1,e:te.id};hops.push(h);break;}
+  const dOn=onDist(te);spd.push({a:d,b:d+dOn,v:te.vmax});h.t+=tt(dOn,te.vmax);d+=dOn;add(lerp(En,X,dOn/te.len));h.b=d;
+  it('e'+te.id,Infinity);end={j,e:te.id,face:xN,entry:r.tgt.entry,dOn};hops.push(h);break;}
+ return{pts,cum:cumOf(pts),items,wps,spd,hops,len:d,start,end,hideAfter:ha};}
+function markPt(E){if(E.kind==='portal'){const O=NM[outerN(E)];return{x:O.x,y:O.y};}return lerp(NM[E.a],NM[E.b],.5);}
+function preview(tr){const k=tr.ver+'/'+NETV;if(tr._pk===k)return tr._pv;
+ const S=tr.stops,pv={segs:[],marks:[],pf:[],err:''};
+ if(S.length){const c0=stEdges(S[0]);
+  if(!c0.length)pv.err='จุดแรกไม่มีชานชาลา / ทางเข้า';
+  else if(S.length===1){pv.marks[0]=markPt(c0[0]);pv.pf[0]=c0[0].pf;}
+  else{let opts=[];c0.forEach(e=>opts.push(...spawnOpts(e)));let i=0;
+   while(i<S.length-1){const pl=planChain(opts,S,i,null);
+    if(pl.fail!=null){pv.err='⚠ ไม่พบทางไป '+stName(S[pl.fail].st)+' (จุดที่ '+(pl.fail+1)+')';break;}
+    if(i===0){const se=EM[pl.start.e];pv.marks[0]=markPt(se);pv.pf[0]=se.pf;}
+    pl.hops.forEach(h=>{const te=EM[h.tgt];pv.segs.push({j:h.j,pts:sliceP(pl.pts,pl.cum,h.a,h.b),len:h.b-h.a,t:h.t+25});pv.marks[h.j]=markPt(te);pv.pf[h.j]=te.pf;});
+    const en=pl.end;if(!en||en.portal)break;
+    const te=EM[en.e],E0=NM[en.entry],X=NM[en.face];
+    opts=poseOpts({e:en.e,face:en.face,hp:lerp(E0,X,en.dOn/te.len),tp:lerp(E0,X,Math.max(0,en.dOn-TL)/te.len)},true);i=en.j;}}}
+ tr._pk=k;tr._pv=pv;return pv;}
+
+/* ═════════ การเดินรถ + จัดทางวิ่ง ═════════ */
+function bodyPts(r){const lo=Math.max(0,r.hs-TL),o=[at(r,r.hs)];
+ for(let k=r.cum.length-1;k>=0;k--)if(r.cum[k]<r.hs-1e-6&&r.cum[k]>lo+1e-6)o.push(r.pts[k]);o.push(at(r,lo));return o;}
+function trySpawn(tr){const S=tr.stops;if(S.length<2)return;const f=S[0];if(f.dep==null||!SM[f.st])return;
+ const isP=SM[f.st].type==='portal';if(SIM.t<f.dep-(isP?0:120)||SIM.t<(tr._sr||0))return;
+ const cands=stEdges(f).filter(e=>!RES['e'+e.id]);if(!cands.length){tr._sr=SIM.t+3;return;}
+ let opts=[];cands.forEach(e=>opts.push(...spawnOpts(e)));
+ const rr=route(opts,tset(S[1]),tr.id),s=rr?rr.s:opts[0],E=EM[s.e];
+ const r={state:'dwell',si:0,v:0,hb:-Infinity,ha:Infinity,res:[],wps:[],spd:[],dly:0,msg:''};
+ if(E.kind==='portal'){const O=NM[outerN(E)],I=NM[s.x],ext=TL+12,dx=(O.x-I.x)/E.len,dy=(O.y-I.y)/E.len;
+  r.pts=[{x:O.x+dx*ext,y:O.y+dy*ext},{x:O.x,y:O.y},{x:I.x,y:I.y}];r.hs=ext;r.hb=ext;r.noRev=true;r.res=[{k:'e'+E.id,end:ext+E.len}];r.dwU=f.dep;}
+ else{const X=NM[s.x],En=NM[oth(E,s.x)];r.pts=[{x:En.x,y:En.y},{x:X.x,y:X.y}];r.hs=onDist(E);r.res=[{k:'e'+E.id,end:Infinity}];r.dwU=Math.max(f.dep,SIM.t+20);}
+ r.cum=cumOf(r.pts);r.pose={e:E.id,face:s.x};r.res.forEach(i=>RES[i.k]=tr.id);tr.rec=[{}];tr.rt=r;}
+function depart(tr){const r=tr.rt,S=tr.stops;if(r.si>=S.length-1){despawn(tr);return;}
+ const P={e:r.pose.e,face:r.pose.face,hp:at(r,r.hs),tp:at(r,r.hs-TL)};
+ const pl=planChain(poseOpts(P,!r.noRev),S,r.si,tr.id);
+ if(pl.fail!=null){r.msg='⚠ ไม่พบทางไป '+stName(S[pl.fail].st);r.retry=SIM.t+10;return;}
+ const body=bodyPts(r),bl=lenOf(body),rev=!!pl.start.rev,base=rev?body:body.slice().reverse(),shift=r.hs-bl,M={};
+ const put=(k,e)=>{if(M[k]==null||M[k]<e)M[k]=e;};
+ r.res.forEach(it=>{if(it.end!==Infinity)put(it.k,rev?(r.hs-it.end):(it.end-shift));});
+ pl.items.forEach(it=>put(it.k,it.end+bl));
+ for(const k in M){const o=RES[k];if(o&&o!==tr.id){r.msg='🔴 รอสัญญาณ — ทางยังไม่ว่าง';r.blocked=true;r.retry=SIM.t+3;return;}}
+ r.res.forEach(it=>{if(M[it.k]==null&&RES[it.k]===tr.id)delete RES[it.k];});
+ r.res=Object.keys(M).map(k=>({k,end:M[k]}));r.res.forEach(it=>RES[it.k]=tr.id);
+ r.hb=(!rev&&r.hb>-Infinity)?r.hb-shift:-Infinity;
+ r.pts=base.concat(pl.pts.slice(1));r.cum=cumOf(r.pts);r.hs=bl;r.legEnd=bl+pl.len;
+ r.wps=pl.wps.map(w=>({j:w.j,d:w.d+bl}));r.spd=pl.spd.map(s=>({a:s.a+bl,b:s.b+bl,v:s.v}));
+ r.ha=pl.hideAfter+bl;r.end=pl.end;r.state='run';r.msg='';r.blocked=false;
+ const dp=S[r.si].dep;if(dp!=null)r.dly=SIM.t-dp;(tr.rec[r.si]=tr.rec[r.si]||{}).d=SIM.t;}
+function move(tr,dt){const r=tr.rt;let vl=Math.sqrt(2*DEC*Math.max(0,r.legEnd-r.hs-.15));
+ for(const s of r.spd){if(s.b<r.hs)continue;const vv=kp(s.v);vl=Math.min(vl,s.a<=r.hs?vv:Math.sqrt(vv*vv+2*DEC*(s.a-r.hs)));}
+ r.v=r.v<vl?Math.min(vl,r.v+ACC*dt):Math.max(vl,r.v-DEC*1.8*dt);
+ r.hs=Math.min(r.legEnd,r.hs+r.v*dt);
+ for(const w of r.wps)if(!w.ok&&r.hs>=w.d){w.ok=1;tr.rec[w.j]={a:SIM.t,d:SIM.t};const sp=tr.stops[w.j];if(sp&&sp.arr!=null)r.dly=SIM.t-sp.arr;}
+ r.res=r.res.filter(it=>{if(it.end+TL+1<r.hs){if(RES[it.k]===tr.id)delete RES[it.k];return false;}return true;});
+ if(r.legEnd-r.hs<.5&&r.v<.35)arrive(tr);}
+function arrive(tr){const r=tr.rt,en=r.end,S=tr.stops;r.v=0;if(!en){despawn(tr);return;}
+ const j=en.j;tr.rec[j]=Object.assign(tr.rec[j]||{},{a:SIM.t});const sp=S[j];if(sp&&sp.arr!=null)r.dly=SIM.t-sp.arr;
+ if(en.portal){despawn(tr);return;}
+ r.si=j;r.pose={e:en.e,face:en.face};r.noRev=false;
+ if(!sp||j>=S.length-1){r.state='end';r.gone=SIM.t+120;return;}
+ r.state='dwell';r.dwU=Math.max(sp.dep!=null?sp.dep:SIM.t,SIM.t+20);}
+function despawn(tr){for(const k in RES)if(RES[k]===tr.id)delete RES[k];tr.rt=null;tr.done=true;}
+function tick(dt){SIM.t+=dt;
+ for(const tr of W.trains){const r=tr.rt;
+  if(!r){if(!tr.done)trySpawn(tr);continue;}
+  if(r.si>=tr.stops.length){despawn(tr);continue;}
+  if(r.state==='dwell'){if(SIM.t>=r.dwU&&SIM.t>=(r.retry||0))depart(tr);}
+  else if(r.state==='run')move(tr,dt);
+  else if(r.state==='end'&&SIM.t>=r.gone)despawn(tr);}}
+function dayStart(){let m=Infinity;W.trains.forEach(t=>{if(t.stops[0]&&t.stops[0].dep!=null)m=Math.min(m,t.stops[0].dep);});return m===Infinity?18000:Math.floor((m-180)/60)*60;}
+function resetSim(){SIM.t=dayStart();RES={};W.trains.forEach(t=>{t.rt=null;t.done=false;t.rec=[];t._sr=0;});}
+function ffTo(t){let g=0;while(SIM.t<t&&g++<120000)tick(Math.min(1,t-SIM.t));}
+function setClock(t){if(t>=SIM.t)ffTo(t);else{resetSim();if(t<SIM.t)SIM.t=t;else ffTo(t);}renderLeft();}
+let NE=null;function netEdited(){reindex();clearTimeout(NE);NE=setTimeout(()=>{const t=SIM.t;resetSim();ffTo(t);renderLeft();},400);renderLeft();}
+
+/* ═════════ วาดแผนที่ ═════════ */
+const cv=$('cv'),ctx=cv.getContext('2d');let DPR=1,cw=0,ch=0;const V={x:0,y:0,z:.4};
+let PAN=null,DR=null,HOV=null,LPH=false;
+function resize(){const r=cv.getBoundingClientRect();DPR=window.devicePixelRatio||1;cw=r.width;ch=r.height;cv.width=cw*DPR;cv.height=ch*DPR;}
+const w2s=p=>({x:p.x*V.z+V.x,y:p.y*V.z+V.y}),s2w=(x,y)=>({x:(x-V.x)/V.z,y:(y-V.y)/V.z});
+const snapG=v=>Math.round(v/GRID)*GRID;
+function octi(x0,y0,bx,by){const dx=bx-x0,dy=by-y0,ax=Math.abs(dx),ay=Math.abs(dy);if(ax<1&&ay<1)return{x:x0,y:y0};
+ if(ax>ay*2.2)return{x:snapG(bx),y:y0};if(ay>ax*2.2)return{x:x0,y:snapG(by)};const m=snapG(Math.min(ax,ay));return{x:x0+Math.sign(dx)*m,y:y0+Math.sign(dy)*m};}
+function fit(){if(!W.nodes.length)return;let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+ W.nodes.forEach(n=>{x0=Math.min(x0,n.x);y0=Math.min(y0,n.y);x1=Math.max(x1,n.x);y1=Math.max(y1,n.y);});
+ V.z=Math.min(2.5,Math.max(.05,Math.min((cw-140)/(x1-x0+1),(ch-260)/(y1-y0+1))));V.x=cw/2-(x0+x1)/2*V.z;V.y=ch/2-(y0+y1)/2*V.z-40;}
+function ln(A,B){ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();}
+function rrect(x,y,w,h,r){const c=ctx;c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function carPath(l,w,rl,rr){const c=ctx,x=-l/2,y=-w/2;c.beginPath();c.moveTo(x+rl,y);c.lineTo(x+l-rr,y);c.arcTo(x+l,y,x+l,y+w/2,rr);c.arcTo(x+l,y+w,x+l-rr,y+w,rr);
+ c.lineTo(x+rl,y+w);c.arcTo(x,y+w,x,y+w/2,rl);c.arcTo(x,y,x+rl,y,rl);c.closePath();}
+function draw(){const c=ctx;c.setTransform(DPR,0,0,DPR,0,0);TRM={};W.trains.forEach(t=>TRM[t.id]=t);
+ c.fillStyle='#03050a';c.fillRect(0,0,cw,ch);
+ const g=c.createRadialGradient(cw*.5,ch*.5,0,cw*.5,ch*.5,Math.max(cw,ch)*.65);g.addColorStop(0,'rgba(22,44,92,.42)');g.addColorStop(1,'rgba(3,5,10,0)');c.fillStyle=g;c.fillRect(0,0,cw,ch);
+ const BUILD=UI.tab==='bd';
+ if(BUILD){const gs=GRID*4*V.z;if(gs>8){c.strokeStyle='rgba(120,140,170,.07)';c.lineWidth=1;c.beginPath();
+  for(let x=V.x%gs;x<cw;x+=gs){c.moveTo(x,0);c.lineTo(x,ch);}for(let y=V.y%gs;y<ch;y+=gs){c.moveTo(0,y);c.lineTo(cw,y);}c.stroke();}}
+ c.lineCap='round';
+ for(const e of W.edges){const A=w2s(NM[e.a]),B=w2s(NM[e.b]);
+  c.strokeStyle=e.kind==='portal'?'rgba(205,212,222,.55)':'rgba(214,220,229,.9)';c.lineWidth=e.kind==='plat'?2.4:2;ln(A,B);
+  const ow=RES['e'+e.id];if(ow&&TRM[ow]&&TRM[ow].rt&&TRM[ow].rt.state==='run'){c.strokeStyle='#2fd36b';c.lineWidth=3;ln(A,B);}
+  if(HOV===e.id){c.strokeStyle='#ffd84a';c.lineWidth=5;ln(A,B);}}
+ const sel=UI.sel?TRM[UI.sel]:null;if(sel&&!BUILD)drawPreview(sel);
+ drawSignals();drawLabels();
+ for(const t of W.trains)if(t.rt)drawTrain(t);
+ if(BUILD){for(const n of W.nodes){const p=w2s(n),d=(ADJ[n.id]||[]).length;
+   if(d>=3){c.fillStyle='#F59E0B';c.beginPath();c.moveTo(p.x,p.y-4.5);c.lineTo(p.x+4.5,p.y);c.lineTo(p.x,p.y+4.5);c.lineTo(p.x-4.5,p.y);c.fill();}
+   else{c.fillStyle=d===1?'#ef4444':'#5c6b80';c.beginPath();c.arc(p.x,p.y,2.6,0,7);c.fill();}}
+  if(DR&&DR.px!=null){const A=w2s(DR),B=w2s({x:DR.px,y:DR.py});c.setLineDash([6,4]);c.strokeStyle='#ffd84a';c.lineWidth=2;ln(A,B);c.setLineDash([]);
+   c.fillStyle='#ffd84a';c.beginPath();c.arc(B.x,B.y,4,0,7);c.fill();}}}
+function drawSignals(){if(V.z<.25)return;const c=ctx;
+ for(const e of W.edges){if(e.kind!=='plat')continue;
+  for(const n of[e.a,e.b]){const N=NM[n],O=NM[oth(e,n)],ux=(N.x-O.x)/e.len,uy=(N.y-O.y)/e.len,P=w2s(N),px=-uy,py=ux;
+   const sx=P.x-ux*12+px*7,sy=P.y-uy*12+py*7;let col='#aeb7c4';
+   const own=RES['n'+n];if(own&&TRM[own]&&TRM[own].rt&&TRM[own].rt.state==='run')col='#2fd36b';
+   for(const t of W.trains){const r=t.rt;if(r&&r.blocked&&r.state==='dwell'&&r.pose.e===e.id&&r.pose.face===n)col='#ff3b4f';}
+   c.fillStyle=col;c.beginPath();c.moveTo(sx+ux*5,sy+uy*5);c.lineTo(sx-ux*3-px*4,sy-uy*3-py*4);c.lineTo(sx-ux*3+px*4,sy-uy*3+py*4);c.closePath();c.fill();}}}
+function drawLabels(){const c=ctx,grp={};
+ for(const e of W.edges)if((e.kind==='plat'||e.kind==='portal')&&SM[e.st])(grp[e.st]=grp[e.st]||[]).push(e);
+ c.textBaseline='middle';
+ for(const sid in grp){const s=SM[sid],es=grp[sid];
+  if(s.type==='portal'){let ox=0,oy=1e9,dx=0;es.forEach(e=>{const O=NM[outerN(e)],I=NM[oth(e,outerN(e))],P=w2s(O);ox+=P.x;oy=Math.min(oy,P.y);dx+=O.x-I.x;
+    if(V.z>.3){c.font='700 10px Sarabun';c.fillStyle='#8592a5';c.textAlign='center';c.fillText(e.pf,P.x+(O.x<I.x?10:-10),P.y-8);}});
+   ox/=es.length;const y=oy-24,L=dx<0;c.font='700 15px Sarabun';c.fillStyle='#fff';
+   if(L){c.textAlign='left';c.fillStyle='#ff7a3d';c.font='700 20px Sarabun';c.fillText('←',ox+4,y);c.fillStyle='#fff';c.font='700 15px Sarabun';c.fillText(s.name,ox+28,y);}
+   else{c.textAlign='right';c.fillStyle='#ff7a3d';c.font='700 20px Sarabun';c.fillText('→',ox-4,y);c.fillStyle='#fff';c.font='700 15px Sarabun';c.fillText(s.name,ox-28,y);}
+   continue;}
+  let cx=0,cy=0;const ms=es.map(e=>{const M=w2s(lerp(NM[e.a],NM[e.b],.5));cx+=M.x;cy+=M.y;return M;});cx/=ms.length;cy/=ms.length;
+  let top=1e9;const pills=[];
+  es.forEach((e,i)=>{const A=w2s(NM[e.a]),B=w2s(NM[e.b]),l=Math.hypot(B.x-A.x,B.y-A.y)||1,nx=-(B.y-A.y)/l,ny=(B.x-A.x)/l,M=ms[i];
+   let s2=(M.x-cx)*nx+(M.y-cy)*ny,sg=Math.abs(s2)<2?(ny<0?1:-1):Math.sign(s2);const P={x:M.x+nx*sg*14,y:M.y+ny*sg*14};pills.push([P,e.pf]);top=Math.min(top,P.y);});
+  if(V.z>.16)pills.forEach(([P,pf])=>{const g=ctx.createLinearGradient(0,P.y-9,0,P.y+9);g.addColorStop(0,'#f2b8bb');g.addColorStop(1,'#d98a8f');
+   c.fillStyle=g;rrect(P.x-23,P.y-9,46,18,9);c.fill();c.strokeStyle='#f8d2d4';c.lineWidth=1;c.stroke();
+   c.fillStyle='#4a0a12';c.font='700 11px Sarabun';c.textAlign='center';c.fillText('PF.'+pf,P.x,P.y+.5);});
+  c.textAlign='center';c.font='700 15px Sarabun';c.fillStyle='rgba(0,0,0,.6)';c.fillText(s.name,cx+1,top-23);c.fillStyle='#fff';c.fillText(s.name,cx,top-24);}}
+function drawPreview(tr){const c=ctx,pv=preview(tr);
+ c.save();c.shadowColor='rgba(255,40,60,.85)';c.shadowBlur=9;c.strokeStyle='#ff3346';c.lineWidth=3;c.lineJoin='round';
+ pv.segs.forEach(s=>{c.beginPath();s.pts.forEach((p,i)=>{const q=w2s(p);i?c.lineTo(q.x,q.y):c.moveTo(q.x,q.y);});c.stroke();});c.restore();
+ c.textBaseline='middle';
+ pv.segs.forEach((s,k)=>{const C=cumOf(s.pts),m=w2s(atP(s.pts,C,s.len/2)),S=tr.stops,a=S[s.j-1],b=S[s.j];
+  const t0=a?(a.dep!=null?a.dep:a.arr):null,t1=b?b.arr:null,run=(t0!=null&&t1!=null)?t1-t0:null;
+  const sp=run>0?Math.round(s.len*PXM/run*3.6):null,txt='⏱ '+(run!=null?mmss(run):'--:--')+'  '+(sp!=null?sp:'--')+' km/h';
+  c.font='700 12px Sarabun';const w=c.measureText(txt).width+34,y=m.y+(k%2?-26:26),x=m.x-w/2;
+  c.fillStyle='rgba(18,8,12,.94)';rrect(x,y-12,w,24,7);c.fill();c.strokeStyle='#ff3346';c.lineWidth=1.2;c.stroke();
+  c.fillStyle='#d81e2c';c.beginPath();c.arc(x+12,y,9,0,7);c.fill();c.fillStyle='#fff';c.textAlign='center';c.font='700 11px Sarabun';c.fillText(s.j,x+12,y+.5);
+  c.textAlign='left';c.font='700 12px Sarabun';c.fillStyle='#ffe9a8';c.fillText(txt,x+25,y+.5);});
+ pv.marks.forEach((m,i)=>{if(!m)return;const q=w2s(m);c.fillStyle='#d81e2c';c.strokeStyle='#ff9aa3';c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,10,0,7);c.fill();c.stroke();
+  c.fillStyle='#fff';c.font='700 11px Sarabun';c.textAlign='center';c.fillText(i+1,q.x,q.y+.5);
+  if(pv.pf[i]){c.fillStyle='#ffd84a';c.textAlign='left';c.fillText(pv.pf[i],q.x+14,q.y+.5);}});}
+function drawCar(F,B,w,col,isH,isT,sel){const c=ctx,l=Math.hypot(F.x-B.x,F.y-B.y);if(l<.6)return;const a=Math.atan2(F.y-B.y,F.x-B.x);
+ c.save();c.translate((F.x+B.x)/2,(F.y+B.y)/2);c.rotate(a);
+ const rH=Math.min(l/2,isH?w*.5:w*.22),rT=Math.min(l/2,isT?w*.4:w*.22);
+ c.save();c.translate(1,1.6);c.fillStyle='rgba(0,0,0,.5)';carPath(l,w,rT,rH);c.fill();c.restore();
+ const g=c.createLinearGradient(0,-w/2,0,w/2);g.addColorStop(0,shade(col,.4));g.addColorStop(.45,col);g.addColorStop(1,shade(col,-.5));
+ c.fillStyle=g;carPath(l,w,rT,rH);c.fill();c.lineWidth=sel?1.8:.8;c.strokeStyle=sel?'#ffd84a':'rgba(20,0,0,.65)';c.stroke();
+ if(l>6){c.fillStyle='rgba(255,255,255,.85)';c.fillRect(-l/2+rT+1,-w*.09,Math.max(0,l-rT-rH-2),w*.18);}
+ if(l>10&&w>5){c.fillStyle='rgba(15,20,30,.72)';const st=Math.max(3.2,w*.62);
+  for(let x=-l/2+rT+2;x<l/2-rH-2;x+=st){c.fillRect(x,-w/2+.9,st*.55,w*.15);c.fillRect(x,w/2-.9-w*.15,st*.55,w*.15);}}
+ if(isH){c.fillStyle='rgba(22,32,48,.95)';c.beginPath();c.ellipse(l/2-w*.34,0,w*.14,w*.32,0,0,7);c.fill();}
+ c.restore();}
+function drawTrain(tr){const r=tr.rt,c=ctx,sel=UI.sel===tr.id,w=Math.max(4.4,7*V.z);let head=null,ha=0,tail=null,ta=0;
+ for(let k=0;k<NCAR;k++){let f=r.hs-k*(CAR+GAP),b=f-CAR;if(f<=r.hb||b>=r.ha)continue;b=Math.max(b,r.hb);f=Math.min(f,r.ha);if(f-b<.4)continue;
+  const F=w2s(at(r,f)),B=w2s(at(r,b));if(k===0){head=F;ha=Math.atan2(F.y-B.y,F.x-B.x);}tail=B;ta=Math.atan2(F.y-B.y,F.x-B.x);
+  drawCar(F,B,w,tr.color,k===0,k===NCAR-1,sel);}
+ if(head&&r.state!=='end'){const hx=head.x+Math.cos(ha)*w,hy=head.y+Math.sin(ha)*w,R=w*(r.v>.2?3.6:2.4),g=c.createRadialGradient(hx,hy,0,hx,hy,R);
+  g.addColorStop(0,'rgba(255,244,214,.8)');g.addColorStop(1,'rgba(255,244,214,0)');c.fillStyle=g;c.beginPath();c.arc(hx,hy,R,0,7);c.fill();}
+ if(tail){c.fillStyle='#ff2d3d';const px=-Math.sin(ta),py=Math.cos(ta);for(const s of[-1,1]){c.beginPath();c.arc(tail.x+px*w*.3*s,tail.y+py*w*.3*s,Math.max(1,w*.13),0,7);c.fill();}}
+ if(head&&(V.z>.28||sel)){const S=tr.stops,j=r.state==='run'&&r.end?r.end.j:r.si,sp=S[j];
+  let t=tr.no+'  '+(r.state==='run'?'▸ ':r.blocked?'🔴 ':'⏸ ')+(sp?stCode(sp.st):'')+(sp&&sp.pf?' ·'+sp.pf:'');
+  const lt=r.dly>45?' +'+mmss(r.dly):'';c.font='700 10px Sarabun';const tw=c.measureText(t+lt).width+10,lx=head.x-tw/2,ly=head.y+w+9;
+  c.fillStyle='rgba(6,9,14,.82)';rrect(lx,ly-7,tw,14,5);c.fill();c.textAlign='left';c.fillStyle='#e8edf4';c.fillText(t,lx+5,ly+.5);
+  if(lt){c.fillStyle='#fbbf24';c.fillText(lt,lx+5+c.measureText(t).width,ly+.5);}}}
+function hitTrain(mx,my){for(const t of W.trains){const r=t.rt;if(!r)continue;for(let k=0;k<NCAR;k++){const f=r.hs-k*(CAR+GAP)-CAR/2;
+ if(f<r.hb||f>r.ha)continue;const p=w2s(at(r,f));if(Math.hypot(p.x-mx,p.y-my)<11)return t;}}return null;}
+
+/* ═════════ เมาส์ ═════════ */
+cv.addEventListener('mousedown',ev=>{const R=cv.getBoundingClientRect(),mx=ev.clientX-R.left,my=ev.clientY-R.top,w=s2w(mx,my);
+ if(ev.button!==0){PAN={x:ev.clientX,y:ev.clientY,vx:V.x,vy:V.y,m:0};return;}
+ if(UI.tab==='bd'){buildClick(w);return;}
+ const t=hitTrain(mx,my);if(t){selectTrain(t.id);return;}
+ if(UI.add&&UI.sel){const en=edgeNear(w.x,w.y,10/V.z);if(en&&(en.e.kind==='plat'||en.e.kind==='portal')){addStop(TR(UI.sel),en.e);return;}}
+ PAN={x:ev.clientX,y:ev.clientY,vx:V.x,vy:V.y,m:0};});
+window.addEventListener('mousemove',ev=>{
+ if(PAN){PAN.m+=Math.abs(ev.movementX)+Math.abs(ev.movementY);V.x=PAN.vx+ev.clientX-PAN.x;V.y=PAN.vy+ev.clientY-PAN.y;return;}
+ if(ev.target!==cv){HOV=null;return;}
+ const R=cv.getBoundingClientRect(),w=s2w(ev.clientX-R.left,ev.clientY-R.top);
+ if(DR){const p=octi(DR.x,DR.y,w.x,w.y),n=nodeNear(p.x,p.y,12/V.z);DR.px=n?n.x:p.x;DR.py=n?n.y:p.y;}
+ const en=edgeNear(w.x,w.y,10/V.z);HOV=null;
+ if(en){if(UI.tab==='bd'&&UI.tool!=='track')HOV=en.e.id;else if(UI.tab==='tr'&&UI.add&&(en.e.kind==='plat'||en.e.kind==='portal'))HOV=en.e.id;}
+ cv.style.cursor=HOV?'pointer':(UI.tab==='bd'&&UI.tool==='track'?'crosshair':'grab');});
+window.addEventListener('mouseup',()=>{PAN=null;});
+cv.addEventListener('contextmenu',e=>{e.preventDefault();if(DR){DR=null;cleanNodes();}});
+cv.addEventListener('wheel',ev=>{ev.preventDefault();const R=cv.getBoundingClientRect(),mx=ev.clientX-R.left,my=ev.clientY-R.top,w=s2w(mx,my);
+ V.z=Math.max(.05,Math.min(5,V.z*(ev.deltaY<0?1.15:1/1.15)));V.x=mx-w.x*V.z;V.y=my-w.y*V.z;},{passive:false});
+function buildClick(w){const T=UI.tool;
+ if(T==='track'){const raw=DR?octi(DR.x,DR.y,w.x,w.y):{x:snapG(w.x),y:snapG(w.y)};let tg=nodeNear(raw.x,raw.y,12/V.z);
+  if(!tg){const en=edgeNear(raw.x,raw.y,8/V.z);if(en&&en.t>.03&&en.t<.97){tg=splitEdge(en.e,en.x,en.y);toast('สร้างประแจ ◆ บนรางเดิมแล้ว');}else tg=addNode(raw.x,raw.y);}
+  if(DR&&tg.id!==DR.id){addEdge(DR.id,tg.id);netEdited();}
+  DR={id:tg.id,x:tg.x,y:tg.y,px:tg.x,py:tg.y};return;}
+ const en=edgeNear(w.x,w.y,10/V.z);
+ if(T==='del'){if(en){delEdge(en.e.id);netEdited();}else{const n=nodeNear(w.x,w.y,10/V.z);if(n){W.edges=W.edges.filter(e=>e.a!==n.id&&e.b!==n.id);cleanNodes();netEdited();}}return;}
+ if(!en)return;dlgEdge(en.e,T==='plat'?'plat':T==='portal'?'portal':null);}
+
+/* ═════════ หน้าต่างแก้ไข ═════════ */
+let DB=[];
+function dlg(title,body,btns){$('dlg').innerHTML='<h3>'+title+'</h3><div class="db">'+body+'</div><div class="df">'+
+ btns.map((b,i)=>'<button class="bt'+(b.p?' p':'')+(b.d?' d':'')+'" data-b="'+i+'">'+esc(b.t)+'</button>').join('')+'<button class="bt" data-b="-1">ปิด</button></div>';
+ DB=btns;$('mask').classList.add('on');}
+const closeDlg=()=>$('mask').classList.remove('on');
+$('dlg').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;const i=+b.dataset.b;if(i<0){closeDlg();return;}if(DB[i].f()!==false)closeDlg();});
+$('mask').addEventListener('mousedown',e=>{if(e.target.id==='mask')closeDlg();});
+function dlgEdge(e,preset){const k=preset||e.kind,isPo=k==='portal';
+ const sts=W.sts.filter(s=>isPo?s.type==='portal':s.type!=='portal');
+ const cur=(e.st&&SM[e.st]&&(SM[e.st].type==='portal')===isPo)?e.st:(sts[0]?sts[0].id:'__new');
+ const body='<div class="g2"><div class="f"><label>ชนิดราง</label><select id="dK"><option value="track"'+(k==='track'?' selected':'')+'>รางวิ่ง</option>'+
+ '<option value="plat"'+(k==='plat'?' selected':'')+'>🚉 ชานชาลา</option><option value="portal"'+(isPo?' selected':'')+'>🚪 ทางเข้า-ออก (ขอบแผนที่)</option></select></div>'+
+ '<div class="f"><label>ความเร็วสูงสุด (กม./ชม.)</label><input id="dV" type="number" value="'+(e.vmax||(k==='plat'?60:100))+'"></div></div>'+
+ (k==='track'?'':'<div class="g2"><div class="f"><label>'+(isPo?'ชื่อทางเข้า-ออก':'สถานี')+'</label><select id="dS">'+
+ sts.map(s=>'<option value="'+s.id+'"'+(s.id===cur?' selected':'')+'>'+esc(s.name)+'</option>').join('')+'<option value="__new"'+(cur==='__new'?' selected':'')+'>＋ สร้างใหม่…</option></select></div>'+
+ '<div class="f"><label>'+(isPo?'ทางที่ (Track)':'ชานชาลาที่ (PF)')+'</label><input id="dP" value="'+esc(e.kind===k?e.pf:'')+'" placeholder="อัตโนมัติ"></div></div>'+
+ '<div class="g2"><div class="f"><label>ชื่อใหม่ (กรณีสร้างใหม่)</label><input id="dN" placeholder="เช่น Taling Chan"></div><div class="f"><label>รหัสย่อ</label><input id="dC" placeholder="เช่น TLC"></div></div>')+
+ '<div class="hint">ความยาว '+Math.round(e.len*PXM)+' ม.'+(isPo?' · ทางเข้า-ออกต้องอยู่ที่ปลายรางตัน':'')+'</div>';
+ dlg('✏️ แก้ไขราง',body,[{t:'🗑 ลบราง',d:1,f:()=>{delEdge(e.id);netEdited();}},{t:'💾 บันทึก',p:1,f:()=>saveEdge(e)}]);
+ $('dK').onchange=()=>dlgEdge(e,$('dK').value);}
+function saveEdge(e){const k=val('dK');e.vmax=Math.max(10,+val('dV')||80);
+ if(k==='track'){e.kind='track';e.st=null;e.pf='';netEdited();return;}
+ if(k==='portal'&&ADJ[e.a].length>1&&ADJ[e.b].length>1){toast('ทางเข้า-ออกต้องอยู่ที่ปลายรางตัน','er');return false;}
+ let sid=val('dS');if(sid==='__new'){const nm=val('dN').trim();if(!nm){toast('กรุณาใส่ชื่อ','er');return false;}
+  const s={id:nid('s'),name:nm,code:(val('dC').trim()||nm.slice(0,3)).toUpperCase(),type:k==='portal'?'portal':'station'};W.sts.push(s);sid=s.id;}
+ e.kind=k;e.st=sid;let pf=val('dP').trim();if(!pf)pf=String(W.edges.filter(q=>q!==e&&q.st===sid&&q.kind===k).length+1);e.pf=pf;netEdited();toast('บันทึกแล้ว');}
+function dlgDup(tr){dlg('⧉ ทำซ้ำขบวน '+esc(tr.no),'<div class="g2"><div class="f"><label>ทุก ๆ (นาที)</label><input id="uI" type="number" value="15"></div>'+
+ '<div class="f"><label>จำนวนขบวนเพิ่ม</label><input id="uN" type="number" value="4"></div><div class="f"><label>เพิ่มเลขขบวนทีละ</label><input id="uS" type="number" value="2"></div></div>'+
+ '<div class="hint">สร้างขบวนใหม่ที่ใช้เส้นทางและชานชาลาเดียวกัน แต่เลื่อนเวลาออกไปตามที่กำหนด</div>',
+ [{t:'สร้าง',p:1,f:()=>{const I=(+val('uI')||15)*60,N=Math.min(60,+val('uN')||1),St=+val('uS')||2;
+  for(let k=1;k<=N;k++){const st=JSON.parse(JSON.stringify(tr.stops));st.forEach(s=>{if(s.arr!=null)s.arr+=I*k;if(s.dep!=null)s.dep+=I*k;});
+   mkTrain({no:String((parseInt(tr.no)||1000)+St*k),color:tr.color,stops:st});}renderLeft();toast('สร้างเพิ่ม '+N+' ขบวน');}}]);}
+
+/* ═════════ ขบวนรถ (ข้อมูล) ═════════ */
+function nextNo(){let m=1000;W.trains.forEach(t=>{const n=parseInt(t.no);if(!isNaN(n)&&n>m)m=n;});return m+1;}
+function mkTrain(o){const t={id:o.id||nid('t'),no:String(o.no||nextNo()),color:o.color||'#d42a37',stops:o.stops||[],ver:1,rt:null,done:false,rec:[]};W.trains.push(t);return t;}
+function fixEnds(tr){const S=tr.stops;if(!S.length)return;const f=S[0];if(f.dep==null)f.dep=f.arr!=null?f.arr:Math.ceil(SIM.t/60)*60;f.arr=null;f.pass=false;
+ if(S.length>1){const l=S[S.length-1];if(l.arr==null)l.arr=l.dep;l.dep=null;l.pass=false;}
+ for(let i=1;i<S.length-1;i++){const s=S[i];if(s.arr==null)s.arr=s.dep;if(s.dep==null)s.dep=s.pass?s.arr:s.arr+60;}}
+function addStop(tr,e){const S=tr.stops,sp={st:e.st,pf:String(e.pf||''),arr:null,dep:null,pass:false};
+ if(!S.length){sp.dep=Math.ceil((SIM.t+120)/60)*60;S.push(sp);}
+ else{const pr=S[S.length-1];if(S.length>1&&pr.dep==null)pr.dep=pr.arr+60;const base=pr.dep!=null?pr.dep:pr.arr;S.push(sp);tr.ver++;
+  const sg=preview(tr).segs.find(s=>s.j===S.length-1);sp.arr=Math.ceil((base+(sg?sg.t:180))/60)*60;}
+ tr.ver++;renderLeft();toast('เพิ่ม '+stName(e.st)+(e.pf?' · ชานชาลา '+e.pf:''));}
+function autoTimes(tr){const S=tr.stops;if(S.length<2)return;tr.ver++;const pv=preview(tr);
+ let t=S[0].dep!=null?S[0].dep:Math.ceil(SIM.t/60)*60;S[0].dep=t;S[0].arr=null;
+ for(let j=1;j<S.length;j++){const sg=pv.segs.find(s=>s.j===j);t+=sg?sg.t:180;const sp=S[j];
+  if(j===S.length-1){sp.arr=Math.ceil(t/60)*60;sp.dep=null;sp.pass=false;}
+  else if(sp.pass){sp.arr=sp.dep=Math.round(t/60)*60;t=sp.arr;}
+  else{sp.arr=Math.ceil(t/60)*60;sp.dep=sp.arr+60;t=sp.dep;}}tr.ver++;}
+function adjT(tr,i,f,dv){const S=tr.stops,sp=S[i];if(!sp||sp[f]==null||!dv)return;
+ if(UI.cas){for(let j=i;j<S.length;j++){const q=S[j];if(j===i){q[f]+=dv;if(f==='arr'&&q.dep!=null)q.dep+=dv;}else{if(q.arr!=null)q.arr+=dv;if(q.dep!=null)q.dep+=dv;}}}
+ else sp[f]+=dv;
+ if(sp.pass)sp.dep=sp.arr;if(sp.arr!=null&&sp.dep!=null&&sp.dep<sp.arr)sp.dep=sp.arr;tr.ver++;renderLeft();}
+function selectTrain(id){UI.sel=id;UI.tab='tr';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab==='tr'));renderLeft();}
+function focusPt(p){if(!p)return;V.z=Math.max(V.z,.7);V.x=cw/2-p.x*V.z;V.y=ch/2-p.y*V.z;}
+function delStation(id){W.edges.forEach(e=>{if(e.st===id){e.kind='track';e.st=null;e.pf='';}});W.sts=W.sts.filter(s=>s.id!==id);
+ W.trains.forEach(t=>{t.stops=t.stops.filter(s=>s.st!==id);fixEnds(t);t.ver++;});netEdited();}
+
+/* ═════════ แผงซ้าย ═════════ */
+function status(tr){const r=tr.rt;if(tr.done)return['✓ จบเที่ยว','#6b7a90'];if(!r)return['รอออก '+hm(tr.stops[0]&&tr.stops[0].dep),'#8592a5'];
+ if(r.state==='run'){const sp=r.end?tr.stops[r.end.j]:null;return['▶ วิ่ง → '+(sp?stCode(sp.st):''),'#34d399'];}
+ if(r.state==='dwell')return r.blocked?['🔴 รอสัญญาณ','#ff6b78']:['⏸ จอด '+stCode(tr.stops[r.si]?tr.stops[r.si].st:''),'#7cb4ff'];return['■ สิ้นสุดที่ชานชาลา','#8592a5'];}
+function tlHTML(tr,i){const sp=tr.stops[i],T=sp.dep!=null?sp.dep:sp.arr;if(T==null)return'';
+ const pfs=stEdges({st:sp.st}).map(e=>String(e.pf)).filter((v,k,a)=>a.indexOf(v)===k).sort((a,b)=>(parseFloat(b)||0)-(parseFloat(a)||0));
+ const a0=T-300,a1=T+1800,X=t=>((t-a0)/(a1-a0)*100),rows=pfs.length||1,H=14+rows*10;
+ let h='<div class="mt" style="height:'+H+'px">';
+ for(let m=Math.ceil(a0/600)*600;m<=a1;m+=600)h+='<div class="tk'+(m===Math.floor(T/600)*600&&m<=T?' c':'')+'" style="left:'+X(m)+'%">'+hm(m)+'</div>';
+ pfs.forEach((pf,r)=>{h+='<div class="rw" style="top:'+(14+r*10)+'px"></div><div class="rl" style="top:'+(14+r*10)+'px">'+esc(pf)+'</div>';});
+ const bars=[];
+ W.trains.forEach(t=>{const pv=preview(t);t.stops.forEach((s,k)=>{if(s.st!==sp.st)return;const pf=String(s.pf||pv.pf[k]||'');const r=pfs.indexOf(pf);if(r<0)return;
+  let ta=s.arr!=null?s.arr:s.dep-60,tb=s.dep!=null?s.dep:s.arr+60;if(s.pass){ta=s.arr-15;tb=s.arr+15;}if(tb<a0||ta>a1)return;bars.push({r,ta,tb,me:t===tr&&k===i});});});
+ bars.forEach(b=>{let col=b.me?'#ffd84a':'#34d399';if(b.me&&bars.some(o=>o!==b&&o.r===b.r&&o.ta<b.tb&&o.tb>b.ta))col='#ff3b4f';
+  const l=Math.max(0,X(b.ta)),w=Math.max(2,Math.min(100,X(b.tb))-l);h+='<div class="bb" style="top:'+(14.5+b.r*10)+'px;left:'+l+'%;width:'+w+'%;background:'+col+'"></div>';});
+ h+='<div class="band" style="left:calc('+X(T)+'% - 4px)"></div>';
+ if(SIM.t>=a0&&SIM.t<=a1)h+='<div class="nw" style="left:'+X(SIM.t)+'%"></div>';
+ return h+'</div>';}
+function cardHTML(tr,i,pv){const S=tr.stops,sp=S[i],st=SM[sp.st]||{name:'?',type:'station'},isP=st.type==='portal',first=i===0,last=i===S.length-1;
+ const pfs=stEdges({st:sp.st}).map(e=>String(e.pf)).filter((v,k,a)=>a.indexOf(v)===k).sort((a,b)=>(parseFloat(a)||0)-(parseFloat(b)||0));
+ let h='<div class="card"><div class="ch"><span class="ix">'+(i+1)+'</span><span class="nm" data-focus="'+i+'" title="ดูบนแผนที่">'+(sp.pass?'PASS · ':'')+esc(st.name)+'</span>'+
+ '<span class="ic">'+(isP?'⇥':'🚉')+(sp.pf||pv.pf[i]||'')+'</span><span class="sp"></span>'+
+ '<button class="pfb'+(!sp.pf?' on':'')+'" data-pf="'+i+'|" title="เลือกชานชาลาอัตโนมัติ">⤨</button>'+
+ pfs.map(p=>'<button class="pfb'+(String(sp.pf)===p?' on':(!sp.pf&&String(pv.pf[i])===p?' au':''))+'" data-pf="'+i+'|'+esc(p)+'">'+esc(p)+'</button>').join('')+'</div>';
+ const ts=[];if(first)ts.push([isP?'Entry':'Departure','dep']);else if(last)ts.push(['Arrival','arr']);else if(sp.pass)ts.push(['Passage','arr']);else ts.push(['Arrival','arr'],['Departure','dep']);
+ const rc=tr.rec[i];let act='';if(rc&&(rc.a!=null||rc.d!=null)){const ref=rc.a!=null?rc.a:rc.d,pl=rc.a!=null?sp.arr:sp.dep,dl=pl!=null?ref-pl:0;
+  act='<div class="act">จริง '+hm(ref)+(dl>30?' <span class="dl">+'+mmss(dl)+'</span>':' ✓')+'</div>';}
+ h+='<div class="cbd"><div>'+tlHTML(tr,i)+'</div><div class="tm">'+ts.map(([lb,f])=>'<label>'+lb+'</label><div class="tmr"><button class="pm" data-tadj="'+i+'|'+f+'|-60">−</button>'+
+ '<input class="ti" data-tin="'+i+'|'+f+'" value="'+hm(sp[f])+'"><button class="pm" data-tadj="'+i+'|'+f+'|60">+</button></div>').join('')+act+
+ '<div class="cf">'+(!first&&!last?'<button class="mini'+(sp.pass?' on':'')+'" data-pass="'+i+'">'+(sp.pass?'⏩ ผ่าน':'⏸ จอด')+'</button>':'')+
+ (i>0?'<button class="mini" data-mv="'+i+'|-1">▲</button>':'')+(!last?'<button class="mini" data-mv="'+i+'|1">▼</button>':'')+
+ '<button class="mini" data-rm="'+i+'">✕</button></div></div></div></div>';return h;}
+function renderLeft(){const lp=$('lp');let h='';
+ if(UI.tab==='bd'){const T=UI.tool;
+  h='<div class="sec"><h4>🛠 เครื่องมือสร้างราง</h4><div class="tools">'+
+  [['track','➕ วาดราง'],['sel','✋ เลือก / แก้ไข'],['plat','🚉 ทำชานชาลา'],['portal','🚪 ทางเข้า-ออก'],['del','🧹 ลบ']].map(t=>'<button class="tool'+(T===t[0]?' on':'')+'" data-tool="'+t[0]+'">'+t[1]+'</button>').join('')+'</div>'+
+  '<div class="hint" style="margin-top:8px">• <b>วาดราง</b>: คลิกจุดเริ่ม แล้วคลิกต่อไปเรื่อย ๆ ระบบจะล็อกมุม 45° ให้ · คลิกขวาเพื่อจบเส้น<br>'+
+  '• ลากเส้นไปชนรางเดิม = สร้าง <b style="color:#F59E0B">ประแจ ◆</b> ให้อัตโนมัติ<br>• <b>ชานชาลา</b>: คลิกรางที่ต้องการแล้วตั้งชื่อสถานีและเลข PF<br>'+
+  '• <b>ทางเข้า-ออก</b>: คลิกรางที่ปลายตัน (ขอบแผนที่) รถจะเข้ามาและออกไปทางนี้<br>• ล้อเมาส์ = ซูม · ลากด้วยคลิกขวา = เลื่อนแผนที่</div></div>'+
+  '<div class="sec"><h4>🚉 สถานี &amp; ทางเข้า-ออก ('+W.sts.length+')</h4>'+
+  (W.sts.map(s=>'<div class="srow"><span class="pill">'+(s.type==='portal'?'🚪':'🚉')+' '+W.edges.filter(e=>e.st===s.id).length+'</span><input data-sname="'+s.id+'" value="'+esc(s.name)+'"><input data-scode="'+s.id+'" value="'+esc(s.code)+'" style="max-width:60px"><button class="x" data-sdel="'+s.id+'">✕</button></div>').join('')||'<div class="hint">ยังไม่มีสถานี</div>')+'</div>'+
+  '<div class="sec"><button class="bt w" data-act="fit">⤢ พอดีจอ</button><button class="bt w" data-act="demo">↺ โหลดตัวอย่าง</button><button class="bt d w" data-act="clr">🗑 ล้างผังทั้งหมด</button></div>';}
+ else if(!UI.sel||!TR(UI.sel)){UI.sel=null;
+  h='<div class="row" style="margin-bottom:9px"><button class="bt p" data-act="new">＋ ขบวนใหม่</button><button class="bt" data-act="autoall">⏱ จัดเวลาทุกขบวนอัตโนมัติ</button></div>'+
+  (W.trains.length?W.trains.slice().sort((a,b)=>((a.stops[0]&&a.stops[0].dep)||0)-((b.stops[0]&&b.stops[0].dep)||0)).map(t=>{const S=t.stops,s=status(t),r=t.rt;
+   return '<div class="trow" data-tr="'+t.id+'"><div class="bar" style="background:'+t.color+'"></div><div class="no">'+esc(t.no)+'</div><div class="rt"><div><b>'+
+   (S.length?esc(stName(S[0].st))+' → '+esc(stName(S[S.length-1].st)):'ยังไม่มีเส้นทาง')+'</b></div><div class="hint">'+(S.length?hm(S[0].dep)+' · '+S.length+' จุด':'')+'</div></div>'+
+   '<div style="text-align:right"><div class="st" style="color:'+s[1]+'">'+s[0]+'</div>'+(r&&r.dly>45?'<span class="dl">+'+mmss(r.dly)+'</span>':'')+'</div></div>';}).join('')
+  :'<div class="hint">ยังไม่มีขบวนรถ กด “＋ ขบวนใหม่” แล้วคลิกชานชาลาบนแผนที่ได้เลย</div>');}
+ else{const tr=TR(UI.sel),pv=preview(tr),s=status(tr);
+  h='<div class="eh"><button class="bt" data-act="back">←</button><input class="no" data-tno value="'+esc(tr.no)+'"><input type="color" data-tcol value="'+tr.color+'">'+
+  '<span class="st" style="color:'+s[1]+';font-weight:700;font-size:11px">'+s[0]+'</span><span class="sp"></span><button class="bt d" data-act="deltr">🗑</button></div>'+
+  (pv.err?'<div class="err2">'+esc(pv.err)+'</div>':'')+
+  (tr.stops.length?tr.stops.map((_,i)=>cardHTML(tr,i,pv)).join(''):'<div class="hint" style="margin-bottom:8px">กดปุ่มด้านล่าง แล้วคลิกชานชาลา (PF) หรือทางเข้า-ออกบนแผนที่ตามลำดับที่ต้องการให้รถวิ่ง</div>')+
+  '<button class="bt w'+(UI.add?' on':' p')+'" data-act="add">'+(UI.add?'✔ เสร็จสิ้นการเพิ่มจุดจอด':'➕ เพิ่มจุดจอด (คลิกบนแผนที่)')+'</button>'+
+  '<div class="row" style="margin-top:6px"><button class="bt" data-act="auto">⏱ คำนวณเวลาอัตโนมัติ</button><button class="bt" data-act="dup">⧉ ทำซ้ำ</button></div>'+
+  '<label class="hint" style="display:block;margin-top:7px"><input type="checkbox" data-cas'+(UI.cas?' checked':'')+'> เมื่อปรับเวลา ให้เลื่อนเวลาของสถานีถัดไปตามด้วย</label>';}
+ lp.innerHTML=h;renderBanner();}
+function renderBanner(){const b=$('bn'),tr=TR(UI.sel);
+ if(UI.tab==='tr'&&UI.add&&tr){b.style.display='block';b.textContent='🖱 คลิกชานชาลา (PF) หรือทางเข้า-ออกบนแผนที่ เพื่อเพิ่มจุดจอดให้ขบวน '+tr.no+' · Esc = เสร็จ';}
+ else if(UI.tab==='bd'&&UI.tool==='track'){b.style.display='block';b.style.background='#1d2a14';b.textContent='➕ วาดราง: คลิกต่อเนื่อง · ชนรางเดิม = ประแจ · คลิกขวา = จบเส้น';return;}
+ else b.style.display='none';b.style.background='#6d1420';}
+$('lp').addEventListener('mouseenter',()=>LPH=true);$('lp').addEventListener('mouseleave',()=>LPH=false);
+$('lp').addEventListener('click',ev=>{const b=ev.target.closest('[data-act],[data-tr],[data-tool],[data-pf],[data-tadj],[data-pass],[data-rm],[data-mv],[data-focus],[data-sdel]');if(!b)return;
+ const d=b.dataset,tr=TR(UI.sel);
+ if(d.tr){selectTrain(d.tr);return;}
+ if(d.tool){UI.tool=d.tool;DR=null;cleanNodes();renderLeft();return;}
+ if(d.sdel){delStation(d.sdel);return;}
+ if(d.pf!=null&&tr){const[i,pf]=d.pf.split('|');tr.stops[+i].pf=pf;tr.ver++;renderLeft();return;}
+ if(d.tadj&&tr){const[i,f,dv]=d.tadj.split('|');adjT(tr,+i,f,+dv);return;}
+ if(d.pass&&tr){const sp=tr.stops[+d.pass];sp.pass=!sp.pass;sp.dep=sp.pass?sp.arr:sp.arr+60;tr.ver++;renderLeft();return;}
+ if(d.rm&&tr){tr.stops.splice(+d.rm,1);fixEnds(tr);tr.ver++;renderLeft();return;}
+ if(d.mv&&tr){const[i,s]=d.mv.split('|').map(Number),j=i+s,S=tr.stops;if(j<0||j>=S.length)return;const t=S[i];S[i]=S[j];S[j]=t;fixEnds(tr);autoTimes(tr);renderLeft();return;}
+ if(d.focus&&tr){focusPt(preview(tr).marks[+d.focus]);return;}
+ const a=d.act;
+ if(a==='new'){const t=mkTrain({});UI.add=true;selectTrain(t.id);}
+ else if(a==='autoall'){W.trains.forEach(autoTimes);renderLeft();toast('จัดเวลาอัตโนมัติทุกขบวนแล้ว');}
+ else if(a==='back'){UI.sel=null;UI.add=false;renderLeft();}
+ else if(a==='deltr'&&tr){if(!confirm('ลบขบวน '+tr.no+' ?'))return;if(tr.rt)despawn(tr);W.trains=W.trains.filter(t=>t!==tr);UI.sel=null;UI.add=false;renderLeft();}
+ else if(a==='add'){UI.add=!UI.add;renderLeft();}
+ else if(a==='auto'&&tr){autoTimes(tr);renderLeft();toast('คำนวณเวลาจากผังรางแล้ว');}
+ else if(a==='dup'&&tr)dlgDup(tr);
+ else if(a==='fit')fit();
+ else if(a==='demo'){if(confirm('โหลดตัวอย่างทับของเดิม?'))demo();}
+ else if(a==='clr'){if(confirm('ล้างผังและขบวนทั้งหมด?')){W={nodes:[],edges:[],sts:[],trains:[],seq:1};reindex();resetSim();UI.sel=null;renderLeft();}}});
+$('lp').addEventListener('change',ev=>{const t=ev.target,d=t.dataset,tr=TR(UI.sel);
+ if(d.tin&&tr){const[i,f]=d.tin.split('|'),v=pT(t.value),sp=tr.stops[+i];if(v==null){toast('รูปแบบเวลาไม่ถูกต้อง เช่น 05:30','er');renderLeft();return;}adjT(tr,+i,f,v-sp[f]);return;}
+ if(d.tno!=null&&tr){tr.no=t.value.trim()||tr.no;renderLeft();return;}
+ if(d.tcol!=null&&tr){tr.color=t.value;return;}
+ if(d.cas!=null){UI.cas=t.checked;return;}
+ if(d.sname){SM[d.sname].name=t.value;renderLeft();return;}
+ if(d.scode){SM[d.scode].code=t.value.toUpperCase();renderLeft();}});
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{UI.tab=b.dataset.tab;UI.add=false;DR=null;cleanNodes();
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));renderLeft();}));
+
+/* ═════════ แถบล่าง / HUD ═════════ */
+function renderUpc(){const L=[];W.trains.forEach(t=>{if(t.done||t.stops.length<2)return;const r=t.rt;
+ if(!r)L.push({t,tm:t.stops[0].dep});else if(r.state==='dwell')L.push({t,tm:r.dwU});});
+ L.sort((a,b)=>a.tm-b.tm);
+ $('upl').innerHTML=L.slice(0,12).map(o=>{const S=o.t.stops;return'<div class="uc" data-tr="'+o.t.id+'"><div class="a"><span style="color:'+o.t.color+'">■</span> '+esc(o.t.no)+
+  ' <span style="color:#8592a5">'+hm(o.tm)+'</span></div><div class="b" style="background:'+o.t.color+'">'+esc(stName(S[0].st))+' → '+esc(stName(S[S.length-1].st))+'</div></div>';}).join('')||'<span class="hint">ไม่มีขบวนที่กำลังจะออก</span>';}
+$('upl').addEventListener('click',e=>{const b=e.target.closest('[data-tr]');if(b)selectTrain(b.dataset.tr);});
+function renderHud(){const run=W.trains.filter(t=>t.rt).length,late=W.trains.filter(t=>t.rt&&t.rt.dly>60).length,wait=W.trains.filter(t=>t.rt&&t.rt.blocked).length;
+ $('hud').innerHTML='<span class="chip">🚉 '+W.sts.filter(s=>s.type!=='portal').length+' สถานี</span><span class="chip">🚆 '+run+' / '+W.trains.length+' ขบวน</span>'+
+ (wait?'<span class="chip" style="color:#ff6b78">🔴 รอสัญญาณ '+wait+'</span>':'')+(late?'<span class="chip" style="color:#fbbf24">⚠ ล่าช้า '+late+'</span>':'');}
+$('spd').innerHTML=[1,5,10,25,60].map(v=>'<button class="sx'+(v===SIM.mul?' on':'')+'" data-v="'+v+'">'+v+'×</button>').join('');
+$('spd').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;SIM.mul=+b.dataset.v;$('spd').querySelectorAll('.sx').forEach(x=>x.classList.toggle('on',x===b));});
+function play(v){SIM.run=v;$('cPl').textContent=v?'⏸':'▶';}
+$('cPl').onclick=()=>play(!SIM.run);
+$('cBk').onclick=()=>setClock(SIM.t-300);$('cFw').onclick=()=>setClock(SIM.t+300);
+$('cRs').onclick=()=>{resetSim();renderLeft();toast('เริ่มจำลองใหม่ที่ '+hm(SIM.t));};
+$('cGo').onclick=()=>{const t=pT(val('cIn'));if(t==null){toast('รูปแบบเวลาไม่ถูกต้อง เช่น 05:30','er');return;}setClock(t);play(true);toast('ไปที่เวลา '+hm(t));};
+$('cIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('cGo').click();});
+window.addEventListener('keydown',e=>{if(/input|select|textarea/i.test(e.target.tagName))return;
+ if(e.code==='Space'){e.preventDefault();play(!SIM.run);}
+ if(e.key==='Escape'){UI.add=false;DR=null;cleanNodes();closeDlg();renderLeft();}});
+
+/* ═════════ บันทึก / เปิด ═════════ */
+function ser(){return{v:1,nodes:W.nodes,edges:W.edges.map(e=>({id:e.id,a:e.a,b:e.b,kind:e.kind,st:e.st,pf:e.pf,vmax:e.vmax})),sts:W.sts,
+ trains:W.trains.map(t=>({id:t.id,no:t.no,color:t.color,stops:t.stops})),seq:W.seq};}
+function loadObj(o){W={nodes:o.nodes||[],edges:o.edges||[],sts:o.sts||[],trains:[],seq:o.seq||1000};reindex();(o.trains||[]).forEach(t=>mkTrain(t));UI.sel=null;resetSim();fit();renderLeft();}
+$('bSave').onclick=()=>{const b=new Blob([JSON.stringify(ser())],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='railflow.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);};
+$('fIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{loadObj(JSON.parse(r.result));toast('เปิดไฟล์สำเร็จ');}catch(x){toast('ไฟล์ไม่ถูกต้อง','er');}};r.readAsText(f);e.target.value='';};
+$('bFit').onclick=fit;$('bDemo').onclick=()=>{if(confirm('โหลดตัวอย่างทับของเดิม?'))demo();};
+
+/* ═════════ ตัวอย่าง: Salaya – Taling Chan – KTW – Siriraj ═════════ */
+function demo(){W={nodes:[],edges:[],sts:[],trains:[],seq:1};reindex();
+ const K={},N=(x,y)=>{const k=x+','+y;if(!K[k])K[k]=addNode(x,y).id;return K[k];},E=(x1,y1,x2,y2,o)=>addEdge(N(x1,y1),N(x2,y2),o);
+ const ST=(name,code,type)=>{const s={id:nid('s'),name,code,type};W.sts.push(s);return s.id;};
+ const SLY=ST('Salaya','SLY','portal'),STS=ST('Sala Thammasop','STS','station'),TLC=ST('Taling Chan','TLC','station'),
+  BBR=ST('Bang Bamru','BBR','station'),KTW=ST('Krung Thep Aphiwat','KTW','portal'),SRJ=ST('Siriraj','SRJ','portal');
+ const A=300,B=360;
+ const main=(xs,y,pl,pa,pb)=>{for(let i=0;i<xs.length-1;i++){const x1=xs[i],x2=xs[i+1];let o={vmax:110};
+  if(pl[x1]&&x2===x1+200)o={kind:'plat',st:pl[x1][0],pf:pl[x1][1],vmax:60};
+  if(x1===0)o={kind:'portal',st:SLY,pf:pa,vmax:100};if(x2===3000)o={kind:'portal',st:KTW,pf:pb,vmax:100};E(x1,y,x2,y,o);}};
+ main([0,150,500,700,1240,1360,1400,1500,1700,1800,1880,2060,2400,2600,2850,3000],A,{500:[STS,'2'],1500:[TLC,'3'],2400:[BBR,'2']},'2','2');
+ main([0,150,500,700,1300,1400,1500,1700,1800,1940,2000,2120,2400,2600,2850,3000],B,{500:[STS,'1'],1500:[TLC,'2'],2400:[BBR,'1']},'1','1');
+ E(1240,A,1300,B,{vmax:45});E(1300,B,1360,A,{vmax:45});
+ E(1400,A,1460,240,{vmax:45});E(1460,240,1500,240,{vmax:60});E(1500,240,1700,240,{kind:'plat',st:TLC,pf:'4',vmax:60});E(1700,240,1740,240,{vmax:60});E(1740,240,1800,A,{vmax:45});
+ E(1400,B,1460,420,{vmax:45});E(1460,420,1500,420,{vmax:60});E(1500,420,1700,420,{kind:'plat',st:TLC,pf:'1',vmax:60});E(1700,420,1740,420,{vmax:60});E(1740,420,1800,B,{vmax:45});
+ E(1880,A,1940,B,{vmax:45});E(2000,B,2060,A,{vmax:45});
+ E(2120,B,2180,420,{vmax:45});E(2180,420,2700,420,{vmax:90});E(2700,420,2760,480,{vmax:60});E(2760,480,2860,480,{vmax:90});
+ E(2860,480,3000,480,{kind:'portal',st:SRJ,pf:'1',vmax:90});
+ const RED='#d42a37',TEAL='#1f9fc4',ORG='#e8702a';
+ const T=(no,col,t0,list)=>{const S=list.map(([s,pf,pass])=>({st:s,pf:pf||'',arr:null,dep:null,pass:!!pass}));S[0].dep=pT(t0);const t=mkTrain({no,color:col,stops:S});autoTimes(t);};
+ const EB=[[SLY,'2'],[STS,'2'],[TLC,'3'],[BBR,'2'],[KTW,'2']],WB=[[KTW,'1'],[BBR,'1'],[TLC,'2'],[STS,'1'],[SLY,'1']];
+ T('1001',RED,'05:00',EB);T('1002',RED,'05:02',WB);
+ T('3001',TEAL,'05:04',[[SRJ,'1'],[TLC,'1'],[SRJ,'1']]);
+ T('1003',RED,'05:12',[[SLY,'2'],[STS,'2'],[TLC,'4'],[BBR,'2'],[KTW,'2']]);
+ T('1004',RED,'05:15',[[KTW,'1'],[BBR,'1'],[TLC,'2',1],[STS,'1'],[SLY,'1']]);
+ T('2001',ORG,'05:22',[[SLY,'2'],[STS,'2'],[TLC,'3'],[SRJ,'1']]);
+ T('2002',ORG,'05:28',[[SRJ,'1'],[TLC,'2'],[STS,'1'],[SLY,'1']]);
+ T('1005',RED,'05:30',EB);T('1006',RED,'05:32',[[KTW,'1'],[BBR,'1'],[TLC,'1'],[STS,'1'],[SLY,'1']]);
+ T('1101',RED,'05:36',[[SLY,'2'],[STS,'2'],[TLC,'4']]);
+ T('3003',TEAL,'05:44',[[SRJ,'1'],[TLC,'1'],[SRJ,'1']]);
+ T('1007',RED,'05:45',EB);T('1008',RED,'05:47',WB);
+ UI.sel=null;UI.add=false;resetSim();fit();renderLeft();toast('โหลดตัวอย่าง: '+W.trains.length+' ขบวน · 3 สถานี · 3 ทางเข้า-ออก');}
+
+/* ═════════ ลูปหลัก ═════════ */
+let last=0,acc=0;
+function loop(ts){const dt=Math.min(.1,(ts-(last||ts))/1000);last=ts;
+ if(SIM.run){let s=dt*SIM.mul;while(s>1e-6){const h=Math.min(.25,s);tick(h);s-=h;}}
+ $('ct').innerHTML=hm(SIM.t)+'<small>:'+p2(Math.floor(((SIM.t%60)+60)%60))+'</small>';
+ draw();acc+=dt;
+ if(acc>.8){acc=0;renderUpc();renderHud();
+  const ae=document.activeElement;if(!LPH&&!(ae&&$('lp').contains(ae)&&/input|select/i.test(ae.tagName))&&UI.tab==='tr')renderLeft();
+  try{localStorage.setItem('railflow_v1',JSON.stringify(ser()));}catch(e){}}
+ requestAnimationFrame(loop);}
+window.addEventListener('resize',resize);
+resize();reindex();
+(function boot(){let ok=false;try{const s=localStorage.getItem('railflow_v1');if(s){const o=JSON.parse(s);if(o.nodes&&o.nodes.length){loadObj(o);ok=true;}}}catch(e){}
+ if(!ok)demo();})();
+play(true);requestAnimationFrame(loop);
+</script>
+</body></html>
