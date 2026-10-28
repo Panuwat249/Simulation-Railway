@@ -9,12 +9,21 @@
 *{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font:13px Sarabun,system-ui,sans-serif}
 button,input,select{font:inherit;color:inherit}
 #err{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:#7f1d1d;color:#fff;padding:7px 12px;font:12px monospace}
-.app{display:grid;grid-template-rows:46px 1fr 58px;height:100vh}
+.app{display:grid;grid-template-rows:46px 38px 1fr 58px;height:100vh}
 .top{display:flex;align-items:center;gap:8px;padding:0 12px;background:#080b11;border-bottom:1px solid var(--bd)}
 .logo{font:700 20px Rajdhani;letter-spacing:1px}.logo b{color:var(--rd2)}
 .sp{flex:1}
 .tb{background:var(--pn2);border:1px solid var(--bd);border-radius:8px;padding:5px 11px;cursor:pointer}
 .tb:hover{border-color:var(--rd2)}
+.pbar{display:flex;align-items:flex-end;gap:3px;padding:0 8px;background:#05070b;border-bottom:1px solid #3a4658;overflow-x:auto;overflow-y:hidden}
+.pj{display:flex;align-items:center;gap:7px;padding:6px 8px 7px 12px;background:#0b1018;border:1px solid var(--bd);border-bottom:0;border-radius:9px 9px 0 0;cursor:pointer;color:var(--mu);font-weight:700;font-size:12px;max-width:230px;white-space:nowrap;user-select:none}
+.pj:hover{color:#fff}
+.pj .nm{overflow:hidden;text-overflow:ellipsis}
+.pj .tm{font-size:10px;color:#5f6b7c;font-weight:600}
+.pj.on{background:var(--pn);color:#fff;border-color:#3a4658;box-shadow:inset 0 2px 0 var(--rd2);margin-bottom:-1px;padding-bottom:8px}
+.pj .xx{opacity:.45;border-radius:4px;padding:0 5px;font-size:13px}.pj .xx:hover{opacity:1;background:#5b1220}
+.pjb{margin:0 0 5px 3px;padding:3px 10px;border:1px solid var(--bd);background:#0b1018;border-radius:7px;cursor:pointer;font-weight:700;color:var(--mu);white-space:nowrap}
+.pjb:hover{color:#fff;border-color:var(--rd2)}
 .main{display:grid;grid-template-columns:390px 1fr;min-height:0}
 .left{background:var(--pn);border-right:1px solid var(--bd);display:flex;flex-direction:column;min-height:0}
 .tabs{display:flex;border-bottom:1px solid var(--bd)}
@@ -114,6 +123,7 @@ input[type=color]{width:34px;height:30px;border:1px solid var(--bd);border-radiu
   <button class="tb" id="bFit">⤢ พอดีจอ</button><button class="tb" id="bDemo">↺ ตัวอย่าง</button>
   <button class="tb" id="bSave">⬇ บันทึก</button>
   <label class="tb" style="margin:0">⬆ เปิด<input type="file" id="fIn" accept=".json" hidden></label></div>
+ <div class="pbar" id="pbar"></div>
  <div class="main">
   <div class="left"><div class="tabs"><button class="tab on" data-tab="tr">🚆 ขบวน &amp; เส้นทาง</button><button class="tab" data-tab="bd">🛠 สร้างราง</button></div><div id="lp"></div></div>
   <div class="stage"><canvas id="cv"></canvas>
@@ -309,6 +319,13 @@ function ln(A,B){ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.str
 function rrect(x,y,w,h,r){const c=ctx;c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
 function carPath(l,w,rl,rr){const c=ctx,x=-l/2,y=-w/2;c.beginPath();c.moveTo(x+rl,y);c.lineTo(x+l-rr,y);c.arcTo(x+l,y,x+l,y+w/2,rr);c.arcTo(x+l,y+w,x+l-rr,y+w,rr);
  c.lineTo(x+rl,y+w);c.arcTo(x,y+w,x,y+w/2,rl);c.arcTo(x,y,x+rl,y,rl);c.closePath();}
+/* เส้นทางสีเขียว: วาดเฉพาะส่วนที่อยู่หน้ารถ (ตั้งแต่ท้ายขบวน → จุดหมาย) จึงหายไปพร้อมกับรถ */
+function drawRouteGreen(){const c=ctx;
+ for(const t of W.trains){const r=t.rt;if(!r||r.state!=='run')continue;
+  const a=Math.max(0,r.hs-TL,r.hb>-Infinity?r.hb:0),b=Math.min(r.legEnd,r.ha);if(b-a<1)continue;
+  const P=sliceP(r.pts,r.cum,a,b);
+  c.save();c.lineCap='round';c.lineJoin='round';c.shadowColor='rgba(47,211,107,.7)';c.shadowBlur=7;c.strokeStyle='#2fd36b';c.lineWidth=3.2;
+  c.beginPath();P.forEach((p,i)=>{const q=w2s(p);i?c.lineTo(q.x,q.y):c.moveTo(q.x,q.y);});c.stroke();c.restore();}}
 function draw(){const c=ctx;c.setTransform(DPR,0,0,DPR,0,0);TRM={};W.trains.forEach(t=>TRM[t.id]=t);
  c.fillStyle='#03050a';c.fillRect(0,0,cw,ch);
  const g=c.createRadialGradient(cw*.5,ch*.5,0,cw*.5,ch*.5,Math.max(cw,ch)*.65);g.addColorStop(0,'rgba(22,44,92,.42)');g.addColorStop(1,'rgba(3,5,10,0)');c.fillStyle=g;c.fillRect(0,0,cw,ch);
@@ -318,8 +335,8 @@ function draw(){const c=ctx;c.setTransform(DPR,0,0,DPR,0,0);TRM={};W.trains.forE
  c.lineCap='round';
  for(const e of W.edges){const A=w2s(NM[e.a]),B=w2s(NM[e.b]);
   c.strokeStyle=e.kind==='portal'?'rgba(205,212,222,.55)':'rgba(214,220,229,.9)';c.lineWidth=e.kind==='plat'?2.4:2;ln(A,B);
-  const ow=RES['e'+e.id];if(ow&&TRM[ow]&&TRM[ow].rt&&TRM[ow].rt.state==='run'){c.strokeStyle='#2fd36b';c.lineWidth=3;ln(A,B);}
   if(HOV===e.id){c.strokeStyle='#ffd84a';c.lineWidth=5;ln(A,B);}}
+ if(!BUILD)drawRouteGreen();
  const sel=UI.sel?TRM[UI.sel]:null;if(sel&&!BUILD)drawPreview(sel);
  drawSignals();drawLabels();
  for(const t of W.trains)if(t.rt)drawTrain(t);
@@ -476,6 +493,7 @@ function adjT(tr,i,f,dv){const S=tr.stops,sp=S[i];if(!sp||sp[f]==null||!dv)retur
  if(UI.cas){for(let j=i;j<S.length;j++){const q=S[j];if(j===i){q[f]+=dv;if(f==='arr'&&q.dep!=null)q.dep+=dv;}else{if(q.arr!=null)q.arr+=dv;if(q.dep!=null)q.dep+=dv;}}}
  else sp[f]+=dv;
  if(sp.pass)sp.dep=sp.arr;if(sp.arr!=null&&sp.dep!=null&&sp.dep<sp.arr)sp.dep=sp.arr;tr.ver++;renderLeft();}
+function setTab(t){UI.tab=t;UI.add=false;DR=null;cleanNodes();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));renderLeft();}
 function selectTrain(id){UI.sel=id;UI.tab='tr';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab==='tr'));renderLeft();}
 function focusPt(p){if(!p)return;V.z=Math.max(V.z,.7);V.x=cw/2-p.x*V.z;V.y=ch/2-p.y*V.z;}
 function delStation(id){W.edges.forEach(e=>{if(e.st===id){e.kind='track';e.st=null;e.pf='';}});W.sts=W.sts.filter(s=>s.id!==id);
@@ -540,9 +558,9 @@ function renderLeft(){const lp=$('lp');let h='';
   '<label class="hint" style="display:block;margin-top:7px"><input type="checkbox" data-cas'+(UI.cas?' checked':'')+'> เมื่อปรับเวลา ให้เลื่อนเวลาของสถานีถัดไปตามด้วย</label>';}
  lp.innerHTML=h;renderBanner();}
 function renderBanner(){const b=$('bn'),tr=TR(UI.sel);
- if(UI.tab==='tr'&&UI.add&&tr){b.style.display='block';b.textContent='🖱 คลิกชานชาลา (PF) หรือทางเข้า-ออกบนแผนที่ เพื่อเพิ่มจุดจอดให้ขบวน '+tr.no+' · Esc = เสร็จ';}
- else if(UI.tab==='bd'&&UI.tool==='track'){b.style.display='block';b.style.background='#1d2a14';b.textContent='➕ วาดราง: คลิกต่อเนื่อง · ชนรางเดิม = ประแจ · คลิกขวา = จบเส้น';return;}
- else b.style.display='none';b.style.background='#6d1420';}
+ if(UI.tab==='tr'&&UI.add&&tr){b.style.display='block';b.style.background='#6d1420';b.textContent='🖱 คลิกชานชาลา (PF) หรือทางเข้า-ออกบนแผนที่ เพื่อเพิ่มจุดจอดให้ขบวน '+tr.no+' · Esc = เสร็จ';}
+ else if(UI.tab==='bd'&&UI.tool==='track'){b.style.display='block';b.style.background='#1d2a14';b.textContent='➕ วาดราง: คลิกต่อเนื่อง · ชนรางเดิม = ประแจ · คลิกขวา = จบเส้น';}
+ else b.style.display='none';}
 $('lp').addEventListener('mouseenter',()=>LPH=true);$('lp').addEventListener('mouseleave',()=>LPH=false);
 $('lp').addEventListener('click',ev=>{const b=ev.target.closest('[data-act],[data-tr],[data-tool],[data-pf],[data-tadj],[data-pass],[data-rm],[data-mv],[data-focus],[data-sdel]');if(!b)return;
  const d=b.dataset,tr=TR(UI.sel);
@@ -564,8 +582,8 @@ $('lp').addEventListener('click',ev=>{const b=ev.target.closest('[data-act],[dat
  else if(a==='auto'&&tr){autoTimes(tr);renderLeft();toast('คำนวณเวลาจากผังรางแล้ว');}
  else if(a==='dup'&&tr)dlgDup(tr);
  else if(a==='fit')fit();
- else if(a==='demo'){if(confirm('โหลดตัวอย่างทับของเดิม?'))demo();}
- else if(a==='clr'){if(confirm('ล้างผังและขบวนทั้งหมด?')){W={nodes:[],edges:[],sts:[],trains:[],seq:1};reindex();resetSim();UI.sel=null;renderLeft();}}});
+ else if(a==='demo'){if(confirm('โหลดตัวอย่างทับโปรเจคนี้?'))demo();}
+ else if(a==='clr'){if(confirm('ล้างผังและขบวนทั้งหมดของโปรเจคนี้?')){W={nodes:[],edges:[],sts:[],trains:[],seq:1};reindex();resetSim();UI.sel=null;renderLeft();}}});
 $('lp').addEventListener('change',ev=>{const t=ev.target,d=t.dataset,tr=TR(UI.sel);
  if(d.tin&&tr){const[i,f]=d.tin.split('|'),v=pT(t.value),sp=tr.stops[+i];if(v==null){toast('รูปแบบเวลาไม่ถูกต้อง เช่น 05:30','er');renderLeft();return;}adjT(tr,+i,f,v-sp[f]);return;}
  if(d.tno!=null&&tr){tr.no=t.value.trim()||tr.no;renderLeft();return;}
@@ -573,8 +591,7 @@ $('lp').addEventListener('change',ev=>{const t=ev.target,d=t.dataset,tr=TR(UI.se
  if(d.cas!=null){UI.cas=t.checked;return;}
  if(d.sname){SM[d.sname].name=t.value;renderLeft();return;}
  if(d.scode){SM[d.scode].code=t.value.toUpperCase();renderLeft();}});
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{UI.tab=b.dataset.tab;UI.add=false;DR=null;cleanNodes();
- document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));renderLeft();}));
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
 
 /* ═════════ แถบล่าง / HUD ═════════ */
 function renderUpc(){const L=[];W.trains.forEach(t=>{if(t.done||t.stops.length<2)return;const r=t.rt;
@@ -601,10 +618,51 @@ window.addEventListener('keydown',e=>{if(/input|select|textarea/i.test(e.target.
 /* ═════════ บันทึก / เปิด ═════════ */
 function ser(){return{v:1,nodes:W.nodes,edges:W.edges.map(e=>({id:e.id,a:e.a,b:e.b,kind:e.kind,st:e.st,pf:e.pf,vmax:e.vmax})),sts:W.sts,
  trains:W.trains.map(t=>({id:t.id,no:t.no,color:t.color,stops:t.stops})),seq:W.seq};}
-function loadObj(o){W={nodes:o.nodes||[],edges:o.edges||[],sts:o.sts||[],trains:[],seq:o.seq||1000};reindex();(o.trains||[]).forEach(t=>mkTrain(t));UI.sel=null;resetSim();fit();renderLeft();}
-$('bSave').onclick=()=>{const b=new Blob([JSON.stringify(ser())],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='railflow.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);};
-$('fIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{loadObj(JSON.parse(r.result));toast('เปิดไฟล์สำเร็จ');}catch(x){toast('ไฟล์ไม่ถูกต้อง','er');}};r.readAsText(f);e.target.value='';};
-$('bFit').onclick=fit;$('bDemo').onclick=()=>{if(confirm('โหลดตัวอย่างทับของเดิม?'))demo();};
+function loadObj(o){W={nodes:o.nodes||[],edges:o.edges||[],sts:o.sts||[],trains:[],seq:o.seq||1000};reindex();
+ (o.trains||[]).forEach(t=>mkTrain(JSON.parse(JSON.stringify(t))));UI.sel=null;UI.add=false;DR=null;resetSim();fit();renderLeft();}
+
+/* ═════════ แถบ PROJECT (แบบแท็บเว็บ) ═════════ */
+let PJ={list:[],act:null};
+const pjCur=()=>PJ.list.find(p=>p.id===PJ.act);
+function pjSync(){const p=pjCur();if(p){p.data=ser();p.t=SIM.t;}}
+function pjSave(){pjSync();try{localStorage.setItem('redline_projects',JSON.stringify(PJ));}catch(e){}}
+function pjNew(name,data){const p={id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),name,data:data||null,t:null};PJ.list.push(p);return p;}
+function pjOpen(id,skip){if(!skip)pjSync();PJ.act=id;const p=pjCur();if(!p)return;
+ if(p.data)loadObj(p.data);else demo();
+ if(p.t!=null){if(p.t>=SIM.t)ffTo(p.t);else SIM.t=p.t;}
+ if(!W.nodes.length)setTab('bd');else renderLeft();
+ renderTabs();pjSave();}
+function pjCopy(){pjSync();const c=pjCur();if(!c)return;
+ const n=pjNew(c.name+' (สำเนา)',JSON.parse(JSON.stringify(c.data)));n.t=c.t;
+ const i=PJ.list.indexOf(c);PJ.list.splice(PJ.list.indexOf(n),1);PJ.list.splice(i+1,0,n);
+ pjOpen(n.id,true);toast('คัดลอกเป็นโปรเจคใหม่: '+n.name);}
+function pjAdd(){pjSync();const n=pjNew('กรณีที่ '+(PJ.list.length+1),{nodes:[],edges:[],sts:[],trains:[],seq:1});
+ pjOpen(n.id,true);toast('สร้างโปรเจคเปล่า — เริ่มวาดรางได้เลย');}
+function pjClose(id){if(PJ.list.length<=1){toast('ต้องมีอย่างน้อย 1 โปรเจค','er');return;}
+ const p=PJ.list.find(q=>q.id===id);if(!p||!confirm('ปิดและลบโปรเจค "'+p.name+'" ?'))return;
+ const i=PJ.list.indexOf(p);PJ.list.splice(i,1);
+ if(id===PJ.act){const nx=PJ.list[Math.max(0,i-1)];pjOpen(nx.id,true);}else{renderTabs();pjSave();}}
+function pjRename(id){const p=PJ.list.find(q=>q.id===id);if(!p)return;const n=prompt('ชื่อโปรเจค',p.name);
+ if(n&&n.trim()){p.name=n.trim();renderTabs();pjSave();}}
+function renderTabs(){$('pbar').innerHTML=PJ.list.map(p=>{const on=p.id===PJ.act,t=on?SIM.t:p.t;
+ return'<div class="pj'+(on?' on':'')+'" data-pj="'+p.id+'" title="ดับเบิลคลิกเพื่อเปลี่ยนชื่อ"><span class="nm">📁 '+esc(p.name)+'</span>'+
+ '<span class="tm">'+(t!=null?hm(t):'')+'</span><span class="xx" data-pjx="'+p.id+'" title="ปิดโปรเจค">×</span></div>';}).join('')+
+ '<button class="pjb" data-pja="new" title="สร้างโปรเจคเปล่า">＋</button>'+
+ '<button class="pjb" data-pja="copy" title="คัดลอกโปรเจคที่เปิดอยู่">⧉ คัดลอกโปรเจค</button>'+
+ '<button class="pjb" data-pja="ren" title="เปลี่ยนชื่อโปรเจคที่เปิดอยู่">✎ เปลี่ยนชื่อ</button>';}
+$('pbar').addEventListener('click',e=>{const x=e.target.closest('[data-pjx]');if(x){e.stopPropagation();pjClose(x.dataset.pjx);return;}
+ const t=e.target.closest('[data-pj]');if(t){if(t.dataset.pj!==PJ.act)pjOpen(t.dataset.pj);return;}
+ const b=e.target.closest('[data-pja]');if(!b)return;const a=b.dataset.pja;
+ if(a==='new')pjAdd();else if(a==='copy')pjCopy();else if(a==='ren')pjRename(PJ.act);});
+$('pbar').addEventListener('dblclick',e=>{const t=e.target.closest('[data-pj]');if(t&&!e.target.closest('[data-pjx]'))pjRename(t.dataset.pj);});
+
+$('bSave').onclick=()=>{const p=pjCur(),nm=(p?p.name:'redline').replace(/[\\/:*?"<>|]/g,'_');
+ const b=new Blob([JSON.stringify(ser())],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');
+ a.href=u;a.download=nm+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);};
+$('fIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{const o=JSON.parse(r.result);if(!o.nodes)throw 0;pjSync();const n=pjNew(f.name.replace(/\.json$/i,''),o);pjOpen(n.id,true);toast('เปิดไฟล์เป็นโปรเจคใหม่แล้ว');}
+ catch(x){toast('ไฟล์ไม่ถูกต้อง','er');}};r.readAsText(f);e.target.value='';};
+$('bFit').onclick=fit;$('bDemo').onclick=()=>{if(confirm('โหลดตัวอย่างทับโปรเจคนี้?'))demo();};
 
 /* ═════════ ตัวอย่าง: Salaya – Taling Chan – KTW – Siriraj ═════════ */
 function demo(){W={nodes:[],edges:[],sts:[],trains:[],seq:1};reindex();
@@ -640,19 +698,25 @@ function demo(){W={nodes:[],edges:[],sts:[],trains:[],seq:1};reindex();
  UI.sel=null;UI.add=false;resetSim();fit();renderLeft();toast('โหลดตัวอย่าง: '+W.trains.length+' ขบวน · 3 สถานี · 3 ทางเข้า-ออก');}
 
 /* ═════════ ลูปหลัก ═════════ */
-let last=0,acc=0;
+let last=0,acc=0,sav=0;
 function loop(ts){const dt=Math.min(.1,(ts-(last||ts))/1000);last=ts;
  if(SIM.run){let s=dt*SIM.mul;while(s>1e-6){const h=Math.min(.25,s);tick(h);s-=h;}}
  $('ct').innerHTML=hm(SIM.t)+'<small>:'+p2(Math.floor(((SIM.t%60)+60)%60))+'</small>';
- draw();acc+=dt;
+ draw();acc+=dt;sav+=dt;
  if(acc>.8){acc=0;renderUpc();renderHud();
   const ae=document.activeElement;if(!LPH&&!(ae&&$('lp').contains(ae)&&/input|select/i.test(ae.tagName))&&UI.tab==='tr')renderLeft();
-  try{localStorage.setItem('railflow_v1',JSON.stringify(ser()));}catch(e){}}
+  const tm=document.querySelector('.pj.on .tm');if(tm)tm.textContent=hm(SIM.t);}
+ if(sav>3){sav=0;pjSave();}
  requestAnimationFrame(loop);}
 window.addEventListener('resize',resize);
+window.addEventListener('beforeunload',pjSave);
 resize();reindex();
-(function boot(){let ok=false;try{const s=localStorage.getItem('railflow_v1');if(s){const o=JSON.parse(s);if(o.nodes&&o.nodes.length){loadObj(o);ok=true;}}}catch(e){}
- if(!ok)demo();})();
+(function boot(){let ok=false;
+ try{const s=localStorage.getItem('redline_projects');if(s){const o=JSON.parse(s);
+  if(o.list&&o.list.length){PJ=o;if(!pjCur())PJ.act=PJ.list[0].id;pjOpen(PJ.act,true);ok=true;}}}catch(e){}
+ if(!ok){let data=null;
+  try{const s=localStorage.getItem('railflow_v1');if(s){const o=JSON.parse(s);if(o.nodes&&o.nodes.length)data=o;}}catch(e){}
+  const p=pjNew('กรณีที่ 1',data);PJ.act=p.id;pjOpen(p.id,true);}})();
 play(true);requestAnimationFrame(loop);
 </script>
 </body></html>
