@@ -142,6 +142,61 @@ input[type=color]{width:34px;height:30px;border:1px solid var(--bd);border-radiu
 .ts{background:#064e30;border:1px solid #0d7a4c;color:#fff;padding:8px 12px;border-radius:9px;font-size:12px}
 .ts.er{background:#5b1220;border-color:#912036}
 ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#2c3642;border-radius:8px;border:2px solid var(--pn)}
+/* ── ตารางเดินรถ ── */
+.stage.tton>canvas#cv,.stage.tton>.hudc,.stage.tton>.banner,.stage.tton>.clock,.stage.tton>.pop{display:none!important}
+.ttv{display:none;position:absolute;inset:0;flex-direction:column;background:var(--bg)}
+.stage.tton .ttv{display:flex}
+.main.nopanel{grid-template-columns:0 1fr}.main.nopanel .left{display:none}
+.ttbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;padding:7px 10px;background:var(--pn);border-bottom:1px solid var(--bd);flex:none}
+.tg{display:flex;align-items:center;gap:3px;padding:3px 5px 3px 9px;border:1px solid var(--bd);border-radius:13px;background:var(--pn2);white-space:nowrap;flex:none}
+.tg>span{font-size:10.5px;color:var(--mu);font-weight:700;margin-right:3px}
+.tg b{font:700 21px Rajdhani;letter-spacing:.5px;min-width:84px;text-align:center}
+.tbn{padding:4px 10px;border:1px solid var(--bd);background:var(--pn);border-radius:10px;cursor:pointer;font-weight:700;font-size:12px;white-space:nowrap;color:var(--tx)}
+.tbn:hover{border-color:var(--rd2)}
+.tbn.on{background:var(--yl);color:#111;border-color:var(--yl)}
+.tbn.warn{background:var(--rd);border-color:var(--rd);color:#fff}
+.tbn.go{background:#14532d;border-color:#22c55e;color:#fff;animation:pls 1.4s infinite}
+.ttcw{position:relative;flex:1;min-height:0}
+.ttcw canvas{position:absolute;inset:0;cursor:grab}
+.ttcw .banner{top:12px}
+.ttd{border:1px solid var(--bd);border-radius:12px;margin-bottom:9px;background:var(--pn2);overflow:hidden}
+.ttd>summary{cursor:pointer;padding:9px 12px;font-weight:700;font-size:12.5px;list-style:none;display:flex;align-items:center;gap:7px;user-select:none}
+.ttd>summary::-webkit-details-marker{display:none}
+.ttd>summary::after{content:'›';margin-left:auto;color:var(--mu);font-size:17px;transition:transform .15s}
+.ttd[open]>summary::after{transform:rotate(90deg)}
+.ttb2{padding:2px 10px 10px}
+.cfi{border:1px solid #7f1d1d;background:rgba(220,38,38,.1);border-radius:10px;padding:6px 9px;margin-bottom:6px;cursor:pointer;font-size:11.5px}
+.cfi:hover{border-color:#ff4b5c}.cfi b{color:#ff6b78}.cfi div{color:var(--mu);margin-top:1px}
+.okb{border:1px solid #14532d;background:rgba(34,197,94,.1);color:#4ade80;border-radius:10px;padding:8px 10px;font-weight:700}
+.ttr{display:flex;align-items:center;gap:7px;padding:6px 8px;border:1px solid var(--bd);border-radius:10px;margin-bottom:5px;background:var(--pn);cursor:pointer}
+.ttr.on{border-color:var(--yl);box-shadow:0 0 0 1px var(--yl) inset}
+.ttr .cb2{width:9px;height:18px;border-radius:5px;flex:none}
+.ttr .rt2{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;color:var(--mu)}
+.ttr small{color:var(--mu);font-size:10px;white-space:nowrap}
+.cfd{background:#dc2626;color:#fff;border-radius:99px;width:17px;height:17px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;animation:blk 1s infinite}
+@keyframes blk{50%{opacity:.25}}
+.vk{width:20px;height:20px;border:2px solid var(--mu);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex:none}
+.vk.on{background:#22c55e;border-color:#22c55e}
+.tfi{flex:1;min-width:100px;padding:6px 10px;border:1px solid var(--bd);border-radius:99px;background:var(--pn)}
+.strow{display:flex;align-items:center;gap:5px;padding:4px 6px;border:1px solid var(--bd);border-radius:10px;margin-bottom:4px;background:var(--pn)}
+.strow .sn{flex:1;min-width:0;cursor:pointer;font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.strow .sn small{color:var(--mu);font-weight:600}
+.strow .gi{width:54px;padding:3px 5px;border:1px solid var(--bd);border-radius:7px;background:var(--pn2);text-align:right}
+.strow .gi0{width:54px;flex:none}
+.strow small{color:var(--mu);font-size:10px}
+.x2{width:22px;height:22px;border:1px solid var(--bd);background:var(--pn2);border-radius:6px;cursor:pointer;padding:0;font-size:10px;color:var(--tx)}
+.ett{max-height:56vh;overflow:auto;border:1px solid var(--bd);border-radius:10px}
+.ett table{width:100%;border-collapse:collapse;font-size:12px}
+.ett th{position:sticky;top:0;background:var(--pn2);padding:6px 8px;text-align:left;font-size:10.5px;color:var(--mu);z-index:1}
+.ett td{padding:4px 8px;border-top:1px solid var(--bd)}
+.ett td.c{text-align:center}.ett td.nm{font-weight:700;white-space:nowrap}
+.ett input:not([type=checkbox]),.ett select{width:84px;padding:4px 6px;border:1px solid var(--bd);border-radius:7px;background:var(--pn2)}
+.ett select{width:128px}
+.mu{color:var(--mu)}
+.tab{padding:10px 4px;font-size:12px}
+body.light .tbn,body.light .tfi,body.light .strow,body.light .ttr{background:#fff}
+body.light .tbn.on{background:var(--yl)}body.light .tbn.warn{background:var(--rd)}body.light .tbn.go{background:#14532d}
+body.light .cfi b{color:#c2182b}body.light .okb{color:#0f7a4a}
 /* ── โหมดสว่าง ── */
 body.light{--bg:#e9eef5;--pn:#ffffff;--pn2:#f4f6fa;--bd:#d2d9e4;--tx:#18202b;--mu:#5d6b7e}
 body.light .top,body.light .upc{background:#fff}
@@ -180,9 +235,22 @@ body.light ::-webkit-scrollbar-thumb{background:#c3ccd8;border-color:#fff}
   <label class="tb">⬆ เปิดไฟล์<input type="file" id="fIn" accept=".json" hidden></label>
   <button class="tb th" id="bTheme" title="สลับโหมดมืด / สว่าง">☀️ โหมดสว่าง</button></div>
  <div class="pbar" id="pbar"></div>
- <div class="main">
-  <div class="left"><div class="tabs"><button class="tab on" data-tab="tr">🚆 ขบวน &amp; เส้นทาง</button><button class="tab" data-tab="bd">🛠 สร้างราง</button></div><div id="lp"></div></div>
-  <div class="stage"><canvas id="cv"></canvas>
+ <div class="main" id="mainw">
+  <div class="left"><div class="tabs"><button class="tab on" data-tab="tr">🚆 ขบวน &amp; เส้นทาง</button><button class="tab" data-tab="tt">📅 ตารางเดินรถ</button><button class="tab" data-tab="bd">🛠 สร้างราง</button></div><div id="lp"></div></div>
+  <div class="stage" id="stg"><canvas id="cv"></canvas>
+   <div class="ttv" id="ttv">
+    <div class="ttbar" id="ttb">
+     <div class="tg"><span>🔍 เวลา</span><button class="tbn" data-tz="t-" title="ซูมออกเฉพาะเวลา">−</button><button class="tbn" data-tz="t+" title="ซูมเข้าเฉพาะเวลา">＋</button><button class="tbn" data-tz="tf">พอดี</button><button class="tbn" data-tz="tall">00–24</button></div>
+     <div class="tg"><span>🔍 สถานี</span><button class="tbn" data-tz="p-" title="ซูมออกเฉพาะสถานี">−</button><button class="tbn" data-tz="p+" title="ซูมเข้าเฉพาะสถานี">＋</button><button class="tbn" data-tz="pf">พอดี</button><button class="tbn" id="tExp" title="กาง/ย่อชานชาลาทุกสถานี">▾ PF</button></div>
+     <div class="tg"><button class="tbn" id="tSwap" title="สลับแกนเวลา ↔ สถานี">⇄ สลับแกน</button><button class="tbn" id="tRev" title="กลับด้านลำดับสถานี">⇅ กลับด้าน</button><button class="tbn" id="tSnap" title="ความละเอียดตอนลาก/ย้ายเส้น">ปัด 1 นาที</button></div>
+     <div class="tg"><span>แสดง</span><button class="tbn" data-tv="showT">เวลา</button><button class="tbn" data-tv="colorBy">สีขบวน</button><button class="tbn" data-tv="showAct">เส้นจริง</button><button class="tbn" data-tv="showCf">ขัดแย้ง</button><button class="tbn" data-tv="showNow">เวลาซิม</button><button class="tbn" data-tv="showLink">เส้นต่อ</button></div>
+     <div class="tg"><button class="tbn warn" id="tChk">⚠ ตรวจชน</button></div>
+     <div style="flex:1"></div>
+     <div class="tg"><button class="tbn" id="tRs" title="เริ่มใหม่">⏮</button><button class="tbn" id="tBk" title="ย้อน 5 นาที">«</button><b id="ttClk">05:00:00</b><button class="tbn" id="tFw" title="ข้าม 5 นาที">»</button><button class="tbn go" id="tPl">▶</button><span id="tSpd"></span></div>
+     <button class="tbn" id="tPan" title="ซ่อน / แสดงแผงด้านซ้าย">◧</button>
+    </div>
+    <div class="ttcw" id="tcw"><canvas id="tcv"></canvas><div class="pop" id="tpop"></div><div class="banner" id="tbn"></div></div>
+   </div>
    <div class="hudc" id="hud"></div><div class="banner" id="bn"></div><div class="pop" id="pop"></div>
    <div class="clock">
     <div class="crow"><button class="cb" id="cRs" title="เริ่มใหม่">⏮</button><button class="cb" id="cBk" title="ย้อน 5 นาที">«</button>
@@ -333,7 +401,7 @@ function planChain(opts,S,i,tid){
   if(!s.ch){add(s.p);const sx=NM[s.x],d1=D2(s.p,sx),E=EM[s.e];spd.push({a:d,b:d+d1,v:E.vmax});h.t+=tt(d1,E.vmax);d+=d1;add(sx);itE(s.e,d);it('n'+s.x,d);}
   for(const c of r.chain){const E=EM[c.e];spd.push({a:d,b:d+E.len,v:E.vmax});h.t+=tt(E.len,E.vmax);d+=E.len;add(NM[c.exit]);itE(c.e,d);it('n'+c.exit,d);}
   const te=EM[r.tgt.e],En=NM[r.tgt.entry],xN=oth(te,r.tgt.entry),X=NM[xN];h.tgt=te.id;
-  if(wp){wps.push({j,d:d+te.len/2});spd.push({a:d,b:d+te.len,v:te.vmax});h.t+=tt(te.len/2,te.vmax);carry=tt(te.len/2,te.vmax);
+  if(wp){wps.push({j,d:d+te.len/2,e:te.id});spd.push({a:d,b:d+te.len,v:te.vmax});h.t+=tt(te.len/2,te.vmax);carry=tt(te.len/2,te.vmax);
    h.b=d+te.len/2;pa=h.b;d+=te.len;add(X);itE(te.id,d);it('n'+xN,d);hops.push(h);starts=[{e:te.id,x:xN,c:0,p:X,ch:1}];continue;}
   if(te.kind==='portal'){const ext=TL+12,ux=(X.x-En.x)/te.len,uy=(X.y-En.y)/te.len;spd.push({a:d,b:d+te.len+ext,v:te.vmax});
    h.t+=tt(te.len,te.vmax);d+=te.len;add(X);ha=d;h.b=d;d+=ext;add({x:X.x+ux*ext,y:X.y+uy*ext});itE(te.id,Infinity);
@@ -378,23 +446,23 @@ function depart(tr){const r=tr.rt,S=tr.stops;if(r.si>=S.length-1){despawn(tr);re
  const put=(k,e)=>{if(M[k]==null||M[k]<e)M[k]=e;};
  r.res.forEach(it=>{if(it.end!==Infinity)put(it.k,rev?(r.hs-it.end):(it.end-shift));});
  pl.items.forEach(it=>put(it.k,it.end+bl));
- for(const k in M){const o=RES[k];if(o&&o!==tr.id){r.msg='🔴 รอสัญญาณ — ทางยังไม่ว่าง';r.blocked=true;r.retry=SIM.t+3;return;}}
+ for(const k in M){const o=RES[k];if(o&&o!==tr.id){r.msg='🔴 รอสัญญาณ — ทางยังไม่ว่าง';r.blocked=true;r.blkBy=o;r.retry=SIM.t+3;return;}}
  r.res.forEach(it=>{if(M[it.k]==null&&RES[it.k]===tr.id)delete RES[it.k];});
  r.res=Object.keys(M).map(k=>({k,end:M[k]}));r.res.forEach(it=>RES[it.k]=tr.id);
  r.hb=(!rev&&r.hb>-Infinity)?r.hb-shift:-Infinity;
- r.pts=base.concat(pl.pts.slice(1));r.cum=cumOf(r.pts);r.hs=bl;r.legEnd=bl+pl.len;
- r.wps=pl.wps.map(w=>({j:w.j,d:w.d+bl}));r.spd=pl.spd.map(s=>({a:s.a+bl,b:s.b+bl,v:s.v}));
- r.ha=pl.hideAfter+bl;r.end=pl.end;r.state='run';r.msg='';r.blocked=false;
- const dp=S[r.si].dep;if(dp!=null)r.dly=SIM.t-dp;(tr.rec[r.si]=tr.rec[r.si]||{}).d=SIM.t;}
+ r.pts=base.concat(pl.pts.slice(1));r.cum=cumOf(r.pts);r.hs=bl;r.legStart=bl;r.legEnd=bl+pl.len;
+ r.wps=pl.wps.map(w=>({j:w.j,d:w.d+bl,e:w.e}));r.spd=pl.spd.map(s=>({a:s.a+bl,b:s.b+bl,v:s.v}));
+ r.ha=pl.hideAfter+bl;r.end=pl.end;r.state='run';r.msg='';r.blocked=false;r.blkBy=null;
+ const dp=S[r.si].dep;if(dp!=null)r.dly=SIM.t-dp;const q0=(tr.rec[r.si]=tr.rec[r.si]||{});q0.d=SIM.t;if(EM[r.pose.e])q0.pf=EM[r.pose.e].pf;}
 function move(tr,dt){const r=tr.rt;let vl=Math.sqrt(2*DEC*Math.max(0,r.legEnd-r.hs-.15));
  for(const s of r.spd){if(s.b<r.hs)continue;const vv=kp(s.v);vl=Math.min(vl,s.a<=r.hs?vv:Math.sqrt(vv*vv+2*DEC*(s.a-r.hs)));}
  r.v=r.v<vl?Math.min(vl,r.v+ACC*dt):Math.max(vl,r.v-DEC*1.8*dt);
  r.hs=Math.min(r.legEnd,r.hs+r.v*dt);
- for(const w of r.wps)if(!w.ok&&r.hs>=w.d){w.ok=1;tr.rec[w.j]={a:SIM.t,d:SIM.t};const sp=tr.stops[w.j];if(sp&&sp.arr!=null)r.dly=SIM.t-sp.arr;}
+ for(const w of r.wps)if(!w.ok&&r.hs>=w.d){w.ok=1;tr.rec[w.j]={a:SIM.t,d:SIM.t,pf:EM[w.e]?EM[w.e].pf:undefined};const sp=tr.stops[w.j];if(sp&&sp.arr!=null)r.dly=SIM.t-sp.arr;}
  r.res=r.res.filter(it=>{if(it.end+TL+1<r.hs){if(RES[it.k]===tr.id)delete RES[it.k];return false;}return true;});
  if(r.legEnd-r.hs<.5&&r.v<.35)arrive(tr);}
 function arrive(tr){const r=tr.rt,en=r.end,S=tr.stops;r.v=0;if(!en){despawn(tr);return;}
- const j=en.j;tr.rec[j]=Object.assign(tr.rec[j]||{},{a:SIM.t});const sp=S[j];if(sp&&sp.arr!=null)r.dly=SIM.t-sp.arr;
+ const j=en.j;tr.rec[j]=Object.assign(tr.rec[j]||{},{a:SIM.t,pf:EM[en.e]?EM[en.e].pf:undefined});const sp=S[j];if(sp&&sp.arr!=null)r.dly=SIM.t-sp.arr;
  if(en.portal){despawn(tr);return;}
  r.si=j;r.pose={e:en.e,face:en.face};r.noRev=false;
  if(!sp||j>=S.length-1){r.state='end';r.gone=SIM.t+Math.max(10,dwOf(tr,j));return;}
@@ -408,7 +476,7 @@ function tick(dt){SIM.t+=dt;
   else if(r.state==='run')move(tr,dt);
   else if(r.state==='end'&&SIM.t>=r.gone)despawn(tr);}}
 function dayStart(){let m=Infinity;W.trains.forEach(t=>{if(t.stops[0]&&t.stops[0].dep!=null)m=Math.min(m,t.stops[0].dep);});return m===Infinity?18000:Math.floor((m-180)/60)*60;}
-function resetSim(){SIM.t=dayStart();RES={};W.trains.forEach(t=>{t.rt=null;t.done=false;t.rec=[];t._sr=0;});}
+function resetSim(){SIM.t=dayStart();RES={};W.trains.forEach(t=>{t.rt=null;t.done=false;t.rec=[];t._sr=0;});if(!TT.busy)TT.simSig=ttSigNow();}
 function ffTo(t){let g=0;while(SIM.t<t&&g++<120000)tick(Math.min(1,t-SIM.t));}
 function setClock(t){if(t>=SIM.t)ffTo(t);else{resetSim();if(t<SIM.t)SIM.t=t;else ffTo(t);}renderLeft();}
 let NE=null;function netEdited(){reindex();clearTimeout(NE);NE=setTimeout(()=>{const t=SIM.t;resetSim();ffTo(t);renderLeft();},400);renderLeft();}
@@ -757,7 +825,7 @@ cv.addEventListener('wheel',ev=>{ev.preventDefault();closePop();const R=cv.getBo
 
 /* ═════════ หน้าต่างแก้ไข ═════════ */
 let DB=[];
-function dlg(title,body,btns){$('dlg').innerHTML='<h3>'+title+'</h3><div class="db">'+body+'</div><div class="df">'+
+function dlg(title,body,btns,wd){$('dlg').oninput=null;$('dlg').onchange=null;$('dlg').style.width='min('+(wd||560)+'px,100%)';$('dlg').innerHTML='<h3>'+title+'</h3><div class="db">'+body+'</div><div class="df">'+
  btns.map((b,i)=>'<button class="bt'+(b.p?' p':'')+(b.d?' d':'')+'" data-b="'+i+'">'+esc(b.t)+'</button>').join('')+'<button class="bt" data-b="-1">ปิด</button></div>';
  DB=btns;$('mask').classList.add('on');}
 const closeDlg=()=>$('mask').classList.remove('on');
@@ -814,7 +882,7 @@ function dlgDup(tr){dlg('⧉ ทำซ้ำขบวน '+esc(tr.no),'<div clas
 /* ═════════ ขบวนรถ (ข้อมูล) ═════════ */
 function nextNo(){let m=1000;W.trains.forEach(t=>{const n=parseInt(t.no);if(!isNaN(n)&&n>m)m=n;});return m+1;}
 function mkTrain(o){const t={id:o.id||nid('t'),no:String(o.no||nextNo()),color:o.color||'#d42a37',stops:o.stops||[],
- dwStd:o.dwStd!=null?o.dwStd:30,dwEnd:o.dwEnd!=null?o.dwEnd:90,show:!!o.show,gc:o.gc!=null?o.gc:null,ver:1,rt:null,done:false,rec:[]};W.trains.push(t);return t;}
+ dwStd:o.dwStd!=null?o.dwStd:30,dwEnd:o.dwEnd!=null?o.dwEnd:90,show:!!o.show,gc:o.gc!=null?o.gc:null,next:o.next||null,tth:!!o.tth,ver:1,rt:null,done:false,rec:[]};W.trains.push(t);return t;}
 function fixEnds(tr){const S=tr.stops;if(!S.length)return;const f=S[0];if(f.dep==null)f.dep=f.arr!=null?f.arr:Math.ceil(SIM.t/60)*60;f.arr=null;f.pass=false;
  if(S.length>1){const l=S[S.length-1];if(l.arr==null)l.arr=l.dep;l.dep=null;l.pass=false;}
  for(let i=1;i<S.length-1;i++){const s=S[i];if(s.arr==null)s.arr=s.dep;if(s.dep==null)s.dep=s.pass?s.arr:s.arr+dwOf(tr,i);}}
@@ -840,8 +908,9 @@ function setDw(tr,i,v){const S=tr.stops,sp=S[i];if(!sp)return;v=Math.max(0,Math.
   if(UI.cas&&dv)for(let j=i+1;j<S.length;j++){const q=S[j];if(q.arr!=null)q.arr+=dv;if(q.dep!=null)q.dep+=dv;}}
  else sp.dw=v;tr.ver++;renderLeft();}
 function dwApply(tr){const S=tr.stops;S.forEach((sp,i)=>{if(sp.pass)return;sp.dw=(i===S.length-1&&i>0)?tr.dwEnd:tr.dwStd;});autoTimes(tr);}
-function setTab(t){UI.tab=t;UI.add=false;DR=null;MV.sel=new Set();closePop();cleanNodes();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));renderLeft();}
-function selectTrain(id){UI.sel=id;UI.tab='tr';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab==='tr'));renderLeft();}
+function stageSync(){const tt=UI.tab==='tt';$('stg').classList.toggle('tton',tt);$('mainw').classList.toggle('nopanel',tt&&TT.nopanel);if(tt)ttResize();else resize();}
+function setTab(t){UI.tab=t;UI.add=false;DR=null;MV.sel=new Set();closePop();cleanNodes();document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));stageSync();if(t==='tt')ttEnter();renderLeft();}
+function selectTrain(id){UI.sel=id;UI.tab='tr';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab==='tr'));stageSync();renderLeft();}
 function focusPt(p){if(!p)return;V.z=Math.max(V.z,.7);V.x=cw/2-p.x*V.z;V.y=ch/2-p.y*V.z;}
 function delStation(id){W.edges.forEach(e=>{if(e.st===id){e.kind='track';e.st=null;e.pf='';}});W.sts=W.sts.filter(s=>s.id!==id);
  W.trains.forEach(t=>{t.stops=t.stops.filter(s=>s.st!==id);fixEnds(t);t.ver++;});netEdited();}
@@ -918,6 +987,7 @@ function renderLeft(){const lp=$('lp');let h='';
   '<div class="sec"><h4>🚉 สถานี &amp; ทางเข้า-ออก ('+W.sts.length+')</h4>'+
   (W.sts.map(s=>'<div class="srow"><span class="pill">'+(s.type==='portal'?'🚪':'🚉')+' '+W.edges.filter(e=>e.st===s.id).length+'</span><input data-sname="'+s.id+'" value="'+esc(s.name)+'"><input data-scode="'+s.id+'" value="'+esc(s.code)+'" style="max-width:60px"><button class="x" data-sdel="'+s.id+'">✕</button></div>').join('')||'<div class="hint">ยังไม่มีสถานี</div>')+'</div>'+
   '<div class="sec"><button class="bt w" data-act="fit">⤢ พอดีจอ</button><button class="bt w" data-act="demo">↺ โหลดตัวอย่าง</button><button class="bt d w" data-act="clr">🗑 ล้างผังทั้งหมด</button></div>';}
+ else if(UI.tab==='tt'){h=ttPanel();}
  else if(!UI.sel||!TR(UI.sel)){UI.sel=null;const ns=W.trains.filter(t=>t.show).length;
   h='<div class="row" style="margin-bottom:7px"><button class="bt p" data-act="new">＋ ขบวนใหม่</button><button class="bt" data-act="autoall">⏱ จัดเวลาทุกขบวนอัตโนมัติ</button></div>'+
   '<div class="row" style="margin-bottom:9px"><span class="hint">🗺 แสดงเส้นทางบนแผนที่ '+ns+'/'+W.trains.length+'</span><span class="sp"></span>'+
@@ -939,7 +1009,7 @@ function renderLeft(){const lp=$('lp');let h='';
   '<button class="bt w'+(UI.add?' on':' p')+'" data-act="add">'+(UI.add?'✔ เสร็จสิ้นการเพิ่มจุดจอด':'➕ เพิ่มจุดจอด (คลิกบนแผนที่)')+'</button>'+
   '<div class="row" style="margin-top:6px"><button class="bt" data-act="auto">⏱ คำนวณเวลาอัตโนมัติ</button><button class="bt" data-act="dup">⧉ ทำซ้ำ</button></div>'+
   '<label class="hint" style="display:block;margin-top:7px"><input type="checkbox" data-cas'+(UI.cas?' checked':'')+'> เมื่อปรับเวลา ให้เลื่อนเวลาของสถานีถัดไปตามด้วย</label>';}
- lp.innerHTML=h;renderBanner();}
+ const sc0=lp.scrollTop;lp.innerHTML=h;if(UI.tab==='tt')lp.scrollTop=sc0;renderBanner();}
 function renderBanner(){const b=$('bn'),tr=TR(UI.sel);
  if(UI.tab==='tr'&&UI.add&&tr){b.style.display='block';b.style.background='#6d1420';b.textContent='🖱 คลิกชานชาลา (PF) หรือทางเข้า-ออกบนแผนที่ เพื่อเพิ่มจุดจอดให้ขบวน '+tr.no+' · Esc = เสร็จ';}
  else if(UI.tab==='bd'&&UI.tool==='track'){b.style.display='block';b.style.background='#1d2a14';b.textContent='➕ วาดราง: คลิกต่อเนื่อง · ผ่านรางเดิม = เลือก ประแจ / ทางตัด / สะพาน / อุโมงค์ · คลิกขวา = จบเส้น';}
@@ -1018,7 +1088,7 @@ $('cRs').onclick=()=>{resetSim();play(false);renderLeft();toast('รีเซ็
 $('cGo').onclick=()=>{const t=pT(val('cIn'));if(t==null){toast('รูปแบบเวลาไม่ถูกต้อง เช่น 05:30','er');return;}setClock(t);play(false);toast('หยุดไว้ที่ '+hm(t)+' — กด ▶ เพื่อเริ่ม');};
 $('cIn').addEventListener('keydown',e=>{if(e.key==='Enter')$('cGo').click();});
 window.addEventListener('keydown',e=>{if(/input|select|textarea/i.test(e.target.tagName))return;
- if(e.key==='Escape'){closePop();UI.add=false;DR=null;MV.sel=new Set();MV.box=null;SD=null;cleanNodes();closeDlg();renderLeft();return;}
+ if(e.key==='Escape'){closePop();UI.add=false;DR=null;MV.sel=new Set();MV.box=null;SD=null;if(UI.tab==='tt')ttEsc();else cleanNodes();closeDlg();renderLeft();return;}
  if((e.ctrlKey||e.metaKey)&&UI.tab==='bd'){const k=e.key.toLowerCase();
   if(k==='c'){e.preventDefault();copySel();return;}
   if(k==='v'){e.preventDefault();pasteAt(MW);return;}
@@ -1030,8 +1100,8 @@ window.addEventListener('keydown',e=>{if(/input|select|textarea/i.test(e.target.
 
 /* ═════════ บันทึก / เปิด ═════════ */
 function ser(){return{v:3,nodes:W.nodes,edges:W.edges.map(e=>({id:e.id,a:e.a,b:e.b,kind:e.kind,st:e.st,pf:e.pf,vmax:e.vmax})),sts:W.sts,xing:W.xing||[],
- trains:W.trains.map(t=>({id:t.id,no:t.no,color:t.color,stops:t.stops,dwStd:t.dwStd,dwEnd:t.dwEnd,show:t.show,gc:t.gc})),seq:W.seq};}
-function loadObj(o){W={nodes:o.nodes||[],edges:o.edges||[],sts:o.sts||[],trains:[],xing:o.xing||[],seq:o.seq||1000};reindex();
+ trains:W.trains.map(t=>({id:t.id,no:t.no,color:t.color,stops:t.stops,dwStd:t.dwStd,dwEnd:t.dwEnd,show:t.show,gc:t.gc,next:t.next||null,tth:!!t.tth})),tt:W.tt||null,seq:W.seq};}
+function loadObj(o){W={nodes:o.nodes||[],edges:o.edges||[],sts:o.sts||[],trains:[],xing:o.xing||[],tt:o.tt?JSON.parse(JSON.stringify(o.tt)):null,seq:o.seq||1000};reindex();TT.sel=null;TT.mv=null;TT.hover=null;TT.lay=null;TT.dm=null;CF={ev:[],trs:new Set(),sig:null,ms:0,n:0};
  (o.trains||[]).forEach(t=>mkTrain(JSON.parse(JSON.stringify(t))));UI.sel=null;UI.add=false;DR=null;MV.sel=new Set();closePop();resetSim();fit();renderLeft();}
 function dlJSON(obj,name){const b=new Blob([JSON.stringify(obj)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');
  a.href=u;a.download=name.replace(/[\\/:*?"<>|]/g,'_')+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);}
@@ -1160,13 +1230,468 @@ function demo(){W={nodes:[],edges:[],sts:[],trains:[],xing:[],seq:1};reindex();
  T('1007',RED,'05:45',EB);T('1008',RED,'05:47',WB);
  UI.sel=null;UI.add=false;resetSim();fit();renderLeft();toast('โหลดตัวอย่าง: '+W.trains.length+' ขบวน · แสดงรถจำลอง 3 เส้นทาง');}
 
+/* ═════════ ตารางเดินรถ (กราฟเวลา–ระยะทาง) ═════════ */
+const TT={w:0,h:0,dpr:1,cv:null,c:null,M:null,sel:null,hover:null,cx:null,cy:null,pan:null,mv:null,hd:null,pend:null,clip:null,
+ auto:true,minWait:10,showT:true,colorBy:false,showAct:true,showCf:true,showNow:true,showLink:true,snap:60,open:{cf:true,st:false,tr:true},
+ sig:null,chg:0,simSig:null,busy:false,dm:null,dmK:'',lay:null,layK:'',nopanel:false,lastPl:null};
+let CF={ev:[],trs:new Set(),sig:null,ms:0,n:0};
+const trr=(c,x,y,w,h,r)=>{r=Math.max(0,Math.min(r,w/2,h/2));c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();};
+const ttLbl=(t,s)=>t>=86400?'24:00':(s?hms(t):hm(t));
+const ttSnap=v=>Math.round(v/TT.snap)*TT.snap;
+const ttNm=id=>SM[id]?SM[id].name:'?';
+function TTC(){return THM==='dark'?{bg:'#060a10',plot:'#0b121b',gr:'150,172,205',tx:'#e8edf4',mu:'#8a97ab',ln:'#eef3fa',act:'#ff5cab',now:'#22d3ee',cf:'#ff2b3d',sel:'#ffd84a',hd:'#101826',lk:'#7dd3fc',halo:'rgba(6,10,16,.88)',hov:'rgba(125,211,252,.35)'}
+ :{bg:'#e6ecf5',plot:'#ffffff',gr:'45,60,85',tx:'#18202b',mu:'#5d6b7e',ln:'#0a0e16',act:'#f0369a',now:'#0284c7',cf:'#e11d2e',sel:'#f59e0b',hd:'#f3f6fb',lk:'#0284c7',halo:'rgba(255,255,255,.92)',hov:'rgba(2,132,199,.28)'};}
+
+/* ── สถานี: ลำดับ / ระยะทาง จากผังรางอัตโนมัติ ── */
+function stX(id){let s=0,n=0;W.edges.forEach(e=>{if(e.st===id&&NM[e.a]&&NM[e.b]){s+=NM[e.a].x+NM[e.b].x;n+=2;}});return n?s/n:0;}
+function stSrc(sid){const m={};W.edges.forEach(e=>{if((e.kind==='plat'||e.kind==='portal')&&e.st===sid){const h=e.len/2;[e.a,e.b].forEach(n=>{if(m[n]==null||m[n]>h)m[n]=h;});}});return m;}
+function dijk(src){const D={},done={},Q=[];for(const n in src){D[n]=src[n];Q.push(n);}
+ while(Q.length){let bi=0;for(let i=1;i<Q.length;i++)if(D[Q[i]]<D[Q[bi]])bi=i;const n=Q.splice(bi,1)[0];if(done[n])continue;done[n]=1;
+  for(const eid of ADJ[n]||[]){const E=EM[eid],m2=oth(E,n),d=D[n]+E.len;if(D[m2]==null||d<D[m2]){D[m2]=d;Q.push(m2);}}}return D;}
+function ttDM(){const ids=W.sts.map(s=>s.id),k=NETV+':'+ids.join(',')+':'+W.edges.length;if(TT.dm&&TT.dmK===k)return TT.dm;
+ const src={},d={},prs=[],nb={},tree={};ids.forEach(id=>{src[id]=stSrc(id);nb[id]=[];});
+ ids.forEach((a,i)=>{if(!Object.keys(src[a]).length)return;const D=dijk(src[a]);
+  for(let j=i+1;j<ids.length;j++){const b=ids[j],sb=src[b];let best=Infinity;for(const n in sb){if(D[n]!=null&&D[n]+sb[n]<best)best=D[n]+sb[n];}
+   if(best<Infinity){const km=best*PXM/1000;d[a+'|'+b]=km;d[b+'|'+a]=km;prs.push({a,b,d:km});}}});
+ prs.sort((x,y)=>x.d-y.d);const par={};ids.forEach(id=>par[id]=id);const fd=x=>par[x]===x?x:(par[x]=fd(par[x]));
+ prs.forEach(p=>{const ra=fd(p.a),rb=fd(p.b);if(ra===rb)return;par[ra]=rb;nb[p.a].push({id:p.b,d:p.d});nb[p.b].push({id:p.a,d:p.d});tree[p.a+'|'+p.b]=tree[p.b+'|'+p.a]=true;});
+ TT.dmK=k;return TT.dm={d,nb,tree};}
+function ttAutoOrder(){const dm=ttDM(),ids=W.sts.map(s=>s.id);if(!ids.length)return[];
+ const seen=new Set(),comps=[],out=[];
+ ids.forEach(id=>{if(seen.has(id))return;const comp=[],st=[id];seen.add(id);while(st.length){const n=st.pop();comp.push(n);(dm.nb[n]||[]).forEach(o=>{if(!seen.has(o.id)){seen.add(o.id);st.push(o.id);}});}comps.push(comp);});
+ comps.sort((a,b)=>b.length-a.length);
+ const bfs=s=>{const D={[s]:0},P={},Q=[s];let best=s;while(Q.length){const n=Q.shift();(dm.nb[n]||[]).forEach(o=>{if(D[o.id]==null){D[o.id]=D[n]+o.d;P[o.id]=n;Q.push(o.id);if(D[o.id]>D[best])best=o.id;}});}return{best,P};};
+ comps.forEach(comp=>{const a=bfs(comp[0]).best,r=bfs(a),path=[];let n=r.best;path.push(n);while(n!==a){n=r.P[n];path.push(n);}
+  if(stX(path[0])>stX(path[path.length-1]))path.reverse();
+  const vis=new Set(path),srt=n=>(dm.nb[n]||[]).slice().sort((x,y)=>x.d-y.d);
+  const dfs=n=>{out.push(n);vis.add(n);srt(n).forEach(o=>{if(!vis.has(o.id))dfs(o.id);});};
+  path.forEach(p=>{out.push(p);srt(p).forEach(o=>{if(!vis.has(o.id))dfs(o.id);});});});
+ return out;}
+function ttDefGap(a,b){const dm=ttDM(),d=dm.d[a+'|'+b];return(dm.tree[a+'|'+b]&&d!=null)?Math.max(.1,Math.round(d*100)/100):.8;}
+function ttDefGaps(force){const T=W.tt;T.order.forEach((id,i)=>{if(i>0&&!T.gu[id]&&(force||T.gap[id]==null))T.gap[id]=ttDefGap(T.order[i-1],id);});}
+function ttInit(){let T=W.tt;if(!T)T=W.tt={};
+ if(!Array.isArray(T.order))T.order=[];T.gap=T.gap||{};T.gu=T.gu||{};T.hid=T.hid||{};T.exp=T.exp||{};
+ if(T.mode==null)T.mode='dist';if(T.swap==null)T.swap=false;if(T.rev==null)T.rev=false;
+ const have=new Set(W.sts.map(s=>s.id)),o2=T.order.filter(id=>have.has(id));let ch=o2.length!==T.order.length;T.order=o2;
+ const inO=new Set(T.order),miss=W.sts.filter(s=>!inO.has(s.id)).map(s=>s.id);
+ if(miss.length){ch=true;if(!T.order.length){T.order=ttAutoOrder();T.gap={};T.gu={};}else miss.forEach(id=>T.order.push(id));}
+ if(ch||T.order.some((id,i)=>i>0&&T.gap[id]==null))ttDefGaps(false);
+ return T;}
+function ttPfs(id){const s={};W.edges.forEach(e=>{if((e.kind==='plat'||e.kind==='portal')&&e.st===id&&e.pf!==''&&e.pf!=null)s[String(e.pf)]=1;});
+ return Object.keys(s).sort((a,b)=>(parseFloat(a)||0)-(parseFloat(b)||0)||a.localeCompare(b));}
+/* layout แถวสถานี (+แถวชานชาลาเมื่อกางออก) */
+function ttLay(){const T=ttInit(),k=JSON.stringify([T.order,T.gap,T.hid,T.exp,T.mode,T.rev])+NETV+'|'+W.edges.length;
+ if(TT.lay&&TT.layK===k)return TT.lay;
+ const eq=T.mode==='equal',seq=T.rev?T.order.slice().reverse():T.order;let sg=0,sn=0;
+ T.order.forEach((id,i)=>{if(i>0){sg+=+T.gap[id]||1;sn++;}});
+ const dl=eq?.28:Math.max(.06,Math.min(.6,(sn?sg/sn:1)*.3));
+ let acc=0,first=true,pend=0;const pos={},pfp={},list=[],rows=[],npf={},gk={};
+ seq.forEach((id,i)=>{if(!SM[id])return;const vis=!T.hid[id];
+  if(eq){if(vis&&!first){acc+=1;pend=1;}}else if(i>0){const gp=Math.max(.05,+(T.rev?T.gap[seq[i-1]]:T.gap[id])||1);acc+=gp;pend+=gp;}
+  if(!vis)return;if(!first)gk[id]=pend;pend=0;first=false;pos[id]=acc;list.push(id);const pfs=ttPfs(id);npf[id]=pfs.length;rows.push({id,pf:null,p:acc});
+  if(T.exp[id]&&pfs.length){pfp[id]={};pfs.forEach(pf=>{acc+=dl;pfp[id][pf]=acc;rows.push({id,pf,p:acc});});}});
+ const anyExp=Object.keys(pfp).length>0,L={ids:list,pos,pfp,rows,npf,gk,total:acc,dl,anyExp,
+  at:(st,pf)=>{const q=pfp[st];if(q&&pf!=null&&q[String(pf)]!=null)return q[String(pf)];return pos[st];}};
+ TT.layK=k;return TT.lay=L;}
+/* ── มุมมอง / ซูม ── */
+function ttFit(w){const T=ttInit(),L=ttLay();let v=T.view;if(!v)v=T.view={t0:18000,t1:86400,p0:0,p1:1};
+ if(w==null||w==='t'||w==='all'){let a=Infinity,b=-Infinity;W.trains.forEach(t=>{if(t.tth)return;t.stops.forEach(s=>{[s.arr,s.dep].forEach(x=>{if(x!=null){if(x<a)a=x;if(x>b)b=x;}});});});
+  if(a===Infinity){a=18000;b=86400;}else{a=Math.max(0,Math.floor((a-600)/3600)*3600);b=Math.min(86400,Math.ceil((b+600)/3600)*3600);if(b-a<3600)b=Math.min(86400,a+3600);}
+  v.t0=a;v.t1=b;}
+ if(w==null||w==='p'||w==='all'){const pad=Math.max(L.total*.03,T.mode==='equal'?.5:.3);v.p0=-pad;v.p1=L.total+pad;}
+ ttClampV();}
+function ttView(){const T=ttInit();if(!T.view)ttFit();return T.view;}
+function ttClampV(){const T=W.tt,v=T.view;if(!v)return;const L=ttLay();
+ let ts=v.t1-v.t0;ts=Math.max(20,Math.min(86400,ts));if(v.t0<0)v.t0=0;if(v.t0+ts>86400)v.t0=86400-ts;v.t1=v.t0+ts;
+ const tot=Math.max(L.total,.1),pad=tot*.2+.6,lo=-pad,hi=tot+pad;let ps=v.p1-v.p0;const mp=T.mode==='equal'?1.2:.15;
+ ps=Math.max(mp,Math.min(hi-lo,ps));if(v.p0<lo)v.p0=lo;if(v.p0+ps>hi)v.p0=hi-ps;v.p1=v.p0+ps;}
+function ttZoomT(f,ct){const v=ttView();if(ct==null)ct=(v.t0+v.t1)/2;v.t0=ct-(ct-v.t0)/f;v.t1=ct+(v.t1-ct)/f;ttClampV();}
+function ttZoomP(f,cp){const v=ttView();if(cp==null)cp=(v.p0+v.p1)/2;v.p0=cp-(cp-v.p0)/f;v.p1=cp+(v.p1-cp)/f;ttClampV();}
+function ttG(){const sw=W.tt.swap;return{L:sw?74:196,T:sw?118:48,R:TT.w-16,B:TT.h-14};}
+function ttMapFor(){const T=W.tt,v=T.view,g=ttG(),sw=!!T.swap,ta=sw?[g.T,g.B]:[g.L,g.R],pa=sw?[g.L,g.R]:[g.T,g.B];
+ const ks=(ta[1]-ta[0])/(v.t1-v.t0),kp=(pa[1]-pa[0])/(v.p1-v.p0);
+ const M={g,sw,ta,pa,ks,kp,v,tx:t=>ta[0]+(t-v.t0)*ks,px:p=>pa[0]+(p-v.p0)*kp,it:s=>v.t0+(s-ta[0])/ks,ip:s=>v.p0+(s-pa[0])/kp};
+ M.xy=(t,p)=>sw?{x:M.px(p),y:M.tx(t)}:{x:M.tx(t),y:M.px(p)};M.sc=(x,y)=>sw?{t:M.it(y),p:M.ip(x)}:{t:M.it(x),p:M.ip(y)};return M;}
+function ttResize(){const w=$('tcw');if(!w||!TT.cv)return;const r=w.getBoundingClientRect();TT.dpr=window.devicePixelRatio||1;TT.w=Math.max(0,r.width);TT.h=Math.max(0,r.height);
+ TT.cv.width=Math.round(TT.w*TT.dpr);TT.cv.height=Math.round(TT.h*TT.dpr);}
+/* ── จุดของเส้น (แผน / จริง) ── */
+function ttPf(tr,i){const s=tr.stops[i];if(s.pf)return String(s.pf);const pv=preview(tr);return pv.pf[i]!=null&&pv.pf[i]!==''?String(pv.pf[i]):null;}
+function ttPts(tr,L){const o=[],ex=L.anyExp;tr.stops.forEach((s,i)=>{if(L.pos[s.st]==null)return;const p=L.at(s.st,ex?ttPf(tr,i):null);
+ if(s.pass){const t=s.arr!=null?s.arr:s.dep;if(t!=null)o.push({t,p,i,k:'p'});return;}
+ if(s.arr!=null)o.push({t:s.arr,p,i,k:'a'});if(s.dep!=null)o.push({t:s.dep,p,i,k:'d'});});return o;}
+function ttActPts(tr,L){const rc=tr.rec||[],S=tr.stops,r=tr.rt,o=[],ex=L.anyExp;
+ for(let i=0;i<S.length;i++){const q=rc[i];if(!q||L.pos[S[i].st]==null)continue;const p=L.at(S[i].st,ex?(q.pf||ttPf(tr,i)):null);
+  if(q.a!=null)o.push({t:q.a,p,i,k:'a'});if(q.d!=null)o.push({t:q.d,p,i,k:'d'});}
+ if(r&&o.length){let live=null;
+  if(r.state==='run'&&r.end&&r.legStart!=null){const idx=[r.si],ds=[r.legStart];(r.wps||[]).forEach(w=>{idx.push(w.j);ds.push(w.d);});idx.push(r.end.j);ds.push(r.legEnd);
+   let m=0;while(m<ds.length-2&&r.hs>ds[m+1])m++;const f=Math.max(0,Math.min(1,(r.hs-ds[m])/Math.max(1e-6,ds[m+1]-ds[m])));
+   const sa=S[idx[m]],sb=S[idx[m+1]];if(sa&&sb&&L.pos[sa.st]!=null&&L.pos[sb.st]!=null){const pa=L.at(sa.st,ex?ttPf(tr,idx[m]):null),pb=L.at(sb.st,ex?ttPf(tr,idx[m+1]):null);live={t:SIM.t,p:pa+(pb-pa)*f};}}
+  else if((r.state==='dwell'||r.state==='end')&&S[r.si]&&L.pos[S[r.si].st]!=null)live={t:SIM.t,p:L.at(S[r.si].st,ex?(rc[r.si]&&rc[r.si].pf||ttPf(tr,r.si)):null)};
+  if(live)o.push(live);}
+ return o;}
+function ttAct(tr){const S=tr.stops,rc=tr.rec||[],rows=[];let has=false;
+ S.forEach((s,i)=>{const q=rc[i]||{},a=q.a,d=q.d;if(a!=null||d!=null)has=true;rows.push({i,s,pa:s.arr,pd:s.dep,a,d,pf:q.pf,da:(a!=null&&s.arr!=null)?a-s.arr:null,dd:(d!=null&&s.dep!=null)?d-s.dep:null});});
+ const Lr=rows[rows.length-1],dest=(Lr&&Lr.a!=null)?Lr:null;return{rows,has,dest,live:tr.rt?tr.rt.dly:null};}
+const ttDl=s=>s==null?'':(s>=0?'+':'-')+mmss(Math.abs(s));
+function ttRoute(tr){const S=tr.stops;return S.length?ttNm(S[0].st)+' → '+ttNm(S[S.length-1].st):'—';}
+function ttSpan(tr){const S=tr.stops;if(!S.length)return'';const a=S[0].dep!=null?S[0].dep:S[0].arr,l=S[S.length-1],b=l.arr!=null?l.arr:l.dep;return hmx(a)+' – '+hmx(b);}
+/* ── วาด ── */
+function ttPath(c,M,P){c.beginPath();P.forEach((q,i)=>{const s=M.xy(q.t,q.p);i?c.lineTo(s.x,s.y):c.moveTo(s.x,s.y);});}
+function ttHalo(c,C,txt,x,y){c.lineWidth=3;c.strokeStyle=C.halo;c.strokeText(txt,x,y);c.fillText(txt,x,y);}
+function ttFitTxt(c,t,w){if(c.measureText(t).width<=w)return t;while(t.length>1&&c.measureText(t+'…').width>w)t=t.slice(0,-1);return t+'…';}
+const TLV=[[10,.5,.07,12],[30,.6,.1,9],[120,.8,.15,7],[600,1.05,.22,6],[1800,1.35,.32,6],[3600,2,.52,0]];
+function ttDraw(){if(!TT.c||TT.w<60||TT.h<60)return;const c=TT.c;c.setTransform(TT.dpr,0,0,TT.dpr,0,0);
+ const C=TTC(),T=ttInit(),L=ttLay();ttView();ttClampV();const M=ttMapFor();TT.M=M;const g=M.g,sw=M.sw,v=M.v,now=performance.now(),pxs=Math.abs(M.ks);
+ c.fillStyle=C.bg;c.fillRect(0,0,TT.w,TT.h);
+ trr(c,g.L,g.T,g.R-g.L,g.B-g.T,12);c.fillStyle=C.plot;c.fill();
+ c.save();trr(c,g.L,g.T,g.R-g.L,g.B-g.T,12);c.clip();
+ /* เส้นตารางเวลา */
+ for(const[s,w,a,mn]of TLV){if(s*pxs<mn)continue;c.lineWidth=w;c.strokeStyle='rgba('+C.gr+','+a+')';c.beginPath();
+  for(let t=Math.ceil(v.t0/s)*s;t<=v.t1;t+=s){const q=Math.round(M.tx(t))+.5;if(sw){c.moveTo(g.L,q);c.lineTo(g.R,q);}else{c.moveTo(q,g.T);c.lineTo(q,g.B);}}c.stroke();}
+ /* เส้นสถานี / ชานชาลา */
+ L.rows.forEach(r=>{const q=Math.round(M.px(r.p))+.5;if(q<(sw?g.L:g.T)-2||q>(sw?g.R:g.B)+2)return;
+  if(r.pf==null){c.strokeStyle='rgba('+C.gr+',.42)';c.lineWidth=1;c.setLineDash([]);}else{c.strokeStyle='rgba('+C.gr+',.2)';c.lineWidth=1;c.setLineDash([4,4]);}
+  c.beginPath();if(sw){c.moveTo(q,g.T);c.lineTo(q,g.B);}else{c.moveTo(g.L,q);c.lineTo(g.R,q);}c.stroke();});c.setLineDash([]);
+ /* เวลาปัจจุบันของซิม */
+ if(TT.showNow&&SIM.t>=v.t0&&SIM.t<=v.t1){const q=Math.round(M.tx(SIM.t))+.5;c.strokeStyle=C.now;c.lineWidth=1.5;c.setLineDash([6,4]);c.beginPath();if(sw){c.moveTo(g.L,q);c.lineTo(g.R,q);}else{c.moveTo(q,g.T);c.lineTo(q,g.B);}c.stroke();c.setLineDash([]);}
+ const trs=W.trains.filter(t=>!t.tth&&t.stops.length>1),pts={};
+ trs.forEach(t=>{const P=ttPts(t,L);if(P.length>1)pts[t.id]=P;});
+ const vis=t=>{const P=pts[t.id];return P&&P[P.length-1].t>=v.t0-60&&P[0].t<=v.t1+60;};
+ /* halo เลือก / ชี้ */
+ [TT.hover&&TT.hover.tr?TT.hover.tr.id:null,TT.sel].forEach((id,k)=>{if(!id||!pts[id])return;ttPath(c,M,pts[id]);c.lineJoin='round';c.lineCap='round';c.lineWidth=k?8:6;c.strokeStyle=k?'rgba(255,216,74,.38)':C.hov;c.stroke();});
+ /* เส้นแผน */
+ c.lineJoin='round';c.lineCap='round';
+ trs.forEach(t=>{if(!vis(t))return;ttPath(c,M,pts[t.id]);c.strokeStyle=TT.colorBy?t.color:C.ln;c.lineWidth=(TT.sel===t.id||(TT.hover&&TT.hover.tr===t))?2.2:1.5;c.stroke();});
+ /* เส้นต่อขบวนหมุนเวียน */
+ if(TT.showLink){c.setLineDash([5,4]);c.strokeStyle=C.lk;c.lineWidth=1.3;trs.forEach(t=>{if(!t.next||!pts[t.id])return;const n=TR(t.next);if(!n||n.tth||!pts[n.id])return;
+  const a=pts[t.id][pts[t.id].length-1],b=pts[n.id][0],A=M.xy(a.t,a.p),B=M.xy(b.t,b.p);c.beginPath();c.moveTo(A.x,A.y);c.lineTo(B.x,B.y);c.stroke();});c.setLineDash([]);}
+ /* เส้นแดงกระพริบ = ขัดแย้ง */
+ const pul=.5+.5*Math.sin(now/170);
+ if(TT.showCf&&CF.trs.size){c.save();c.shadowColor=C.cf;c.shadowBlur=10;c.strokeStyle=C.cf;c.lineWidth=3.4;c.globalAlpha=.35+.65*pul;
+  CF.trs.forEach(id=>{const t=TR(id);if(!t||t.tth||!pts[id]||!vis(t))return;ttPath(c,M,pts[id]);c.stroke();});c.restore();}
+ /* เส้นชมพู = เดินรถจริงในซิม */
+ if(TT.showAct){c.save();c.strokeStyle=C.act;c.lineWidth=2.6;if(THM==='dark'){c.shadowColor=C.act;c.shadowBlur=7;}
+  trs.forEach(t=>{if(!t.rec||!t.rec.length)return;const P=ttActPts(t,L);if(P.length<2)return;ttPath(c,M,P);c.stroke();});c.restore();}
+ /* ตัวเลขเวลา / เลขขบวน */
+ const pm=pxs*60;c.textBaseline='middle';
+ if(TT.showT&&pm>=7){c.font='600 '+(pm>=26?10:9)+'px Sarabun';c.fillStyle=C.mu;c.textAlign='left';
+  trs.forEach(t=>{if(!vis(t))return;pts[t.id].forEach(q=>{if(q.t<v.t0||q.t>v.t1)return;const s=M.xy(q.t,q.p);const tx=pm>=26?hmx(q.t):(Math.floor(q.t/60)%60+(q.t%60?':'+p2(q.t%60):''));
+   ttHalo(c,C,String(tx).padStart(2,'0'),s.x+4,s.y+(q.k==='d'?9:-8));});});}
+ if(pm>=2.2||TT.sel||TT.hover){c.font='700 10px Sarabun';c.fillStyle=C.tx;c.textAlign='left';
+  trs.forEach(t=>{const P=pts[t.id];if(!P||!vis(t))return;const on=TT.sel===t.id||(TT.hover&&TT.hover.tr===t);if(pm<2.2&&!on)return;const q=P[0],s=M.xy(q.t,q.p);if(q.t<v.t0||q.t>v.t1)return;ttHalo(c,C,t.no,s.x+(sw?6:-4-c.measureText(t.no).width),s.y+(sw?-8:-9));});}
+ /* จุดความขัดแย้ง */
+ if(TT.showCf)CF.ev.forEach(e=>{const t=TR(e.tid);if(!t||L.pos[e.st]==null)return;const p=L.pos[e.st],A=M.xy(e.t0,p),B=M.xy(e.t1,p),X=(A.x+B.x)/2,Y=(A.y+B.y)/2;
+  c.save();c.globalAlpha=.4+.6*pul;c.strokeStyle=C.cf;c.fillStyle=C.cf;c.shadowColor=C.cf;c.shadowBlur=12;c.lineWidth=5;c.lineCap='round';c.beginPath();c.moveTo(A.x,A.y);c.lineTo(B.x,B.y);c.stroke();
+  c.beginPath();c.arc(X,Y,6+3*pul,0,7);c.fill();c.lineWidth=2;c.globalAlpha=.9*pul;c.beginPath();c.arc(X,Y,13+5*pul,0,7);c.stroke();c.restore();
+  c.fillStyle='#fff';c.font='700 10px Sarabun';c.textAlign='center';c.fillText('!',X,Y+.5);});
+ /* จุดจับของขบวนที่เลือก */
+ if(TT.sel&&pts[TT.sel]){pts[TT.sel].forEach(q=>{const s=M.xy(q.t,q.p);c.beginPath();c.arc(s.x,s.y,5,0,7);c.fillStyle=q.k==='a'?C.plot:C.sel;c.fill();c.lineWidth=2;c.strokeStyle=C.sel;c.stroke();});}
+ c.restore();
+ trr(c,g.L,g.T,g.R-g.L,g.B-g.T,12);c.lineWidth=1.2;c.strokeStyle='rgba('+C.gr+',.45)';c.stroke();
+ ttRuler(c,C,M,pxs);ttGutter(c,C,M,L);
+ /* เวลา/สถานีที่เมาส์ชี้ */
+ if(TT.cx!=null&&!TT.pan&&!TT.hd){const m=M.sc(TT.cx,TT.cy),inP=TT.cx>=g.L&&TT.cx<=g.R&&TT.cy>=g.T&&TT.cy<=g.B;
+  if(inP){c.font='700 11px Sarabun';c.textAlign='center';c.textBaseline='middle';const txt=ttLbl(Math.max(0,m.t),1),w=c.measureText(txt).width+14;
+   c.setLineDash([2,3]);c.strokeStyle='rgba('+C.gr+',.55)';c.lineWidth=1;c.beginPath();if(sw){c.moveTo(g.L,TT.cy);c.lineTo(g.R,TT.cy);}else{c.moveTo(TT.cx,g.T);c.lineTo(TT.cx,g.B);}c.stroke();c.setLineDash([]);
+   const bx=sw?g.L-w-4:TT.cx-w/2,by=sw?TT.cy-9:g.T-24;trr(c,bx,by,w,18,9);c.fillStyle=C.tx;c.fill();c.fillStyle=C.plot;c.fillText(txt,bx+w/2,by+9.5);}}
+ ttTip(c,C,M,L);
+ const el=$('ttClk');if(el)el.textContent=hms(SIM.t);const pb=$('tPl'),pt=SIM.run?'⏸':'▶';if(pb&&TT.lastPl!==pt){pb.textContent=pt;pb.classList.toggle('go',!SIM.run);TT.lastPl=pt;}}
+function ttRuler(c,C,M,pxs){const g=M.g,sw=M.sw,v=M.v;
+ trr(c,sw?0:g.L,sw?g.T:0,sw?g.L-6:g.R-g.L,sw?g.B-g.T:g.T-6,10);c.fillStyle=C.hd;c.fill();
+ c.save();c.beginPath();if(sw)c.rect(0,g.T,g.L,g.B-g.T);else c.rect(g.L,0,g.R-g.L,g.T);c.clip();
+ const tk={10:3,30:4,120:5,600:7,1800:9,3600:13};
+ for(const[s,w,a,mn]of TLV){if(s*pxs<mn)continue;c.strokeStyle='rgba('+C.gr+','+Math.min(.9,a*2+.15)+')';c.lineWidth=Math.max(.7,w*.8);c.beginPath();
+  for(let t=Math.ceil(v.t0/s)*s;t<=v.t1;t+=s){const q=Math.round(M.tx(t))+.5,l=tk[s];if(sw){c.moveTo(g.L-6,q);c.lineTo(g.L-6-l,q);}else{c.moveTo(q,g.T-6);c.lineTo(q,g.T-6-l);}}c.stroke();}
+ const LS=[10,30,120,600,1800,3600,7200,10800,21600];let ls=21600;for(const s of LS){if(s*pxs>=(sw?22:60)){ls=s;break;}}
+ c.textBaseline='middle';
+ for(let t=Math.ceil(v.t0/ls)*ls;t<=v.t1;t+=ls){const q=M.tx(t),hr=t%3600===0;c.font=(hr?'700 12px':'600 10px')+' Sarabun';c.fillStyle=hr?C.tx:C.mu;const txt=ttLbl(t,ls<60);
+  if(sw){c.textAlign='right';c.fillText(txt,g.L-24,q);}else{c.textAlign='center';c.fillText(txt,q,g.T-24);}}
+ c.restore();
+ if(TT.showNow&&SIM.t>=v.t0&&SIM.t<=v.t1){const q=M.tx(SIM.t),txt=hms(SIM.t);c.font='700 10px Sarabun';const w=c.measureText(txt).width+12;const bx=sw?2:q-w/2,by=sw?q-8:g.T-46;
+  trr(c,bx,by,w,16,8);c.fillStyle=C.now;c.fill();c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText(txt,bx+w/2,by+8.5);}}
+function ttPfLbl(id,pf){return(SM[id]&&SM[id].type==='portal'?'ทาง ':'PF.')+pf;}
+function ttToggleExp(id,v){const T=ttInit();if(!ttPfs(id).length)return false;const L0=ttLay(),p0=L0.pos[id];T.exp[id]=v==null?!T.exp[id]:!!v;const L1=ttLay(),vw=T.view;
+ if(vw&&p0!=null){const d=L1.total-L0.total;if(d&&vw.p1>p0)vw.p1+=d;ttClampV();
+  if(W.tt.exp[id]&&TT.M){const kp=Math.abs(TT.M.kp)||1,need=26/(L1.dl*kp);if(need>1){const n=ttPfs(id).length;ttZoomP(Math.min(need,6),L1.pos[id]+n*L1.dl/2);}const v2=ttView(),tp=L1.pos[id]-L1.dl*1.6;if(v2.p0>tp){const d=v2.p0-tp;v2.p0-=d;v2.p1-=d;ttClampV();}}}return true;}
+function ttGutter(c,C,M,L){const g=M.g,sw=M.sw,T=W.tt;c.textBaseline='middle';
+ if(!sw){trr(c,0,g.T,g.L-6,g.B-g.T,10);c.fillStyle=C.hd;c.fill();c.save();c.beginPath();c.rect(0,g.T,g.L-6,g.B-g.T);c.clip();
+  let lastY=-99,prevSt=null,prevY=0;
+  L.rows.forEach(r=>{const y=M.px(r.p);
+   if(r.pf==null){const py=prevY,ps=prevSt;prevY=y;prevSt=r;
+    if(y<g.T-12||y>g.B+12)return;
+    if(T.mode!=='equal'&&ps&&L.gk[r.id]!=null&&!L.pfp[ps.id]&&Math.abs(y-py)>=30){c.font='500 9px Sarabun';c.fillStyle=C.mu;c.textAlign='right';c.fillText(L.gk[r.id].toFixed(1)+' กม.',g.L-12,(y+py)/2);}
+    if(Math.abs(y-lastY)<12)return;lastY=y;
+    const has=L.npf[r.id]>0,ex=!!T.exp[r.id],hv=TT.hovRow===r.id;
+    if(hv){c.fillStyle='rgba('+C.gr+',.16)';trr(c,4,y-11,g.L-18,22,8);c.fill();}
+    c.font='700 12.5px Sarabun';c.fillStyle=hv?C.sel:C.tx;c.textAlign='left';c.fillText(ttFitTxt(c,(has?(ex?'▾ ':'▸ '):'   ')+ttNm(r.id),g.L-58),10,y);
+    if(has){c.font='600 10px Sarabun';c.fillStyle=C.mu;c.textAlign='right';c.fillText(L.npf[r.id]+' PF',g.L-12,y);}
+    return;}
+   if(y<g.T-12||y>g.B+12)return;if(Math.abs(y-lastY)<8)return;lastY=y;
+   c.font='600 10.5px Sarabun';c.fillStyle=C.mu;c.textAlign='right';c.fillText(ttPfLbl(r.id,r.pf),g.L-12,y);});c.restore();}
+ else{trr(c,g.L,0,g.R-g.L,g.T-6,10);c.fillStyle=C.hd;c.fill();c.save();c.beginPath();c.rect(g.L,0,g.R-g.L,g.T-6);c.clip();let lastX=-99;
+  L.rows.forEach(r=>{const x=M.px(r.p);if(x<g.L-8||x>g.R+8)return;if(Math.abs(x-lastX)<(r.pf==null?13:11))return;lastX=x;c.save();c.translate(x,g.T-12);c.rotate(-Math.PI*.3);c.textAlign='left';
+   if(r.pf==null){const has=L.npf[r.id]>0,ex=!!T.exp[r.id];c.font='700 12px Sarabun';c.fillStyle=TT.hovRow===r.id?C.sel:C.tx;c.fillText(ttFitTxt(c,(has?(ex?'▾ ':'▸ '):'')+ttNm(r.id),118),0,0);}
+   else{c.font='600 10px Sarabun';c.fillStyle=C.mu;c.fillText(ttPfLbl(r.id,r.pf),0,0);}c.restore();});c.restore();}}
+function ttTip(c,C,M,L){const h=TT.hover;if(!h||TT.pan||TT.hd||TT.cx==null)return;let lines=[];
+ if(h.ev){const x=ttEvText(h.ev);lines=['⚠ '+x.h,x.s];}
+ else if(h.tr){const tr=h.tr;lines=['ขบวน '+tr.no+'  '+ttRoute(tr),'แผน '+ttSpan(tr)];if(h.kind==='a'){const a=ttAct(tr);lines.push(a.dest?'เดินจริงถึงปลายทาง '+hmx(a.dest.a)+' · '+(Math.abs(a.dest.da||0)<=30?'ตรงเวลา':'ล่าช้า '+ttDl(a.dest.da)):'กำลังเดินรถ · ล่าช้าสะสม '+ttDl(a.live||0));lines.push('คลิกเพื่อดูรายละเอียด');}
+  else if(CF.trs.has(tr.id))lines.push('⚠ มีความขัดแย้งในตารางนี้');}
+ if(!lines.length)return;c.font='600 11px Sarabun';c.textBaseline='middle';c.textAlign='left';const w=Math.max(...lines.map(s=>c.measureText(s).width))+18,hh=lines.length*16+10;
+ let x=TT.cx+14,y=TT.cy+14;if(x+w>TT.w-6)x=TT.cx-w-12;if(y+hh>TT.h-6)y=TT.cy-hh-12;
+ c.save();c.shadowColor='rgba(0,0,0,.35)';c.shadowBlur=12;trr(c,x,y,w,hh,10);c.fillStyle=THM==='dark'?'rgba(20,28,40,.96)':'rgba(255,255,255,.97)';c.fill();c.restore();
+ trr(c,x,y,w,hh,10);c.lineWidth=1;c.strokeStyle='rgba('+C.gr+',.4)';c.stroke();
+ lines.forEach((s,i)=>{c.fillStyle=i===0?C.tx:C.mu;c.font=(i===0?'700 ':'500 ')+'11px Sarabun';c.fillText(s,x+9,y+13+i*16);});}
+/* ── โต้ตอบเมาส์ ── */
+function ttXY(ev){const r=TT.cv.getBoundingClientRect();return{x:ev.clientX-r.left,y:ev.clientY-r.top};}
+function ttArea(M,x,y){const g=M.g;if(x>=g.L&&x<=g.R&&y>=g.T&&y<=g.B)return'plot';
+ if(!M.sw){if(y<g.T&&x>=g.L)return'tr';if(x<g.L&&y>=g.T)return'sg';}else{if(x<g.L&&y>=g.T)return'tr';if(y<g.T&&x>=g.L)return'sg';}return'none';}
+function ttSegD(px,py,ax,ay,bx,by){const vx=bx-ax,vy=by-ay,l2=vx*vx+vy*vy;let t=l2?((px-ax)*vx+(py-ay)*vy)/l2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+vx*t),py-(ay+vy*t));}
+function ttHit(mx,my){const M=TT.M;if(!M)return null;const L=ttLay(),tol=7;let best=null,bd=tol;
+ if(TT.showCf)for(const e of CF.ev){if(L.pos[e.st]==null)continue;const A=M.xy(e.t0,L.pos[e.st]),B=M.xy(e.t1,L.pos[e.st]),d=ttSegD(mx,my,A.x,A.y,B.x,B.y)-4;if(d<bd){bd=d;best={ev:e,tr:TR(e.tid),kind:'e'};}}
+ if(best)return best;
+ for(const tr of W.trains){if(tr.tth||tr.stops.length<2)continue;
+  const P=ttPts(tr,L);for(let i=0;i<P.length-1;i++){const A=M.xy(P[i].t,P[i].p),B=M.xy(P[i+1].t,P[i+1].p),d=ttSegD(mx,my,A.x,A.y,B.x,B.y);if(d<bd){bd=d;best={tr,kind:'p'};}}
+  if(TT.showAct&&tr.rec&&tr.rec.length){const Q=ttActPts(tr,L);for(let i=0;i<Q.length-1;i++){const A=M.xy(Q[i].t,Q[i].p),B=M.xy(Q[i+1].t,Q[i+1].p),d=ttSegD(mx,my,A.x,A.y,B.x,B.y)-1.5;if(d<bd){bd=d;best={tr,kind:'a'};}}}}
+ return best;}
+function ttHovRow(m){const M=TT.M,L=ttLay();TT.hovRow=null;if(!M||ttArea(M,m.x,m.y)!=='sg')return;let bd=10;L.rows.forEach(r=>{if(r.pf!=null)return;const d=Math.abs(M.px(r.p)-(M.sw?m.x:m.y));if(d<bd){bd=d;TT.hovRow=r.id;}});}
+function ttGutClick(m){const M=TT.M,L=ttLay(),T=ttInit();let best=null,bd=11;L.rows.forEach(r=>{if(r.pf!=null)return;const d=Math.abs(M.px(r.p)-(M.sw?m.x:m.y));if(d<bd){bd=d;best=r;}});
+ if(best){if(L.npf[best.id]>0){ttToggleExp(best.id);toast((T.exp[best.id]?'กางชานชาลา ':'ย่อชานชาลา ')+ttNm(best.id));renderLeft();}else toast(ttNm(best.id)+' — ยังไม่มีชานชาลา (สร้างได้ที่หน้าสร้างราง)','er');}}
+function ttAdj(tr,i,f,dv,cas){const S=tr.stops,sp=S[i];if(!sp||sp[f]==null||!dv)return;
+ if(cas){for(let j=i;j<S.length;j++){const q=S[j];if(j===i){q[f]+=dv;if(f==='arr'&&q.dep!=null)q.dep+=dv;}else{if(q.arr!=null)q.arr+=dv;if(q.dep!=null)q.dep+=dv;}}}else sp[f]+=dv;
+ if(sp.pass)sp.dep=sp.arr;if(sp.arr!=null&&sp.dep!=null&&sp.dep<sp.arr)sp.dep=sp.arr;
+ if(i>0&&i<S.length-1&&!sp.pass&&sp.arr!=null&&sp.dep!=null)sp.dw=sp.dep-sp.arr;tr.ver++;}
+function ttEdited(){TT.chg=performance.now();if(UI.tab==='tt')renderLeft();}
+function ttBanner(t){const b=$('tbn');if(!b)return;if(t){b.style.display='block';b.textContent=t;}else b.style.display='none';}
+function ttDown(ev){if(ev.button!==0||!TT.M)return;const m=ttXY(ev),M=TT.M,a=ttArea(M,m.x,m.y);tpClose();const sc=M.sc(m.x,m.y);
+ if(TT.mv&&a==='plot'){const tr=TT.mv.tr;TT.mv.t0=sc.t;TT.mv.orig=tr.stops.map(s=>({a:s.arr,d:s.dep}));TT.mv.on=true;TT.mv.dv=0;return;}
+ if(a==='plot'){if(TT.sel){const tr=TR(TT.sel);if(tr){const P=ttPts(tr,ttLay());for(const q of P){const s=M.xy(q.t,q.p);if(Math.hypot(s.x-m.x,s.y-m.y)<8){TT.hd={tr,i:q.i,k:q.k,moved:false};return;}}}}
+  TT.pend=ttHit(m.x,m.y);}
+ if(a!=='none')TT.pan={x:m.x,y:m.y,v:Object.assign({},W.tt.view),part:a==='tr'?'t':a==='sg'?'p':'all',moved:false,area:a};}
+function ttMouse(ev){if(UI.tab!=='tt'||!TT.M)return;const m=ttXY(ev),M=TT.M;TT.cx=m.x;TT.cy=m.y;const sc=M.sc(m.x,m.y);
+ if(TT.mv&&TT.mv.on){const dv=ttSnap(sc.t-TT.mv.t0),tr=TT.mv.tr;tr.stops.forEach((s,i)=>{const o=TT.mv.orig[i];s.arr=o.a!=null?o.a+dv:null;s.dep=o.d!=null?o.d+dv:null;});tr.ver++;TT.mv.dv=dv;return;}
+ if(TT.hd){const h=TT.hd,s=h.tr.stops[h.i],f=h.k==='d'?'dep':'arr';ttAdj(h.tr,h.i,f,Math.max(0,Math.min(129600,ttSnap(sc.t)))-s[f],UI.cas);h.moved=true;return;}
+ if(TT.pan){const p=TT.pan,dx=m.x-p.x,dy=m.y-p.y;if(!p.moved&&Math.hypot(dx,dy)<4)return;p.moved=true;const v=W.tt.view,o=p.v;
+  if(p.part!=='p'){const d=-(M.sw?dy:dx)/M.ks;v.t0=o.t0+d;v.t1=o.t1+d;}
+  if(p.part!=='t'){const d=-(M.sw?dx:dy)/M.kp;v.p0=o.p0+d;v.p1=o.p1+d;}ttClampV();return;}
+ ttHovRow(m);const a=ttArea(M,m.x,m.y);TT.hover=a==='plot'?ttHit(m.x,m.y):null;
+ let cur='grab';if(TT.mv)cur='move';else if(TT.hover)cur='pointer';else if(TT.hovRow)cur='pointer';else if(a==='tr')cur='ew-resize';TT.cv.style.cursor=cur;}
+function ttUp(ev){if(UI.tab!=='tt')return;const m=ttXY(ev);
+ if(TT.mv&&TT.mv.on){const mv=TT.mv;TT.mv=null;ttBanner('');if(mv.dv){ttEdited();toast('ย้ายขบวน '+mv.tr.no+' '+(mv.dv>0?'+':'−')+mmss(Math.abs(mv.dv)));}return;}
+ if(TT.hd){const h=TT.hd;TT.hd=null;if(h.moved)ttEdited();return;}
+ const p=TT.pan;TT.pan=null;const pend=TT.pend;TT.pend=null;
+ if(p&&!p.moved){if(p.area==='plot'){if(pend&&pend.ev){const x=ttEvText(pend.ev);tpOpen(m.x,m.y,'⚠ '+x.h,[{ic:'ℹ',t:x.s,f:()=>{}},{sep:1},{ic:'⤢',t:'ซูมไปที่จุดนี้',f:()=>ttFocusEv(pend.ev)},{ic:'✏️',t:'แก้ไขขบวนที่ถูกหยุด…',off:!pend.tr,f:()=>ttEditDlg(pend.tr)}]);}
+   else if(pend&&pend.tr){TT.sel=pend.tr.id;ttMenu(pend.tr,m.x,m.y,pend);}else{TT.sel=null;}}
+  else if(p.area==='sg')ttGutClick(m);}}
+function ttCtx(ev){ev.preventDefault();if(!TT.M)return;const m=ttXY(ev),M=TT.M;if(ttArea(M,m.x,m.y)!=='plot')return;const h=ttHit(m.x,m.y),t=ttSnap(Math.max(0,M.sc(m.x,m.y).t));
+ if(h&&h.tr){TT.sel=h.tr.id;ttMenu(h.tr,m.x,m.y,h);}
+ else tpOpen(m.x,m.y,'ตารางเดินรถ · '+ttLbl(t),[{ic:'📥',t:'วางขบวนที่คัดลอกไว้ที่ '+ttLbl(t),off:!TT.clip,f:()=>ttPaste(t)},{ic:'⤢',t:'พอดีหน้าจอ',f:()=>ttFit()},{ic:'⇄',t:'สลับแกนเวลา/สถานี',f:ttSwap}]);}
+function ttDbl(ev){if(UI.tab!=='tt'||!TT.M)return;const m=ttXY(ev),M=TT.M,a=ttArea(M,m.x,m.y);
+ if(a==='tr'){const t=Math.max(0,Math.round(M.sc(m.x,m.y).t));setClock(t);toast('ตั้งเวลาจำลองที่ '+hms(t));}
+ else if(a==='plot'){const h=ttHit(m.x,m.y);if(h&&h.tr&&!h.ev)ttEditDlg(h.tr);}}
+function ttWheel(ev){if(UI.tab!=='tt'||!TT.M)return;ev.preventDefault();tpClose();const m=ttXY(ev),M=TT.M,a=ttArea(M,m.x,m.y),sc=M.sc(m.x,m.y),dy=ev.deltaY||ev.deltaX,f=dy<0?1.18:1/1.18;
+ let zt=true,zp=true;if(a==='tr')zp=false;else if(a==='sg')zt=false;else if(ev.ctrlKey)zp=false;else if(ev.shiftKey)zt=false;
+ if(zt)ttZoomT(f,sc.t);if(zp)ttZoomP(f,sc.p);}
+function ttSwap(){const T=ttInit();T.swap=!T.swap;ttSyncTb();}
+/* ── เมนูลอย ── */
+let TPF=[];
+function tpOpen(x,y,title,items){const p=$('tpop');TPF=[];
+ p.innerHTML=(title?'<div class="ph">'+esc(title)+'</div>':'')+items.map((it,i)=>{if(it.sep)return'<div class="ps"></div>';TPF[i]=it.f;
+  return'<div class="pi'+(it.d?' dz':'')+(it.off?' off':'')+'" data-pi="'+i+'"><span>'+(it.ic||'')+'</span>'+esc(it.t)+(it.k?'<small>'+it.k+'</small>':'')+'</div>';}).join('');
+ p.style.display='block';const w=p.offsetWidth,h=p.offsetHeight;p.style.left=Math.max(6,Math.min(x+10,TT.w-w-6))+'px';p.style.top=Math.max(6,Math.min(y+10,TT.h-h-6))+'px';}
+function tpClose(){const p=$('tpop');if(p)p.style.display='none';TPF=[];}
+$('tpop').addEventListener('click',e=>{const b=e.target.closest('[data-pi]');if(!b)return;const f=TPF[+b.dataset.pi];tpClose();if(f)f();});
+window.addEventListener('mousedown',e=>{if(!e.target.closest('#tpop'))tpClose();},true);
+function ttMenu(tr,x,y,h){const a=ttAct(tr),t=ttSnap(Math.max(0,TT.M.sc(x,y).t)),cf=CF.trs.has(tr.id);
+ let title='ขบวน '+tr.no+' · '+ttRoute(tr)+' · '+ttSpan(tr);
+ if(h&&h.kind==='a'&&a.has)title+=' · '+(a.dest?'ปลายทาง '+ttDl(a.dest.da||0):'ล่าช้า '+ttDl(a.live||0));
+ tpOpen(x,y,title,[
+  {ic:'📊',t:'รายละเอียดเดินรถจริง…',off:!a.has,f:()=>ttActDlg(tr)},
+  {ic:'✏️',t:'แก้ไขเวลา / ชานชาลา…',k:'E',f:()=>ttEditDlg(tr)},
+  {ic:'✥',t:'ย้าย (ลากเลื่อนเวลา)',f:()=>ttMoveStart(tr)},
+  {ic:'📋',t:'คัดลอก',k:'Ctrl+C',f:()=>ttCopy(tr)},
+  {ic:'📥',t:'วางที่ '+ttLbl(t),k:'Ctrl+V',off:!TT.clip,f:()=>ttPaste(t)},
+  {ic:'⧉',t:'คัดลอกวางตามความถี่…',f:()=>ttFreqDlg(tr)},
+  {ic:'↩',t:'ต่อขบวนกลับ (ถึงปลายทาง → เลขถัดไป)',f:()=>ttReturn(tr)},
+  {sep:1},
+  {ic:'🚆',t:'เปิดในแท็บขบวน & เส้นทาง',f:()=>selectTrain(tr.id)},
+  {ic:'🙈',t:'ซ่อนเส้นนี้จากตาราง',f:()=>{tr.tth=true;if(TT.sel===tr.id)TT.sel=null;ttEdited();}},
+  {sep:1},
+  {ic:'🗑',t:'ลบขบวนนี้',k:'Del',d:1,f:()=>ttDel(tr)}]);}
+function ttMoveStart(tr){TT.mv={tr,on:false};TT.sel=tr.id;ttBanner('✥ ย้ายขบวน '+tr.no+': กดค้างแล้วลากซ้าย–ขวาเพื่อเลื่อนเวลา (ปัดทีละ '+TT.snap+' วิ) · Esc = ยกเลิก');}
+function ttEsc(){if(TT.mv){if(TT.mv.on&&TT.mv.orig){TT.mv.tr.stops.forEach((s,i)=>{const o=TT.mv.orig[i];s.arr=o.a;s.dep=o.d;});TT.mv.tr.ver++;}TT.mv=null;ttBanner('');}
+ if(TT.hd)TT.hd=null;tpClose();}
+/* ── คัดลอก / วาง / ลบ / ต่อขบวน ── */
+const ttClone=(S,dv)=>S.map(s=>({st:s.st,pf:s.pf||'',arr:s.arr!=null?s.arr+dv:null,dep:s.dep!=null?s.dep+dv:null,pass:!!s.pass,dw:s.dw}));
+function uniqNo(n,step){let k=parseInt(n);if(isNaN(k))return nextNo();step=step||1;while(W.trains.some(t=>t.no===String(k)))k+=step;return String(k);}
+function ttCopy(tr){TT.clip={no:tr.no,color:tr.color,dwStd:tr.dwStd,dwEnd:tr.dwEnd,stops:ttClone(tr.stops,0),pj:PJ.act,snm:tr.stops.map(s=>ttNm(s.st))};toast('📋 คัดลอกขบวน '+tr.no+' — คลิกขวาที่ว่าง / Ctrl+V เพื่อวาง');}
+function ttPaste(t){const c=TT.clip;if(!c){toast('ยังไม่ได้คัดลอกขบวน','er');return;}let sts=c.stops;
+ if(c.pj!==PJ.act||sts.some(s=>!SM[s.st])){const m=[];for(let i=0;i<sts.length;i++){const ns=W.sts.find(x=>x.name===c.snm[i]);if(!ns){toast('โปรเจคนี้ไม่มีสถานี “'+c.snm[i]+'”','er');return;}m.push(Object.assign({},sts[i],{st:ns.id,pf:''}));}sts=m;}
+ const f=sts[0],dv=t-(f&&f.dep!=null?f.dep:(f?f.arr:0));
+ const n=mkTrain({no:uniqNo((parseInt(c.no)||1000)+2,2),color:c.color,stops:ttClone(sts,dv),dwStd:c.dwStd,dwEnd:c.dwEnd});TT.sel=n.id;ttEdited();toast('วางขบวน '+n.no+' ที่ '+ttLbl(t));}
+function ttDel(tr){if(!confirm('ลบขบวน '+tr.no+' ?'))return;if(tr.rt)despawn(tr);W.trains=W.trains.filter(t=>t!==tr);W.trains.forEach(t=>{if(t.next===tr.id)t.next=null;});if(TT.sel===tr.id)TT.sel=null;if(UI.sel===tr.id)UI.sel=null;ttEdited();}
+function ttRevStops(S,start){const n=S.length,A=S.map(s=>s.arr!=null?s.arr:s.dep),D=S.map(s=>s.dep!=null?s.dep:s.arr),R=[];let t=0;
+ for(let k=0;k<n;k++){const i=n-1-k,s=S[i];if(k>0)t+=A[i+1]-D[i];const dw=(s.arr!=null&&s.dep!=null)?s.dep-s.arr:0;
+  const e={st:s.st,pf:'',arr:k===0?null:t,dep:k===n-1?null:t+dw,pass:!!s.pass};if(k===0)e.dep=t;if(!s.pass&&k>0&&k<n-1&&s.dw!=null)e.dw=s.dw;R.push(e);t+=dw;}
+ R.forEach(e=>{if(e.arr!=null)e.arr+=start;if(e.dep!=null)e.dep+=start;});return R;}
+function ttLastT(S){const l=S[S.length-1];return l.arr!=null?l.arr:l.dep;}
+function ttReturn(tr){const S=tr.stops;if(S.length<2)return;const st=ttLastT(S)+Math.max(300,tr.dwEnd||0);
+ const n=mkTrain({no:uniqNo((parseInt(tr.no)||1000)+1,1),color:tr.color,stops:ttRevStops(S,st),dwStd:tr.dwStd,dwEnd:tr.dwEnd});tr.next=n.id;TT.sel=n.id;ttEdited();toast('ต่อขบวนกลับ '+n.no+' ออกจาก '+ttNm(S[S.length-1].st)+' เวลา '+hm(st));}
+function ttFreqDlg(tr){const f0=tr.stops[0],T0=f0&&f0.dep!=null?f0.dep:18000,n0=parseInt(tr.no)||1000;
+ const upd=()=>{const S=pT(val('qS')),E=pT(val('qE')),I=(+val('qI')||0)*60,K=$('qR').checked?Math.max(1,+val('qK')||2):1;let n=0;if(S!=null&&E!=null&&I>0&&E>S)n=Math.ceil((E-S)/I);
+  $('qC').textContent=n?('จะสร้าง '+n+' รอบ = '+(n*K)+' ขบวน'):'ตรวจค่าที่กรอก';};
+ dlg('⧉ คัดลอกวางตามความถี่ — ขบวน '+esc(tr.no),
+ '<div class="g2"><div class="f"><label>ออกรอบแรกเวลา</label><input id="qS" value="'+hm(T0+1200)+'"></div><div class="f"><label>สร้างไปจนถึงเวลา (ไม่รวม)</label><input id="qE" value="24:00"></div>'+
+ '<div class="f"><label>ทุก ๆ (นาที)</label><input id="qI" type="number" value="20"></div><div class="f"><label>เลขขบวนเริ่มต้น</label><input id="qN" value="'+(n0+2)+'"></div>'+
+ '<div class="f"><label>เพิ่มเลขทีละ (ต่อรอบ)</label><input id="qT" type="number" value="2"></div><div class="f"><label>สรุป</label><div class="hint" id="qC" style="padding-top:6px"></div></div></div>'+
+ '<label class="hint" style="display:block;margin:4px 0 6px"><input type="checkbox" id="qR"> 🔗 ต่อขบวนหมุนเวียน — ถึงปลายทางแล้ววิ่งกลับต่อเนื่อง เปลี่ยนเลขขบวนถัดไปอัตโนมัติ (ลากเส้นเชื่อมให้)</label>'+
+ '<div class="g2"><div class="f"><label>เวลากลับตัวที่ปลายทาง (นาที)</label><input id="qU" type="number" value="5"></div><div class="f"><label>จำนวนเที่ยวต่อรอบ (ไป-กลับ = 2)</label><input id="qK" type="number" value="2"></div></div>'+
+ '<div class="hint">เที่ยวกลับจะกลับลำดับสถานี ใช้เวลาวิ่งเท่าเดิม และให้ระบบเลือกชานชาลาเอง · เลขขบวนในรอบเดียวกันเพิ่มทีละ 1</div>',
+ [{t:'สร้างเส้น',p:1,f:()=>{const S=pT(val('qS')),E=pT(val('qE')),I=(+val('qI')||0)*60,N=+val('qN'),st=+val('qT')||1,R=$('qR').checked,U=Math.max(0,+val('qU')||0)*60,K=R?Math.max(1,Math.min(10,+val('qK')||2)):1;
+  if(S==null||E==null||I<=0||E<=S){toast('ตรวจเวลา/ความถี่ที่กรอก','er');return false;}
+  const base=ttClone(tr.stops,0),d0=base[0].dep!=null?base[0].dep:base[0].arr;let cnt=0,k=0;
+  for(let t=S;t<E&&k<400;t+=I,k++){let stops=ttClone(base,t-d0),prev=null;
+   for(let j=0;j<K;j++){if(j>0){const st2=ttLastT(prev.stops)+U;stops=(j%2)?ttRevStops(base,st2):ttClone(base,st2-d0);}
+    const no=uniqNo(String((isNaN(N)?n0+2:N)+k*st+j),1),nt=mkTrain({no,color:tr.color,stops,dwStd:tr.dwStd,dwEnd:tr.dwEnd});if(prev)prev.next=nt.id;prev=nt;cnt++;}}
+  ttEdited();toast('สร้างแล้ว '+cnt+' ขบวน');}}]);
+ $('dlg').oninput=upd;upd();}
+/* ── แก้ไขเวลา (pop up) ── */
+function ttEditDlg(tr){const S=tr.stops;let rows='';
+ S.forEach((s,i)=>{const first=i===0,last=i===S.length-1,pass=!!s.pass,pfs=stEdges({st:s.st}).map(e=>String(e.pf)).filter((v,k,a)=>a.indexOf(v)===k).sort((a,b)=>(parseFloat(a)||0)-(parseFloat(b)||0));
+  const dw=dwOf(tr,i),pv=preview(tr),pfSel='<select data-e="P|'+i+'"><option value="">อัตโนมัติ'+(pv.pf[i]?' ('+esc(String(pv.pf[i]))+')':'')+'</option>'+pfs.map(p=>'<option value="'+esc(p)+'"'+(String(s.pf)===p?' selected':'')+'>PF.'+esc(p)+'</option>').join('')+'</select>';
+  const inp=(k,v,dis)=>'<input data-e="'+k+'|'+i+'" value="'+esc(v)+'"'+(dis?' disabled':'')+'>';
+  const A=first?'<span class="mu">—</span>':inp('A',hmx(pass?(s.arr!=null?s.arr:s.dep):s.arr)),W2=(pass||first)?'<span class="mu">—</span>':inp('W',mmss(dw)),Dd=(last||pass)?'<span class="mu">—</span>':inp('D',hmx(s.dep));
+  rows+='<tr><td class="c">'+(i+1)+'</td><td class="nm">'+(pass?'<i>ผ่าน</i> ':'')+esc(ttNm(s.st))+'</td><td>'+pfSel+'</td><td>'+A+'</td><td>'+W2+'</td><td>'+Dd+'</td><td class="c">'+(first||last?'':'<label title="ผ่านสถานี (ไม่จอด)"><input type="checkbox" data-e="S|'+i+'"'+(pass?' checked':'')+'></label>')+'</td><td class="c"><label title="ลบจุดนี้"><input type="checkbox" data-e="X|'+i+'"></label></td></tr>';});
+ dlg('✏️ แก้ไขขบวน '+esc(tr.no)+' · '+esc(ttRoute(tr)),
+ '<div class="g2"><div class="f"><label>เลขขบวน</label><input id="eN" value="'+esc(tr.no)+'"></div><div class="f"><label>เลื่อนทั้งขบวน (นาที, + / −)</label><input id="eSh" type="number" value="0" step="1"></div></div>'+
+ '<div class="ett"><table><thead><tr><th>#</th><th>สถานี</th><th>ชานชาลา</th><th>ถึง</th><th>จอด (นาที:วินาที)</th><th>ออก</th><th>ผ่าน</th><th>ลบ</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+ '<div class="hint">แก้ “ถึง” หรือ “จอด” → เวลาออกคำนวณให้ · แก้ “ออก” → เวลาจอดคำนวณให้ · รูปแบบเวลา 05:30 หรือ 05:30:30</div>',
+ [{t:'⏱ คำนวณเวลาจากผังราง',f:()=>{autoTimes(tr);ttEdited();ttEditDlg(tr);return false;}},{t:'💾 บันทึก',p:1,f:()=>ttEditSave(tr)}],960);
+ $('dlg').onchange=ev=>{const t=ev.target,e=t.dataset&&t.dataset.e;if(!e)return;const[k,i]=e.split('|'),q=x=>$('dlg').querySelector('[data-e="'+x+'|'+i+'"]');
+  const a=q('A'),w=q('W'),d=q('D');
+  if(k==='A'||k==='W'){if(a&&w&&d){const A=pT(a.value),Wv=pMS(w.value);if(A!=null&&Wv!=null)d.value=hmx(A+Wv);}}
+  else if(k==='D'){if(a&&w&&d){const A=pT(a.value),Dv=pT(d.value);if(A!=null&&Dv!=null&&Dv>=A)w.value=mmss(Dv-A);}}};}
+function ttEditSave(tr){const S=tr.stops,dlgq=x=>$('dlg').querySelector(x),gv=(k,i)=>{const e=dlgq('[data-e="'+k+'|'+i+'"]');return e?e.value:null;},gc=(k,i)=>{const e=dlgq('[data-e="'+k+'|'+i+'"]');return e?e.checked:false;};
+ const sh=Math.round((+val('eSh')||0)*60),out=[];
+ for(let i=0;i<S.length;i++){if(gc('X',i))continue;const s=S[i],first=i===0,last=i===S.length-1,pass=!first&&!last&&gc('S',i);let arr=null,dep=null,dw=s.dw;
+  const A=gv('A',i),D=gv('D',i),Wv=gv('W',i);
+  if(first){dep=pT(D);if(dep==null){toast('เวลาออกจุดที่ 1 ไม่ถูกต้อง','er');return false;}if(Wv!=null){const v=pMS(Wv);if(v!=null)dw=v;}}
+  else if(last){arr=pT(A);if(arr==null){toast('เวลาถึงจุดที่ '+(i+1)+' ไม่ถูกต้อง','er');return false;}if(Wv!=null){const v=pMS(Wv);if(v!=null)dw=v;}}
+  else if(pass){arr=pT(A);if(arr==null){toast('เวลาผ่านจุดที่ '+(i+1)+' ไม่ถูกต้อง','er');return false;}dep=arr;}
+  else{arr=pT(A);dep=pT(D);if(arr==null||dep==null||dep<arr){toast('เวลาจุดที่ '+(i+1)+' ไม่ถูกต้อง (ออกต้องไม่ก่อนถึง)','er');return false;}dw=dep-arr;}
+  out.push({st:s.st,pf:gv('P',i)||'',arr:arr!=null?arr+sh:null,dep:dep!=null?dep+sh:null,pass:pass,dw:pass?undefined:dw});}
+ if(out.length<2){toast('ต้องเหลืออย่างน้อย 2 จุด','er');return false;}
+ const n=val('eN').trim();if(n&&n!==tr.no)tr.no=n;
+ tr.stops=out;fixEnds(tr);tr.ver++;ttEdited();toast('บันทึกขบวน '+tr.no+' แล้ว');}
+/* ── รายละเอียดเดินรถจริง ── */
+function ttActDlg(tr){const a=ttAct(tr),f=(x,p)=>x==null?'<span class="mu">—</span>':hmx(x);
+ const dc=s=>s==null?'':'<b style="color:'+(s>30?'#ff6b78':s<-30?'#34d399':'#8aa0b8')+'">'+(Math.abs(s)<=30?'ตรงเวลา':ttDl(s))+'</b>';
+ let rows=a.rows.map(r=>'<tr><td class="c">'+(r.i+1)+'</td><td class="nm">'+esc(ttNm(r.s.st))+'</td><td class="c">'+(r.pf!=null&&r.pf!==''?'PF.'+esc(String(r.pf)):(r.s.pf?'PF.'+esc(String(r.s.pf)):'—'))+'</td><td>'+f(r.pa)+'</td><td>'+f(r.a)+'</td><td>'+dc(r.da)+'</td><td>'+f(r.pd)+'</td><td>'+f(r.d)+'</td><td>'+dc(r.dd)+'</td></tr>').join('');
+ const sum=a.dest?'ถึงปลายทาง '+esc(ttNm(a.dest.s.st))+' เวลา '+hmx(a.dest.a)+' (แผน '+hmx(a.dest.pa)+') → <b>'+(Math.abs(a.dest.da||0)<=30?'ตรงเวลา':'ล่าช้า '+ttDl(a.dest.da))+'</b>':'ยังไม่ถึงปลายทาง · ล่าช้าสะสมขณะนี้ <b>'+ttDl(a.live||0)+'</b>';
+ dlg('📊 ผลเดินรถจริง — ขบวน '+esc(tr.no)+' · '+esc(ttRoute(tr)),'<div class="ett"><table><thead><tr><th>#</th><th>สถานี</th><th>ชานชาลา</th><th>แผนถึง</th><th>จริงถึง</th><th>ผลต่าง</th><th>แผนออก</th><th>จริงออก</th><th>ผลต่าง</th></tr></thead><tbody>'+rows+'</tbody></table></div><div class="hint" style="margin-top:8px;font-size:12px">'+sum+'</div>',[],900);}
+/* ── ตรวจความขัดแย้ง (รันซิมเฮดเลสทั้งวันแล้วเก็บเหตุการณ์ที่ต้องรอ) ── */
+function ttEvText(e){const tr=TR(e.tid),by=[...e.by].map(id=>TR(id)).filter(Boolean).map(t=>t.no).join(', ');
+ const k=e.kind==='route'?'ไม่พบเส้นทางไปจุดถัดไป':e.kind==='spawn'?'ชานชาลาต้นทางไม่ว่าง':'รอสัญญาณ — ทางข้างหน้ายังไม่ว่าง';
+ return{h:'ขบวน '+(tr?tr.no:'?')+' · '+k,s:ttNm(e.st)+' · '+hms(e.t0)+'–'+hms(e.t1)+' ('+mmss(e.t1-e.t0)+')'+(by?' · ติดกับขบวน '+by:'')};}
+function ttSigNow(){return NETV+'|'+TT.minWait+'|'+W.trains.map(t=>t.id+':'+t.stops.map(s=>s.st+','+(s.pf||'')+','+s.arr+','+s.dep+','+(s.pass?1:0)+','+(s.dw==null?'':s.dw)).join(';')+'|'+t.dwStd+'|'+t.dwEnd).join('#');}
+function ttAnalyze(sig){if(TT.busy)return;TT.busy=true;const t00=performance.now(),wasRun=SIM.run;SIM.run=false;
+ const snap={t:SIM.t,res:RES,trs:W.trains.map(t=>[t.rt,t.done,t.rec,t._sr])};let list=[];
+ try{resetSim();let mx=0;W.trains.forEach(t=>t.stops.forEach(s=>{[s.arr,s.dep].forEach(x=>{if(x!=null&&x>mx)mx=x;});}));
+  const maxT=Math.max(mx+7200,SIM.t+3600),cur={};let g=0;
+  while(SIM.t<maxT&&g++<1200000){tick(.5);let act=0,anyRt=false;
+   for(const t of W.trains){if(t.stops.length<2||!t.stops[0]||t.stops[0].dep==null)continue;const r=t.rt;let key=null,kind=null,by=null;
+    if(r){act++;anyRt=true;if(r.blocked){key=t.id+'#'+r.si;kind='sig';by=r.blkBy;}else if(r.state==='dwell'&&r.msg&&r.msg.charAt(0)==='⚠'){key=t.id+'#'+r.si;kind='route';}}
+    else if(!t.done){act++;if(t._sr>SIM.t){key=t.id+'#s';kind='spawn';}}
+    if(key){let e=cur[key];if(!e||SIM.t-e.t1>6){e={tid:t.id,si:r?r.si:0,kind,t0:SIM.t,t1:SIM.t,by:new Set()};cur[key]=e;list.push(e);}e.t1=SIM.t;if(by)e.by.add(by);
+     if(kind==='spawn')stEdges(t.stops[0]).forEach(ed=>{const o=RES['e'+ed.id];if(o&&o!==t.id)e.by.add(o);});}}
+   if(!act)break;
+   if(!anyRt){let nx=Infinity;W.trains.forEach(t=>{if(t.done||t.rt||t.stops.length<2)return;const f=t.stops[0];if(!f||f.dep==null)return;const isP=SM[f.st]&&SM[f.st].type==='portal';nx=Math.min(nx,f.dep-(isP?0:Math.max(20,dwOf(t,0))));});if(nx<Infinity&&nx>SIM.t+3)SIM.t=nx-2;}}
+ }catch(err){console.error(err);}
+ RES=snap.res;W.trains.forEach((t,i)=>{const s=snap.trs[i];if(s){t.rt=s[0];t.done=s[1];t.rec=s[2];t._sr=s[3];}});SIM.t=snap.t;SIM.run=wasRun;TT.busy=false;
+ list=list.filter(e=>e.kind==='route'||e.t1-e.t0>=TT.minWait);list.forEach(e=>{const t=TR(e.tid);e.st=t&&t.stops[e.si]?t.stops[e.si].st:null;});list=list.filter(e=>e.st);list.sort((a,b)=>a.t0-b.t0);
+ const s=new Set();list.forEach(e=>{s.add(e.tid);e.by.forEach(x=>s.add(x));});CF={ev:list,trs:s,sig:sig==null?ttSigNow():sig,ms:Math.round(performance.now()-t00),n:list.length};
+ if(UI.tab==='tt')renderLeft();return CF;}
+function ttWatch(){const now=performance.now();if(now-(TT.sgT||0)<250)return;TT.sgT=now;const sg=ttSigNow();if(sg!==TT.sig){TT.sig=sg;TT.chg=now;return;}if(!TT.chg||now-TT.chg<700||TT.mv||TT.hd)return;
+ if(TT.simSig!==sg){const t0=SIM.t;resetSim();ffTo(t0);renderLeft();}
+ if(TT.auto&&CF.sig!==sg)ttAnalyze(sg);}
+function ttFocusEv(e){const T=ttInit(),L=ttLay(),v=ttView();v.t0=e.t0-900;v.t1=e.t1+900;const p=L.pos[e.st]!=null?L.pos[e.st]:0,sp=Math.max(L.total*.12,T.mode==='equal'?3:2);v.p0=p-sp;v.p1=p+sp;ttClampV();TT.sel=e.tid;}
+/* ── แผงด้านซ้าย ── */
+function ttPanel(){const T=ttInit(),L=ttLay(),sec=(k,t,b)=>'<details class="ttd" data-sec="'+k+'"'+(TT.open[k]?' open':'')+'><summary>'+t+'</summary><div class="ttb2">'+b+'</div></details>';
+ let cfb;if(CF.sig==null)cfb='<div class="hint">ยังไม่ได้ตรวจ — กด “ตรวจความขัดแย้ง”</div>';
+ else if(!CF.ev.length)cfb='<div class="okb">✓ ไม่พบความขัดแย้ง — ทุกขบวนเดินตามตารางได้ในซิม <small>('+CF.ms+' ms)</small></div>';
+ else cfb=CF.ev.slice(0,80).map((e,i)=>{const x=ttEvText(e);return'<div class="cfi" data-ta="cf|'+i+'"><b>⚠ '+esc(x.h)+'</b><div>'+esc(x.s)+'</div></div>';}).join('')+(CF.ev.length>80?'<div class="hint">…และอีก '+(CF.ev.length-80)+' รายการ</div>':'');
+ cfb='<div class="row" style="margin-bottom:7px"><button class="bt p" data-ta="chk">🔍 ตรวจความขัดแย้ง</button><label class="hint"><input type="checkbox" data-tauto'+(TT.auto?' checked':'')+'> ตรวจอัตโนมัติ</label></div>'+
+  '<div class="row" style="margin-bottom:8px"><span class="hint">ถือเป็นขัดแย้งเมื่อรอนานเกิน</span><input class="tin" data-tmw value="'+TT.minWait+'" style="width:54px"><span class="hint">วินาที</span></div>'+cfb;
+ const trs=W.trains.slice().sort((a,b)=>((a.stops[0]&&(a.stops[0].dep!=null?a.stops[0].dep:a.stops[0].arr))||0)-((b.stops[0]&&(b.stops[0].dep!=null?b.stops[0].dep:b.stops[0].arr))||0));
+ const trb='<div class="row" style="margin-bottom:7px"><input class="tfi" data-tfilter placeholder="🔎 ค้นหาเลขขบวน / สถานี"><button class="bt" data-ta="hall|0">ซ่อนทั้งหมด</button><button class="bt" data-ta="hall|1">แสดงทั้งหมด</button></div>'+
+  (trs.map(t=>'<div class="ttr'+(TT.sel===t.id?' on':'')+'" data-ta="tsel|'+t.id+'" data-q="'+esc((t.no+' '+ttRoute(t)).toLowerCase())+'"><span class="cb2" style="background:'+t.color+'"></span><b>'+esc(t.no)+'</b><span class="rt2">'+esc(ttRoute(t))+'</span><small>'+ttSpan(t)+'</small>'+(CF.trs.has(t.id)?'<span class="cfd">!</span>':'')+
+   '<span class="vk'+(t.tth?'':' on')+'" data-ta="thide|'+t.id+'" title="แสดง/ซ่อนในตาราง">'+(t.tth?'':'✓')+'</span></div>').join('')||'<div class="hint">ยังไม่มีขบวน — สร้างที่แท็บ “ขบวน & เส้นทาง”</div>');
+ const stb='<div class="row" style="margin-bottom:7px"><button class="bt'+(T.mode==='dist'?' on':'')+'" data-ta="mode|dist">ระยะทางจริง</button><button class="bt'+(T.mode==='equal'?' on':'')+'" data-ta="mode|equal">ระยะเท่ากัน</button>'+
+  '<button class="bt" data-ta="auto">🔄 เรียงจากผังราง</button><button class="bt" data-ta="calc">📏 คำนวณระยะใหม่</button><button class="bt" data-ta="expall|1">▾ กางชานชาลาทั้งหมด</button><button class="bt" data-ta="expall|0">▸ ย่อทั้งหมด</button></div>'+
+  '<div class="hint" style="margin-bottom:6px">คลิกชื่อสถานีบนตารางเพื่อกางเป็นชานชาลา PF แต่ละราง · ช่อง กม. = ระยะจากสถานีก่อนหน้า</div>'+
+  T.order.map((id,i)=>{const n=L.npf[id]||ttPfs(id).length;return'<div class="strow"><span class="pill">'+(i+1)+'</span><span class="sn" data-ta="exp|'+id+'">'+(n?(T.exp[id]?'▾ ':'▸ '):'')+esc(ttNm(id))+(n?' <small>'+n+' PF</small>':'')+'</span>'+
+   (i?'<input class="gi" data-ttgap="'+id+'" value="'+(+T.gap[id]||0)+'" title="ระยะจากสถานีก่อนหน้า (กม.)"><small>กม.</small>':'<span class="gi0"></span>')+
+   '<button class="x2" data-ta="up|'+id+'">▲</button><button class="x2" data-ta="dn|'+id+'">▼</button><button class="x2" data-ta="shid|'+id+'">'+(T.hid[id]?'🙈':'👁')+'</button></div>';}).join('');
+ const hp='<div class="hint" style="margin-bottom:9px">'+
+  '• <b>เส้นดำ/ขาว</b> = ตารางแผน · <b style="color:#ff4fa3">เส้นชมพู</b> = เดินรถจริงในซิม · <b style="color:#ff3346">เส้นแดงกะพริบ</b> = ขัดแย้ง/ไม่ปลอดภัย<br>'+
+  '• คลิกเส้น = เมนู แก้ไข / ย้าย / คัดลอก / วาง / ความถี่ · ดับเบิลคลิกเส้น = แก้ไขเวลา · ลากจุดกลมบนเส้นที่เลือก = ปรับเวลา<br>'+
+  '• ล้อเมาส์: บนแผนที่ = ซูมทั้งคู่ · บนแถบเวลา = ซูมเวลา · บนชื่อสถานี = ซูมสถานี · Ctrl/Shift ล็อกแกน · ลากพื้นที่ว่าง = เลื่อน · ดับเบิลคลิกแถบเวลา = ตั้งเวลาซิม</div>';
+ return hp+sec('cf','⚠ ความขัดแย้ง'+(CF.sig!=null?' <span class="pill" style="'+(CF.ev.length?'background:#7f1d1d;color:#fff':'background:#14532d;color:#d1fae5')+'">'+CF.ev.length+'</span>':''),cfb)+sec('tr','🚆 ขบวนในตาราง ('+trs.length+')',trb)+sec('st','🚉 สถานี · ชานชาลา · ระยะทาง ('+T.order.length+')',stb);}
+function ttFilterRows(q){q=q.trim().toLowerCase();document.querySelectorAll('#lp .ttr').forEach(r=>{r.style.display=!q||r.dataset.q.indexOf(q)>=0?'':'none';});}
+function ttPanelClick(ev){if(UI.tab!=='tt')return;const b=ev.target.closest('[data-ta]');if(!b)return;const[a,x]=b.dataset.ta.split('|'),T=ttInit();
+ if(a==='chk'){ttAnalyze(ttSigNow());toast(CF.ev.length?'พบความขัดแย้ง '+CF.ev.length+' จุด':'ไม่พบความขัดแย้ง');return;}
+ if(a==='cf'){const e=CF.ev[+x];if(e)ttFocusEv(e);renderLeft();return;}
+ if(a==='tsel'){const t=TR(x);if(!t)return;TT.sel=x;const P=ttPts(t,ttLay());if(P.length){const v=ttView();let a0=Infinity,b0=-Infinity;P.forEach(q=>{a0=Math.min(a0,q.t);b0=Math.max(b0,q.t);});const sp=Math.max(b0-a0,900);v.t0=a0-sp*.25;v.t1=b0+sp*.25;ttClampV();}renderLeft();return;}
+ if(a==='thide'){const t=TR(x);if(t){t.tth=!t.tth;ttEdited();}ev.stopPropagation();return;}
+ if(a==='hall'){W.trains.forEach(t=>t.tth=(x==='0'));ttEdited();return;}
+ if(a==='mode'){T.mode=x;ttFit('p');renderLeft();return;}
+ if(a==='auto'){if(!confirm('เรียงลำดับสถานีและตั้งระยะใหม่จากผังราง? (ค่าที่แก้เองจะถูกล้าง)'))return;T.order=ttAutoOrder();T.gap={};T.gu={};ttDefGaps(true);ttFit('p');renderLeft();return;}
+ if(a==='calc'){T.gu={};ttDefGaps(true);ttFit('p');renderLeft();toast('คำนวณระยะระหว่างสถานีจากผังรางแล้ว');return;}
+ if(a==='exp'){if(ttToggleExp(x))renderLeft();return;}
+ if(a==='expall'){T.order.forEach(id=>{if(ttPfs(id).length)T.exp[id]=(x==='1');});ttFit('p');renderLeft();return;}
+ if(a==='shid'){T.hid[x]=!T.hid[x];ttFit('p');renderLeft();return;}
+ if(a==='up'||a==='dn'){const i=T.order.indexOf(x),j=a==='up'?i-1:i+1;if(i<0||j<0||j>=T.order.length)return;const o=T.order;[o[i],o[j]]=[o[j],o[i]];ttDefGaps(true);ttFit('p');renderLeft();return;}}
+$('lp').addEventListener('click',ttPanelClick);
+$('lp').addEventListener('change',ev=>{if(UI.tab!=='tt')return;const t=ev.target,d=t.dataset,T=ttInit();
+ if(d.ttgap){const v=parseFloat(t.value);if(isNaN(v)||v<=0){toast('ระยะต้องมากกว่า 0','er');renderLeft();return;}T.gap[d.ttgap]=Math.max(.05,v);T.gu[d.ttgap]=1;ttFit('p');renderLeft();return;}
+ if(d.tauto!=null){TT.auto=t.checked;return;}
+ if(d.tmw!=null){const v=parseFloat(t.value);if(!isNaN(v)&&v>=0){TT.minWait=v;CF.sig=null;}renderLeft();return;}});
+$('lp').addEventListener('input',ev=>{if(UI.tab==='tt'&&ev.target.dataset.tfilter!=null)ttFilterRows(ev.target.value);});
+$('lp').addEventListener('toggle',ev=>{const d=ev.target;if(d.dataset&&d.dataset.sec)TT.open[d.dataset.sec]=d.open;},true);
+/* ── ปุ่มแถบเครื่องมือ ── */
+function ttSyncTb(){document.querySelectorAll('[data-tv]').forEach(b=>b.classList.toggle('on',!!TT[b.dataset.tv]));const T=W.tt||{};
+ const s=$('tSwap'),r=$('tRev'),n=$('tSnap');if(s)s.classList.toggle('on',!!T.swap);if(r)r.classList.toggle('on',!!T.rev);if(n)n.textContent='ปัด '+(TT.snap<60?TT.snap+' วิ':TT.snap/60+' นาที');}
+function ttEnter(){ttInit();TT.sig=ttSigNow();TT.chg=1;TT.sgT=0;TT.hover=null;ttSyncTb();requestAnimationFrame(()=>{ttResize();});}
+$('ttb').addEventListener('click',ev=>{const b=ev.target.closest('button,[data-tv],[data-tz]');if(!b)return;const T=ttInit();
+ if(b.dataset.tv){TT[b.dataset.tv]=!TT[b.dataset.tv];ttSyncTb();return;}
+ const z=b.dataset.tz;if(z){if(z==='t-')ttZoomT(1/1.4);else if(z==='t+')ttZoomT(1.4);else if(z==='tf')ttFit('t');else if(z==='tall'){const v=ttView();v.t0=0;v.t1=86400;}
+  else if(z==='p-')ttZoomP(1/1.4);else if(z==='p+')ttZoomP(1.4);else if(z==='pf')ttFit('p');return;}
+ if(b.id==='tSwap'){ttSwap();return;}if(b.id==='tRev'){T.rev=!T.rev;ttFit('p');ttSyncTb();return;}
+ if(b.id==='tPan'){TT.nopanel=!TT.nopanel;stageSync();return;}
+ if(b.id==='tSnap'){const L=[10,30,60,300];TT.snap=L[(L.indexOf(TT.snap)+1)%L.length];ttSyncTb();return;}
+ if(b.id==='tExp'){const any=T.order.some(id=>T.exp[id]);T.order.forEach(id=>{if(ttPfs(id).length)T.exp[id]=!any;});ttFit('p');renderLeft();return;}
+ if(b.id==='tChk'){ttAnalyze(ttSigNow());toast(CF.ev.length?'พบความขัดแย้ง '+CF.ev.length+' จุด':'ไม่พบความขัดแย้ง');return;}
+ if(b.id==='tPl'){play(!SIM.run);return;}if(b.id==='tRs'){$('cRs').click();return;}
+ if(b.id==='tBk'){setClock(SIM.t-300);return;}if(b.id==='tFw'){setClock(SIM.t+300);return;}
+ if(b.dataset.v){SIM.mul=+b.dataset.v;document.querySelectorAll('#spd .sx,#tSpd .sx').forEach(x=>x.classList.toggle('on',+x.dataset.v===SIM.mul));}});
+$('tSpd').innerHTML=[1,5,10,25,60].map(v=>'<button class="sx'+(v===SIM.mul?' on':'')+'" data-v="'+v+'">'+v+'×</button>').join('');
+TT.cv=$('tcv');TT.c=TT.cv.getContext('2d');
+TT.cv.addEventListener('mousedown',ttDown);window.addEventListener('mousemove',ttMouse);window.addEventListener('mouseup',ttUp);
+TT.cv.addEventListener('contextmenu',ttCtx);TT.cv.addEventListener('dblclick',ttDbl);TT.cv.addEventListener('wheel',ttWheel,{passive:false});
+TT.cv.addEventListener('mouseleave',()=>{TT.cx=null;TT.hover=null;TT.hovRow=null;});
+window.addEventListener('keydown',e=>{if(UI.tab!=='tt'||/input|select|textarea/i.test(e.target.tagName))return;const tr=TT.sel?TR(TT.sel):null,k=e.key.toLowerCase();
+ if((e.key==='Delete'||e.key==='Backspace')&&tr){e.preventDefault();ttDel(tr);}
+ else if((e.ctrlKey||e.metaKey)&&k==='c'&&tr){e.preventDefault();ttCopy(tr);}
+ else if((e.ctrlKey||e.metaKey)&&k==='v'&&TT.clip&&TT.M&&TT.cx!=null){e.preventDefault();ttPaste(ttSnap(Math.max(0,TT.M.sc(TT.cx,TT.cy).t)));}
+ else if(k==='e'&&tr&&!e.ctrlKey&&!e.metaKey){e.preventDefault();ttEditDlg(tr);}});
+if(window.ResizeObserver)new ResizeObserver(()=>{if(UI.tab==='tt')ttResize();}).observe($('tcw'));
+
 /* ═════════ ลูปหลัก ═════════ */
 let last=0,acc=0,sav=0,fsv=0;
 function loop(ts){const dt=Math.min(.1,(ts-(last||ts))/1000);last=ts;
  if(SIM.run){let s=dt*SIM.mul;while(s>1e-6){const h=Math.min(.25,s);tick(h);s-=h;}}
  if(GH.on)GH.ph+=dt*GH.spd*70;
  $('ct').innerHTML=hm(SIM.t)+'<small>:'+p2(Math.floor(((SIM.t%60)+60)%60))+'</small>';
- draw();acc+=dt;sav+=dt;fsv+=dt;
+ if(UI.tab==='tt'){ttWatch();ttDraw();}else draw();acc+=dt;sav+=dt;fsv+=dt;
  if(acc>.8){acc=0;renderUpc();renderHud();
   const ae=document.activeElement;if(!LPH&&!(ae&&$('lp').contains(ae)&&/input|select/i.test(ae.tagName))&&UI.tab==='tr')renderLeft();
   const tm=document.querySelector('.pj.on .tm');if(tm)tm.textContent=hm(SIM.t);}
