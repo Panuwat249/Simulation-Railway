@@ -1117,7 +1117,7 @@
             }
 
             .main.nopanel {
-                grid-template-columns: 0 1fr
+                grid-template-columns: 1fr
             }
 
             .main.nopanel .left {
@@ -9422,6 +9422,7 @@
                     if (!cd)
                         return;
                     const hh = l.fold ? 0 : (l.h || 320);
+                    cd.cvw.style.display = l.fold ? 'none' : '';
                     cd.cvw.style.height = hh + 'px';
                     const r = l.fold ? {
                         width: 0
